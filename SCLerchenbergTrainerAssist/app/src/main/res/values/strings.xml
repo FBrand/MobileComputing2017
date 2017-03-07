@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">SC Lerchenberg TrainerAssist</string>
 
+    <!-- main Activity strings -->
     <string name="uebungen_button">Übungen</string>
     <string name="einheiten_button">Einheiten</string>
     <string name="settings_button">Einstellungen</string>
+
+    <string-array name="menu">
+        <item>Übungen</item>
+        <item>Einheiten</item>
+        <item>Einstellungen</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
