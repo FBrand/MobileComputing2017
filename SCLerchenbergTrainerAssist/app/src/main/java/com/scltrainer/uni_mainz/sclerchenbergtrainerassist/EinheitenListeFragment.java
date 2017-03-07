@@ -11,7 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-public class UebungListeFragment extends ListFragment implements OnItemClickListener {
+public class EinheitenListeFragment extends ListFragment implements OnItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class UebungListeFragment extends ListFragment implements OnItemClickList
 
         // TODO: Eigenen ArrayAdapter schreiben um eine schoenere Liste zu erzeugen
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.uebungTest, android.R.layout.simple_list_item_1);
+                R.array.einheitenTest, android.R.layout.simple_list_item_1);
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
         Log.i("APP", "onActivityCreated ende");

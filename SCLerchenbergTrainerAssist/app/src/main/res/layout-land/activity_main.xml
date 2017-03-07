@@ -12,6 +12,7 @@
         tools:context="com.scltrainer.uni_mainz.sclerchenbergtrainerassist.MainActivity">
 
     <LinearLayout
+            android:id="@+id/menu_layout"
             android:orientation="vertical"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
@@ -31,7 +32,7 @@
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungListeFragment"
+                android:name="com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungenListeFragment"
                 android:id="@+id/fragment"/>
     </LinearLayout>
 </RelativeLayout>
