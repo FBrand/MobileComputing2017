@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SC Lerchenberg TrainerAssist</string>
+
+    <string name="uebungen_button">Übungen</string>
+    <string name="einheiten_button">Einheiten</string>
+    <string name="settings_button">Einstellungen</string>
 </resources>
