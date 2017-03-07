@@ -60,9 +60,9 @@ The actual API design is very straightforward and follows the design patterns of
 
 	(C)reate > POST   /table
 	(R)ead   > GET    /table[/id]
-	(R)ead   > GET    user/table[/column/content]
+	(R)ead   > GET    /user/table[/column/content]
 	(U)pdate > PUT    /table/id
-	(D)elete > DELETE user/table/id
+	(D)elete > DELETE /user/table/id
 
 To put this into practice below are some example of how you would use the ArrestDB API:
 
