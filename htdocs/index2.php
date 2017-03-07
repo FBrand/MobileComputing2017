@@ -4,8 +4,6 @@ $dsn = 'sqlite://./db.sqlite';
 $clients = [];
 $userstxt = file_get_contents ( 'users.txt');
 $users = explode ( ';', $userstxt);
-$admintxt = file_get_contents ( 'admin.txt');
-$admin = explode ( ';', $admintxt);
 
 
 /**
@@ -41,7 +39,7 @@ else if (array_key_exists('HTTP_X_HTTP_METHOD_OVERRIDE', $_SERVER) === true)
 	$_SERVER['REQUEST_METHOD'] = strtoupper(trim($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']));
 }
 
-ArrestDB::Serve('GET', '/(#any)/(#any)/(#any)', function ($table,  $id, $data)
+ArrestDB::Serve('GET', '/(#any)/(#any)/(#any)/(#any)', function ($table, $user=null, $id, $data)
 {
 	$query = array
 	(
@@ -85,8 +83,14 @@ ArrestDB::Serve('GET', '/(#any)/(#any)/(#any)', function ($table,  $id, $data)
 	return ArrestDB::Reply($result);
 });
 
-ArrestDB::Serve('GET', '/(#any)/(#num)?', function ($table, $id = null)
+ArrestDB::Serve('GET', '/(#any)/(#any)/(#num)?', function ($table, $user=null, $id = null)
 {
+	global $users;
+	if(array_search ( $user , $users , $strict = false ) === false)
+	{
+		$result = ArrestDB::$HTTP[205];
+	}
+	else{
 
 	$query = array
 	(
@@ -138,18 +142,14 @@ ArrestDB::Serve('GET', '/(#any)/(#num)?', function ($table, $id = null)
 	{
 		$result = array_shift($result);
 	}
+}
 	return ArrestDB::Reply($result);
 });
 
 ArrestDB::Serve('DELETE', '/(#any)/(#any)/(#num)', function ($user, $table, $id)
 {
-	$author = ArrestDB::Query('SELECT "Autor" FROM "%s" WHERE "id" = "%s"', $table, $id);					///check!   fehler werfen, wenn der Nutzer den zu löschenden Datensatz nicht selbst erstellt hat und kein admin ist.
-	if(($user !== $author) and (array_search ( $user , $admin , $strict = false ) === false))
-	{
-		$resullt = ArrestDB::$HTTP[205];
-	}
-	else
-	{
+	$author = ArrestDB::Query('SELECT "Autor" FROM "%s" WHERE "id" = "%s"', $table, $id);					///check!
+	if($user === $author){
 	$query = array
 	(
 		sprintf('DELETE FROM "%s" WHERE "%s" = ?', $table, 'id'),
@@ -173,8 +173,7 @@ ArrestDB::Serve('DELETE', '/(#any)/(#any)/(#num)', function ($user, $table, $id)
 		$result = ArrestDB::$HTTP[200];
 	}
 
-	}
-	
+	}else $resullt = ArrestDB::$HTTP[205];
 
 	return ArrestDB::Reply($result);
 });
@@ -207,7 +206,7 @@ if (in_array($http = strtoupper($_SERVER['REQUEST_METHOD']), ['POST', 'PUT']) ==
 	unset($data);
 }
 
-ArrestDB::Serve('POST', '/(#any)' , '/(#any)', function ($user, $table)					//neuer eintrag
+ArrestDB::Serve('POST', '/(#any)' , '/(#any)', function ($user, $table)
 {
 	global $users;
 	if (empty($_POST) === true)
@@ -215,8 +214,8 @@ ArrestDB::Serve('POST', '/(#any)' , '/(#any)', function ($user, $table)					//ne
 		$result = ArrestDB::$HTTP[204];
 	}
 
-	else if(array_search ( $user , $users , $strict = false ) === false)				//blockieren, falls der nutzer nicht auf der whitelist steht
-	{	
+	else if(array_search ( $user , $users , $strict = false ) === false)
+	{
 		$result = ArrestDB::$HTTP[205];
 	}
 
@@ -287,7 +286,7 @@ ArrestDB::Serve('POST', '/(#any)' , '/(#any)', function ($user, $table)					//ne
 	return ArrestDB::Reply($result);
 });
 
-ArrestDB::Serve('PUT', '/(#any)/(#num)', function ($table, $id)			//eintrag ändern
+ArrestDB::Serve('PUT', '/(#any)/(#num)', function ($table, $id)
 {
 	if (empty($GLOBALS['_PUT']) === true)
 	{
