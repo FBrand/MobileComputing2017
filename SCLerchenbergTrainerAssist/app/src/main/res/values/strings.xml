@@ -12,6 +12,25 @@
         <item>Einstellungen</item>
     </string-array>
 
+    <string-array name="uebungTest">
+        <item>uebung-test1</item>
+        <item>uebung-test2</item>
+        <item>uebung-test1</item>
+        <item>uebung-test2</item>
+        <item>uebung-test1</item>
+        <item>uebung-test2</item>
+        <item>uebung-test1</item>
+        <item>uebung-test2</item>
+        <item>uebung-test1</item>
+        <item>uebung-test2</item>
+
+    </string-array>
+
+    <string-array name="einheitenTest">
+        <item>einheiten-test1</item>
+        <item>einheiten-test2</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
