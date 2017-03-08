@@ -1,0 +1,32 @@
+DATENBANK
+
+Einheit:
+globale ID: Integer
+lokale ID: Integer
+Name: String
+Beschreibung: String
+Favoriten: boolean
+Autorname: String
+Autormail: String (Schlüssel)
+letzte Änderung: Date
+
+
+Liste der Übungen: Array aus Pairs aus Integer und Übung(ID), bzw. Tripel
+
+Übung:
+globale ID: Integer
+lokale ID: Integer
+Name: String
+Grafik: ??
+Beschreibung: String
+7 Punkte - System: 3x Integer (Technik, Taktik und Physis)
+Favorit: boolean
+vorgeschlagener Zeitaufwand: Integer
+Altersklassen: Array aus Enums (Senioren, Erwachsenen, A-, B-, C-, D-, E-, F-Jugend und Bambinis)
+Sportart: String
+Schlagwörter: Array aus Enums (z.B. Dribbling, Laufen, etc pp)
+Videolink: String
+Gruppengröße: Pair aus Integer
+Autorname: String
+Autormail: String (PRIMÄRSCHLÜSSEL)
+letzte Änderung: Date
