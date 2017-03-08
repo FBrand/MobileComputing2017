@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungDetailFragment"
+              android:id="@+id/uebungZeit">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="UebungName" android:contentDescription="Name der Uebung"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:id="@+id/uebungName"/>
+            <TextView
+                    android:text="autorname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/uebungAutorname"/>
+            <TextView
+                    android:text="Beschreibung"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/uebungBeschreibung"/>
+            <TextView
+                    android:text="Technik: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/technik"/>
+            <TextView
+                    android:text="Anzahl der Punkte fuer Technik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/technikPunkte"/>
+            <TextView
+                    android:text="Taktik: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/taktik"/>
+            <TextView
+                    android:text="Anzahl Punkte fuer Taktik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/taktikPunkte"/>
+            <TextView
+                    android:text="Physis: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/physis"/>
+            <TextView
+                    android:text="Anzahl Punkte fuer Physis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/physisPunkte"/>
+            <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/uebungFavoriten" android:numStars="1"
+                    android:rating="0" android:stepSize="1"
+                    />
+            <TextView
+                    android:text="Vorgeschlagener Zeitaufwand: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/uebungDauer"/>
+            <TextView
+                    android:text="Dauer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/uebungDauerWert"/>
+            <TextView
+                    android:text="Altersklassen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/altersklassen"/>
+            <TextView
+                    android:text="schlagwoerter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/uebungSchlagwoerter"/>
+            <TextView
+                    android:text="https://www.youtube.com/watch?v=eh7lp9umG2I"
+                    android:layout_width="match_parent"
+                    android:onClick="onClick"
+                    android:layout_height="wrap_content" android:id="@+id/videoURL"/>
+            <TextView
+                    android:text="1 bis 2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/gruppengroesse"/>
+            <TextView
+                    android:text="letzte Anderung: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/letzteAenderung"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
