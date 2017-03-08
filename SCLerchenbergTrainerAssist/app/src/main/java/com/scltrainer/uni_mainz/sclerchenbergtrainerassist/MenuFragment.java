@@ -2,6 +2,7 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 
 public class MenuFragment extends ListFragment implements OnItemClickListener {
 
-    private EinheitenListeFragment ef;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -28,7 +28,6 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
         Log.i("APP", "onCreateView start");
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        ef = (EinheitenListeFragment) Fragment.instantiate(getActivity(), EinheitenListeFragment.class.getName(), null);
 
         Log.i("APP", "onCreate ende");
         return view;
@@ -52,10 +51,30 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
         Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
 
-        //Hochkantansicht
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.menu_layout, ef);
-        ft.commit();
+        replaceMenuWithList(position);
+        //Hochkant
 
+    }
+    public void replaceMenuWithList(int position){
+        switch (position){
+            case 0:
+                doTransaction(R.id.menu_frame, new UebungenListeFragment(), "uebungsliste");
+                break;
+            case 1:
+                doTransaction(R.id.menu_frame, new EinheitenListeFragment(), "einheitenliste");
+                break;
+            case 2:
+                break;
+            default:
+                Toast.makeText(getActivity(), "default switch case", Toast.LENGTH_LONG);
+        }
+    }
+
+    private void doTransaction(int frameID, ListFragment fragment, String tag){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(frameID, fragment, tag);
+        ft.addToBackStack(tag);
+        ft.commit();
     }
 }

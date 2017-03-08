@@ -1,6 +1,7 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,9 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+        //TODO: Verbindung zwischen Position in Liste und DB herstellen
         Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), UebungActivity.class);
+        startActivity(intent);
     }
 }
