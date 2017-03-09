@@ -31,9 +31,19 @@ public class MainActivity extends AppCompatActivity {
         fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.menu_frame, new MenuFragment(),"menu");
-        ft.addToBackStack("menu");
+        //ft.addToBackStack("menu");
         ft.commit();
         Log.i("APP", "onCreate ende");
+    }
+
+
+    @Override
+    public void onBackPressed(){
+        if (getFragmentManager().getBackStackEntryCount()== 0){
+            super.onBackPressed();
+        } else {
+            getFragmentManager().popBackStack();
+        }
     }
 
 

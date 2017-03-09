@@ -27,8 +27,6 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
                              ViewGroup container, Bundle savedInstanceState) {
         Log.i("APP", "onCreateView start");
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
-
-
         Log.i("APP", "onCreate ende");
         return view;
 
@@ -55,6 +53,7 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
         //Hochkant
 
     }
+
     public void replaceMenuWithList(int position){
         switch (position){
             case 0:
@@ -76,5 +75,10 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
         ft.replace(frameID, fragment, tag);
         ft.addToBackStack(tag);
         ft.commit();
+    }
+
+
+    public void onBackPressed(){
+        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
     }
 }
