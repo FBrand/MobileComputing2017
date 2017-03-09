@@ -5,7 +5,8 @@
               tools:context="com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungDetailFragment"
               android:id="@+id/uebungZeit">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Schoener anordnen -->
+    <!-- Layout der Detailansicht einer Uebung -->
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">

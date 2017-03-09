@@ -9,6 +9,14 @@ import android.util.Log;
 import android.app.FragmentManager;
 import android.widget.Toast;
 
+
+/**
+ * Hauptmenu mit dem die Anwendung startet.
+ * Verlinkt zur Uebungliste, Einheitenliste und Einstellungen.
+ * Enthaelt Fragmente MenuFragment, UebungListeFragment und EinheitenListeFragment.
+ * In der Hochkant-Ansicht wird jeweils eine Liste über das MenuFragment gestapelt.
+ * In Landscape wird links dauerhaft das MenuFragment angezeigt und rechts die jeweilige Liste, Standard ist Uebungsliste.
+ */
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fm;
