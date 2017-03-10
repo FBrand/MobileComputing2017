@@ -32,11 +32,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!-- paddingBottom damit Spielfeldtextur komplett angezeigt wird,
+    da ansonsten Teile des inneren Fragments über den Bildschirm hinaus ragen.
+    TODO: anpassen damit openGL und Auswahl für Symbole rein passt -->
     <android.support.v4.view.ViewPager
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
