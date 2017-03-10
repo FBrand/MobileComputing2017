@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Übersicht einer Übung in der Liste der Übungen -->
+    <!-- TODO: CardView schöner machen -->
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,7 +20,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/uebungName"
+                    android:id="@+id/uebungListeName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
@@ -28,7 +30,7 @@
                     android:text="Name der Übung"/>
 
                 <RatingBar
-                    android:id="@+id/uebungFavoriten"
+                    android:id="@+id/uebungListeFavoriten"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="1"
@@ -38,20 +40,20 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/uebungZeitaufwand"
+                android:id="@+id/uebungListeZeitaufwand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Zeitaufwand" />
 
             <TextView
-                android:id="@+id/uebungSchlagwoerter"
+                android:id="@+id/uebungListeSchlagwoerter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Schlagwörter" />
             <TextView
-                android:text="Schwerpunkt "
+                android:text="Schwerpunkt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/uebungSchwerpunkt"/>
+                android:layout_height="wrap_content" android:id="@+id/uebungListeSchwerpunkt"/>
 
         </LinearLayout>
 

@@ -21,7 +21,7 @@
             <TextView
                     android:text="autorname"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/uebungAutorname"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungAutor"/>
             <TextView
                     android:text="Beschreibung"
                     android:layout_width="match_parent"
@@ -29,27 +29,27 @@
             <TextView
                     android:text="Technik: "
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/technik"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungTechnik"/>
             <TextView
                     android:text="Anzahl der Punkte fuer Technik"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/technikPunkte"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungTechnikPunkte"/>
             <TextView
                     android:text="Taktik: "
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/taktik"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungTaktik"/>
             <TextView
                     android:text="Anzahl Punkte fuer Taktik"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/taktikPunkte"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungTaktikPunkte"/>
             <TextView
                     android:text="Physis: "
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/physis"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungPhysis"/>
             <TextView
                     android:text="Anzahl Punkte fuer Physis"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/physisPunkte"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungPhysisPunkte"/>
             <RatingBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/uebungFavoriten" android:numStars="1"
@@ -60,13 +60,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/uebungDauer"/>
             <TextView
-                    android:text="Dauer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/uebungDauerWert"/>
-            <TextView
                     android:text="Altersklassen"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/altersklassen"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungAltersklassen"/>
             <TextView
                     android:text="schlagwoerter"
                     android:layout_width="match_parent"
@@ -75,15 +71,15 @@
                     android:text="https://www.youtube.com/watch?v=eh7lp9umG2I"
                     android:layout_width="match_parent"
                     android:onClick="onClick"
-                    android:layout_height="wrap_content" android:id="@+id/videoURL"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungVideoURL"/>
             <TextView
                     android:text="1 bis 2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/gruppengroesse"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungGruppengroesse"/>
             <TextView
                     android:text="letzte Anderung: "
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/letzteAenderung"/>
+                    android:layout_height="wrap_content" android:id="@+id/uebungLetzteAenderung"/>
 
         </LinearLayout>
 
