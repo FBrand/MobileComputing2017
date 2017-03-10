@@ -40,7 +40,7 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
     public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
         //TODO: Verbindung zwischen Position in Liste und DB herstellen
         Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), EinheitDetail.class);
+        Intent intent = new Intent(getActivity(), EinheitDetailActivity.class);
         startActivity(intent);
     }
 }
