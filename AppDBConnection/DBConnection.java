@@ -11,6 +11,7 @@ import android.database.Cursor;
  * Interface for connecting to SQL-DB
  */
 public interface DBConnection {
+
     /**
      * Method representing SQL SELECT. (SELECT col FROM table WHERE col = x).
      * @param table representing the table from the query.
@@ -25,9 +26,9 @@ public interface DBConnection {
      * Method representing SQL INSERT (INSERT INTO table (val1, val2,...))
      * @param table representing the table from the query.
      * @param values representing the values of the query.
-     * @return If the insert-query was successful returning TRUE else FALSE.
+     * @return The row number from the entry created by the insert-query is returned as long. -1 is returned if there was an error.
      */
-    public boolean insert(String table, ContentValues values);
+    public long insert(String table, ContentValues values);
 
     /**
      * Method representing SQL UPDATE. (UPDATE table SET col1 = val1, col2 = val2 WHERE col = x )
@@ -35,17 +36,17 @@ public interface DBConnection {
      * @param values representing the values of the query.
      * @param selection representing the WHERE part from the query in the form (col1 = ? AND col2 = ?).
      * @param selectionargs representing the selection args the ? from the selection String are replaced with selechtionargs entries.
-     * @return If the update-query was successful returning TRUE else FALSE.
+     * @return The row number from the entry updated by the update-query is returned as long. -1 is returned if there was an error.
      */
-    public boolean update(String table, ContentValues values, String selection, String[] selectionargs);
+    public long update(String table, ContentValues values, String selection, String[] selectionargs);
 
     /**
      * Method representing SQL DELETE (DELTE FROM table WHERE col = x)
      * @param table representing the table from the query.
      * @param selection representing the WHERE part from the query in the form (col1 = ? AND col2 = ?).
      * @param selectionargs representing the selection args the ? from the selection String are replaced with selechtionargs entries.
-     * @return If the delte-query was succesful returning TRUE else FALSE.
+     * @return The count of deleted entries is returnded.
      */
-    public boolean delete(String table, String selection, String[] selectionargs);
+    public int delete(String table, String selection, String[] selectionargs);
 
 }

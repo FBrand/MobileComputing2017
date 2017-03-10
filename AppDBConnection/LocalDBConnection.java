@@ -3,6 +3,7 @@ package com.example.lars.connector;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.Settings;
 
 /**
  * Created by lars on 09.03.17.
@@ -22,17 +23,17 @@ public class LocalDBConnection implements DBConnection {
     }
 
     @Override
-    public boolean insert(String table, ContentValues values) {
-        return false;
+    public long insert(String table, ContentValues values) {
+        return localdb.insert(table, null, values);
     }
 
     @Override
-    public boolean update(String table, ContentValues values, String selection, String[] selectionargs) {
-        return false;
+    public long update(String table, ContentValues values, String selection, String[] selectionargs) {
+        return localdb.update(table,values,selection,selectionargs);
     }
 
     @Override
-    public boolean delete(String table, String selection, String[] selectionargs) {
-        return false;
+    public int delete(String table, String selection, String[] selectionargs) {
+        return localdb.delete(table,selection,selectionargs);
     }
 }
