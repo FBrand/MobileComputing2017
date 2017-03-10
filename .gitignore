@@ -95,6 +95,9 @@ captures/
 .idea/gradle.xml
 .idea/dictionaries
 .idea/libraries
+.idea/compiler.xml
+.idea/copyright/
+.idea/runConfiguration.xml
 
 # Keystore files
 *.jks
