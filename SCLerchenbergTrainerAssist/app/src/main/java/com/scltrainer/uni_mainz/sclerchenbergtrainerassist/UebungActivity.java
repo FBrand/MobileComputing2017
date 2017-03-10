@@ -1,5 +1,6 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -213,5 +214,6 @@ public class UebungActivity extends AppCompatActivity {
             }
             return null;
         }
+
     }
 }

@@ -33,10 +33,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/einheitFavoriten" android:numStars="1"
                 android:rating="0" android:stepSize="1" />
+
             <TextView
                 android:text="Autor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/einheitAutor"/>
+
+            <TextView
+                android:id="@+id/einheitDauer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="tatsächliche Dauer" />
+
             <TextView
                 android:text="Beschreibung"
                 android:layout_width="match_parent"
@@ -50,6 +58,12 @@
                 android:text="letzte Änderung"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/einheitLetzteAenderung"/>
+
+            <!-- TODO: Mit der in Einheit befindeten Übungen füllen. -->
+            <ListView
+                android:id="@+id/einheitUebungen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
