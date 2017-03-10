@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungDetailFragment"
+    android:id="@+id/uebungZeitEdit">
+
+    <!-- TODO: Schoener anordnen -->
+    <!-- TODO: Numerische Textfelder einfügen -->
+    <!-- TODO: Schlagwörter über vorgegebene Auswahl einfügbar machen -->
+    <!-- TODO: Altersklassen über vorgegebene Auswahl einfügbar machen -->
+    <!-- TODO: Texte müssen aus strings.xml kommen! -->
+    <!-- Layout der Editieransicht bzw Einfügeeinsicht neuer Übungen -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Name der Übung"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:id="@+id/uebungNameEdit"/>
+            <EditText
+                android:text="Autor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungAutorEdit"/>
+            <EditText
+                android:text="Beschreibung"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungBeschreibungEdit"/>
+            <TextView
+                android:text="Technik: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungTechnikEdit"/>
+            <EditText
+                android:text="Anzahl der Punkte fuer Technik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungTechnikPunkteEdit"/>
+            <TextView
+                android:text="Taktik: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungTaktikEdit"/>
+            <EditText
+                android:text="Anzahl Punkte fuer Taktik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungTaktikPunkteEdit"/>
+            <TextView
+                android:text="Physis: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungPhysisEdit"/>
+            <EditText
+                android:text="Anzahl Punkte für Physis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungPhysisPunkteEdit"/>
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungFavoritenEdit"
+                android:numStars="1"
+                android:rating="0"
+                android:stepSize="1"/>
+            <EditText
+                android:id="@+id/uebungDauerWertEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dauer" />
+
+            <EditText
+                android:text="Altersklassen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungAltersklassenEdit"/>
+            <EditText
+                android:text="Schlagwörter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungSchlagwoerterEdit"/>
+            <EditText
+                android:text="https://www.youtube.com/watch?v=eh7lp9umG2I"
+                android:layout_width="match_parent"
+                android:onClick="onClick"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungVideoURLEdit"/>
+            <EditText
+                android:text="1 bis 2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungGruppengroesseEdit"/>
+            <EditText
+                android:text="letzte Anderung"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/uebungLetzteAenderungEdit"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
+
