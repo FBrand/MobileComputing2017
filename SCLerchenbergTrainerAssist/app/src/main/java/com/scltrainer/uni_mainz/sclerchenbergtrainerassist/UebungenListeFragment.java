@@ -2,6 +2,7 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.app.ListFragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -26,7 +26,7 @@ public class UebungDetailAdapter extends CursorAdapter {
 	
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
-		System.out.println("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST");
+		//System.out.println("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST");
 		if(cursor == null) return;
 		TextView uebungName = (TextView) view.findViewById(R.id.uebungName);//nameUebung-0
 		TextView uebungAutor = (TextView) view.findViewById(R.id.uebungAutor);//nameAutor-1
