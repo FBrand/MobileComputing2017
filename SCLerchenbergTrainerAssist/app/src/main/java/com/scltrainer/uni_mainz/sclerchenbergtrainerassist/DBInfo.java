@@ -8,7 +8,7 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 public class DBInfo {
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "test2.db";
+    public static final String DATABASE_NAME = "test3.db";
 
     public static final String EXERCISE_TABLE_NAME = "exercise";
     public static final String EXERCISE_COLUMN_NAME_ID = "_id";
