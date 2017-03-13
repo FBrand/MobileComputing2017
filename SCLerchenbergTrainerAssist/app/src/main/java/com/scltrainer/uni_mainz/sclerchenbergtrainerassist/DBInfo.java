@@ -44,4 +44,16 @@ public class DBInfo {
     public static final String TRAININGSUNIT_COLUMN_NAME_NAME = "name";
     public static final String TRAININGSUNIT_COLUMN_NAME_KEYWORDS = "keywords";
     public static final String TRAININGSUNIT_COLUMN_NAME_EXERCISE = "exercise";
+
+    public static final String GRAPHIC_TABLE_NAME = "graphic";
+    public static final String GRAPHIC_COLUMN_NAME_ID = "_id";
+    public static final String GRAPHIC_COLUMN_NAME_EXERCIXE = "exercise";
+    public static final String GRAPHIC_COLUMN_NAME_DESCRIPTION = "description";
+    public static final String GRAPHIC_COLUMN_NAME_MAINTYPE = "maintype";
+    public static final String GRAPHIC_COLUMN_NAME_TYPE = "type";
+
+    public static final String TRAININGSUNITEXERCISE_TABLE_NAME = "trainingsunitexercise";
+    public static final String TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT = "trainingsunit";
+    public static final String TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE = "exercise";
+
 }
