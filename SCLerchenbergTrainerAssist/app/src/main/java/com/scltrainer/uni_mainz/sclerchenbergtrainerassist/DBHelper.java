@@ -155,8 +155,44 @@ public class DBHelper extends SQLiteOpenHelper {
         row.put(DBInfo.EXERCISE_COLUMN_NAME_TACTIC,3);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,3);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK, "https://www.youtube.com/watch?v=HnHatjXLBY8");
-        System.out.println("TESTDATAINSERT " + con.insert(DBInfo.EXERCISE_TABLE_NAME, row));
+        con.insert(DBInfo.EXERCISE_TABLE_NAME, row);
         row.clear();
 
+
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_ID, 1);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AGE,"A B C");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AUTORMAIL,"muster@mail.de");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AUTORNAME, "mustermaik");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_DESCRIPTION, "Wundertolle Einheit!");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_RATING, 1.0);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_DURATION,90);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_NAME, "Montags Einheit");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_KEYWORDS, "Laufen");
+        con.insert(DBInfo.TRAININGSUNIT_TABLE_NAME, row);
+        row.clear();
+
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_ID, 2);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AGE,"A B C");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AUTORMAIL,"muster@mail.de");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AUTORNAME, "mustermaik");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_DESCRIPTION, "Das macht richtig Laune");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_RATING, 1.0);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_DURATION,90);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_NAME, "Freitags Einheit");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_KEYWORDS, "Schuss");
+        con.insert(DBInfo.TRAININGSUNIT_TABLE_NAME, row);
+        row.clear();
+
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_ID, 3);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AGE,"A B C");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AUTORMAIL,"muster@mail.de");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AUTORNAME, "mustermaik");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_DESCRIPTION, "Jetzt gehts rund!");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_RATING, 1.0);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_DURATION,120);
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_NAME, "Extra Einheit");
+        row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_KEYWORDS, "Passen");
+        con.insert(DBInfo.TRAININGSUNIT_TABLE_NAME, row);
+        row.clear();
     }
 }
