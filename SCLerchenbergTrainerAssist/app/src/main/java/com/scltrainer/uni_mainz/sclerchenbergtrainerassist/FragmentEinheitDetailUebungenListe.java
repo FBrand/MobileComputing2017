@@ -1,5 +1,6 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +50,7 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
 
 
     /**
-     * Fügt einer Einheit die angeklickte Liste hinzu
+     * Fügt einer Einheit die angeklickte Liste hinzu und schließt die Ansicht wieder
      * @param parent
      * @param view
      * @param position
@@ -59,6 +60,14 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //TODO: Verbindung zwischen Position in Liste und DB herstellen
         Toast.makeText(getActivity(), "Uebung " + position + " hinzugefuegt", Toast.LENGTH_SHORT).show();
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        //ft.replace(R.id.fragment, new EinheitDetailFragment(), null);
+        ft.remove(this);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
+        getFragmentManager().popBackStack();
+        getFragmentManager().executePendingTransactions();
 
         /**
          * TODO: Aktion: Uebung der Einheit hinzufügen!
