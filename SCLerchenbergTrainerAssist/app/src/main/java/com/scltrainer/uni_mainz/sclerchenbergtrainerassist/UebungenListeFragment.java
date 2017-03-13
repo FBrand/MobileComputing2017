@@ -14,13 +14,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 public class UebungenListeFragment extends ListFragment implements OnItemClickListener {
+
+    //TAG
+    private static final String TAG = UebungenListeFragment.class.getSimpleName();
+
+    // wird für die Listenansicht benötigt
+    private Cursor dbCursor;
+    // bildet den Cursor auf die ListView ab
+    private UebungenListeAdapter listAdapter;
+    // Schnittstelle zur Datenbank
+    private DBConnection dbConnection;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.i("APP", "onCreateView start");
-        View view = inflater.inflate(R.layout.fragment_menu, container, false);
-        Log.i("APP", "onCreate ende");
-        return view;
+        Log.i(TAG, "onCreateView 1");
+        View rootView = inflater.inflate(R.layout.fragment_uebungen_liste, container, false);
+
+
+        Log.i(TAG, "onCreateView fertig");
+
+        return rootView;
 
     }
 
@@ -30,10 +45,20 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         Log.i("APP", "onActivityCreated start");
 
         // TODO: Eigenen ArrayAdapter schreiben um eine schoenere Liste zu erzeugen
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
+        /*ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.uebungTest, android.R.layout.simple_list_item_1);
         setListAdapter(adapter);
-        getListView().setOnItemClickListener(this);
+        getListView().setOnItemClickListener(this);*/
+        dbConnection= DBHelper.getConnection(getActivity());
+        dbCursor = selectCursorUebungenListe();
+        Log.i(TAG, "Cursor wurde initiiert");
+        getActivity().startManagingCursor(dbCursor);
+        Log.i(TAG, "startManagingCursor");
+        listAdapter = new UebungenListeAdapter(getActivity().getBaseContext(), dbCursor);
+        listAdapter.bindView(this.getView(), getActivity().getBaseContext(), dbCursor);
+
+
+
         Log.i("APP", "onActivityCreated ende");
     }
 
@@ -44,4 +69,16 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         Intent intent = new Intent(getActivity(), UebungActivity.class);
         startActivity(intent);
     }
+
+    public Cursor selectCursorUebungenListe(){
+
+        String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME,
+                DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME,
+                DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS,
+                DBInfo.EXERCISE_COLUMN_NAME_RATING,
+                DBInfo.EXERCISE_COLUMN_NAME_DURATION};
+
+        return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
+    }
+
 }

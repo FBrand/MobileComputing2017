@@ -23,7 +23,7 @@ public class EinheitDetailFragment extends Fragment {
     // wird für die Listenansicht benötigt
     private Cursor dbCursor;
     // bildet den Cursor auf die ListView ab
-    private EinheitenDetailAdapter listAdapter;
+    private EinheitDetailAdapter listAdapter;
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
 
@@ -60,7 +60,7 @@ public class EinheitDetailFragment extends Fragment {
         //Log.i(TAG, "Cursor wurde initiiert");
         getActivity().startManagingCursor(dbCursor);
         //Log.i(TAG, "startManagingCursor");
-        listAdapter = new EinheitenDetailAdapter(getActivity().getBaseContext(), dbCursor);
+        listAdapter = new EinheitDetailAdapter(getActivity().getBaseContext(), dbCursor);
         listAdapter.bindView(rootView, getActivity().getBaseContext(), dbCursor);
 
         return rootView;

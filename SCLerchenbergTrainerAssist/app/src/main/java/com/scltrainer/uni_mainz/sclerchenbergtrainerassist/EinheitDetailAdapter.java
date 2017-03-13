@@ -13,13 +13,13 @@ import android.widget.TextView;
  * Created by Yorrick on 13.03.2017.
  */
 
-public class EinheitenDetailAdapter extends CursorAdapter {
+public class EinheitDetailAdapter extends CursorAdapter {
 
     private LayoutInflater inflator;
     //private int s;
     String TAG = "EinheitDetailAdapter";
 
-    public EinheitenDetailAdapter(Context context, Cursor c) {
+    public EinheitDetailAdapter(Context context, Cursor c) {
         super(context, c);
         inflator = LayoutInflater.from(context);
 
