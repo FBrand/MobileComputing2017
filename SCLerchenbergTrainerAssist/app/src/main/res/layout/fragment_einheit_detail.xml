@@ -60,10 +60,17 @@
                 android:layout_height="wrap_content" android:id="@+id/einheitLetzteAenderung"/>
 
             <!-- TODO: Mit der in Einheit befindeten Übungen füllen. -->
+            <Button
+                android:id="@+id/addCalendarDateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/addCalendarDate" />
+
             <ListView
                 android:id="@+id/einheitUebungen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
 
         </LinearLayout>
 

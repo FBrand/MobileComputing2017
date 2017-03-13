@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+/**
+ * Übersicht einer einzelnen Einheit und ihrer Übungen.
+ */
 public class EinheitDetailActivity extends AppCompatActivity {
 
     FragmentManager fm;
@@ -33,6 +36,10 @@ public class EinheitDetailActivity extends AppCompatActivity {
         //ft.addToBackStack("menu");
         ft.commit();
 
+        /**
+         * erzeugt FloatingActionButton mit "Plus"-Icon zum, je nach Fragment,
+         * hinzufügen oder filtern von Übungen
+         */
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,16 +47,13 @@ public class EinheitDetailActivity extends AppCompatActivity {
 
                 if (getFragmentManager().getBackStackEntryCount()== 0){
                     doTransaction(R.id.fragment, new UebungenListeFragment(), "EinheitDetailUebungListe");
-                    //fab.hide();
-                    //fab.setVisibility(View.INVISIBLE);
                     fab.setImageResource(android.R.drawable.ic_menu_search);
-                    //Toast.makeText(getApplicationContext(), "BackStackEntryCount == 0", Toast.LENGTH_LONG);
-                /**
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                 **/
             }
         }});
+
+        /**
+         * verhindert "Zurück-Pfeil" oben links
+         */
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);

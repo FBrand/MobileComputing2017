@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Dies ist ein Platzhalter für die Detailansicht einer Übung!
+ */
 
 /**
  * A simple {@link Fragment} subclass.
