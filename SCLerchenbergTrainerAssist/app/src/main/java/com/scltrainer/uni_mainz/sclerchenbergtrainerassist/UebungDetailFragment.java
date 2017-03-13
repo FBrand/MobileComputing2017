@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Dies ist ein Platzhalter für die Detailansicht einer Übung!
+ * TODO: Diesen Hinweis löschen wenn die Klasse benutzt wird!
+ */
 
 /**
  * A simple {@link Fragment} subclass.

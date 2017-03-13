@@ -42,5 +42,8 @@
     <string name="details">Details</string>
     <string name="title_activity_einheit_detail">EinheitDetail</string>
 
+    <!-- EinheitDetailFragment -->
+    <string name="addCalendarDate">Einheit in Kalender eintragen</string>
+
 
 </resources>
