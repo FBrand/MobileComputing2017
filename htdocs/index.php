@@ -143,10 +143,22 @@ ArrestDB::Serve('GET', '/(#any)/(#num)?', function ($table, $id = null)
 
 ArrestDB::Serve('DELETE', '/(#any)/(#any)/(#num)', function ($user, $table, $id)
 {
-	$author = ArrestDB::Query('SELECT "Autor" FROM "%s" WHERE "id" = "%s"', $table, $id);					///check!   fehler werfen, wenn der Nutzer den zu löschenden Datensatz nicht selbst erstellt hat und kein admin ist.
-	if(($user !== $author) and (array_search ( $user , $admin , $strict = false ) === false))
+	global $admin;
+	$query = array
+	(
+		sprintf('SELECT AutorMail FROM "%s"', $table),
+		$query[] = sprintf('WHERE "%s" = ? LIMIT 1', 'id'),
+	);
+
+	$query = sprintf('%s;', implode(' ', $query));
+	$author2 = ArrestDB::Query($query, $id);					///check!   fehler werfen, wenn der Nutzer den zu löschenden Datensatz nicht selbst erstellt hat und kein admin ist.
+
+	$author = implode(' ', $author2[0]);
+	if(($user != $author) and (array_search ( $user , $admin , $strict = false ) === false))
 	{
-		$resullt = ArrestDB::$HTTP[205];
+		echo "hello2";
+		$result = ArrestDB::$HTTP[205];
+		echo "hello3";
 	}
 	else
 	{
@@ -207,7 +219,7 @@ if (in_array($http = strtoupper($_SERVER['REQUEST_METHOD']), ['POST', 'PUT']) ==
 	unset($data);
 }
 
-ArrestDB::Serve('POST', '/(#any)' , '/(#any)', function ($user, $table)					//neuer eintrag
+ArrestDB::Serve('POST', '/(#any)/(#any)', function ($user, $table)					//neuer eintrag
 {
 	global $users;
 	if (empty($_POST) === true)
@@ -280,15 +292,35 @@ ArrestDB::Serve('POST', '/(#any)' , '/(#any)', function ($user, $table)					//ne
 
 		else
 		{
-			$result = ArrestDB::$HTTP[201];
+			$result = ArrestDB::$HTTP[201];											//rückgabe bei erfolg
 		}
 	}
 
 	return ArrestDB::Reply($result);
 });
 
-ArrestDB::Serve('PUT', '/(#any)/(#num)', function ($table, $id)			//eintrag ändern
+ArrestDB::Serve('PUT', '/(#any)/(#any)/(#num)', function ($user, $table, $id)			//eintrag ändern
 {
+	global $admin;
+
+	$query = array
+	(
+		sprintf('SELECT AutorMail FROM "%s"', $table),
+		$query[] = sprintf('WHERE "%s" = ? LIMIT 1', 'id'),
+	);
+
+	$query = sprintf('%s;', implode(' ', $query));
+	$author2 = ArrestDB::Query($query, $id);					///check!   fehler werfen, wenn der Nutzer den zu löschenden Datensatz nicht selbst erstellt hat und kein admin ist.
+
+	$author = implode(' ', $author2[0]);
+
+	if(($user != $author) and (array_search ( $user , $admin , $strict = false ) === false))
+	{
+		$result = ArrestDB::$HTTP[205];
+	}
+	else
+	{
+
 	if (empty($GLOBALS['_PUT']) === true)
 	{
 		$result = ArrestDB::$HTTP[204];
@@ -321,6 +353,8 @@ ArrestDB::Serve('PUT', '/(#any)/(#num)', function ($table, $id)			//eintrag änd
 			$result = ArrestDB::$HTTP[200];
 		}
 	}
+
+}
 
 	return ArrestDB::Reply($result);
 });
@@ -413,6 +447,9 @@ class ArrestDB
 				}
 
 				if ($result[$hash]->execute($data) === true)
+							echo "lastInsertId:  ";
+							print_r ($db->lastInsertId());
+							echo "   ";
 				{
 					$sequence = null;
 
