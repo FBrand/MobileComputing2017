@@ -33,7 +33,6 @@ public class EinheitDetailActivity extends AppCompatActivity {
         fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.fragment, new EinheitDetailFragment(),"EinheitDetail");
-        //ft.addToBackStack(null);
         ft.commit();
 
         /**
@@ -46,7 +45,7 @@ public class EinheitDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Log.i("EinheitenDetailActivity", "BackstackEntryCount for FAB: " +fm.getBackStackEntryCount());
-                if (fm.getBackStackEntryCount()== 0){
+                if (fm.getBackStackEntryCount() <2){
                     doTransaction(R.id.fragment, new FragmentEinheitDetailUebungenListe(), "EinheitDetailUebungListe");
                     fab.setImageResource(android.R.drawable.ic_menu_search);
                 } else {
