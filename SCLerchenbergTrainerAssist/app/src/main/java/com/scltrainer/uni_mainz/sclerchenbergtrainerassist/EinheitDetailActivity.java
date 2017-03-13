@@ -46,7 +46,7 @@ public class EinheitDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (getFragmentManager().getBackStackEntryCount()== 0){
-                    doTransaction(R.id.fragment, new UebungenListeFragment(), "EinheitDetailUebungListe");
+                    doTransaction(R.id.fragment, new FragmentEinheitDetailUebungenListe(), "EinheitDetailUebungListe");
                     fab.setImageResource(android.R.drawable.ic_menu_search);
             }
         }});

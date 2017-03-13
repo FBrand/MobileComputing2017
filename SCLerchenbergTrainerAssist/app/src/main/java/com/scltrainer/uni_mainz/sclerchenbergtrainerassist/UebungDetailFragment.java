@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 /**
  * Dies ist ein Platzhalter für die Detailansicht einer Übung!
+ * TODO: Diesen Hinweis löschen wenn die Klasse benutzt wird!
  */
 
 /**

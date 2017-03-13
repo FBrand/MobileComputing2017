@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Farben des Vereinlogos -->
     <color name="colorPrimary">#61993b</color>
     <color name="colorPrimaryDark">#4e7b2f</color>
     <color name="colorAccent">#f99a1c</color>
