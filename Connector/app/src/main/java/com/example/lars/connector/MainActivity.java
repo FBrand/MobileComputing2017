@@ -90,9 +90,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 // do the thing that takes a long time
-                        try {
-                            //System.out.println( Connector.get("http://10.0.2.2:9000/persons"));
-                            Connector.post("http://10.0.2.2:9000/person","Hallotest123");
+                        try {                                   //localhost:10.0.2.2:80
+                            String host ="http://134.93.143.94:80";
+                            Connector.delete(host + "/admin@test.de/Nutzer/19");
+                            Connector.post(host + "/test@mail.de/Nutzer/", "{\"id\": \"19\",\"Name\": \"Test4\",\"Einheiten\": null,\"Email\": \"test@mail.de\",\"Uebungen\": null}");// "{\"id\": \"3\",\"Name\": \"Test3\",\"Einheiten\": null,\"Email\": \"test@mail.de\",\"Uebungen\": null}");
+                            System.out.println( Connector.get(host + "/nutzer/19"));
+                            Connector.put(host + "/admin@test.de/Nutzer/19", "{\"id\": \"19\",\"Name\": \"Test5\",\"Einheiten\": null,\"Email\": \"test@mail.de\",\"Uebungen\": null}");// "{\"id\": \"3\",\"Name\": \"Test3\",\"Einheiten\": null,\"Email\": \"test@mail.de\",\"Uebungen\": null}");
+                            System.out.println( Connector.get(host + "/nutzer/"));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
