@@ -33,7 +33,7 @@ public class EinheitDetailActivity extends AppCompatActivity {
         fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.fragment, new EinheitDetailFragment(),"EinheitDetail");
-        //ft.addToBackStack("menu");
+        //ft.addToBackStack(null);
         ft.commit();
 
         /**
@@ -45,10 +45,20 @@ public class EinheitDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (getFragmentManager().getBackStackEntryCount()== 0){
+                Log.i("EinheitenDetailActivity", "BackstackEntryCount for FAB: " +fm.getBackStackEntryCount());
+                if (fm.getBackStackEntryCount()== 0){
                     doTransaction(R.id.fragment, new FragmentEinheitDetailUebungenListe(), "EinheitDetailUebungListe");
                     fab.setImageResource(android.R.drawable.ic_menu_search);
-            }
+                } else {
+                    /**
+                     * TODO: Hier soll der Filterdialog hin!
+                     */
+                    int index = fm.getBackStackEntryCount() - 1;
+                    FragmentManager.BackStackEntry backEntry = getFragmentManager().getBackStackEntryAt(index);
+                    Log.i("EinheitDetailActivity", "Backstack last TAG: " +backEntry.getName());
+                    Toast.makeText(getApplicationContext(), "Filter an", Toast.LENGTH_SHORT).show();
+                }
+
         }});
 
         /**
@@ -57,14 +67,29 @@ public class EinheitDetailActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+
     }
 
+    /**
+     * Benötigt globalen FragmentManager
+     * @param frameID
+     * @param fragment
+     * @param tag
+     */
     private void doTransaction(int frameID, Fragment fragment, String tag){
-        FragmentManager fm = getFragmentManager();
+       // fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(frameID, fragment, tag);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack(tag);
         ft.commit();
+        fm.executePendingTransactions();
+        Log.i("EinheitenDetailActivity", "BackstackEntryCount: " +fm.getBackStackEntryCount());
+        Log.i("EinheitenDetailActivity", "do Transaction fertig");
+
+
+
     }
 
     @Override
