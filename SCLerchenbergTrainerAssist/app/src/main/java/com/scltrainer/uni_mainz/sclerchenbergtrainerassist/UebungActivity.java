@@ -2,6 +2,7 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -155,6 +156,14 @@ public class UebungActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        // wird für die Listenansicht benötigt
+        private Cursor dbCursor;
+        // bildet den Cursor auf die ListView ab
+        private UebungDetailAdapter listAdapter;
+        // Schnittstelle zur Datenbank
+        private DBConnection dbConnection;
+
+
         public DetailFragment() {
         }
 
@@ -174,9 +183,21 @@ public class UebungActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_uebung_detail, container, false);
+            dbConnection= DBHelper.getConnection(this.getContext());
+            dbCursor = selectCursorUebungDetail();
+            //Log.i(TAG, "Cursor wurde initiiert");
+            getActivity().startManagingCursor(dbCursor);
+            //Log.i(TAG, "startManagingCursor");
+            listAdapter = new UebungDetailAdapter(this.getContext(), dbCursor);
+            listAdapter.bindView(rootView, this.getContext(), dbCursor);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
+        }
+
+        public Cursor selectCursorUebungDetail(){
+            String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC, DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,DBInfo.EXERCISE_COLUMN_NAME_RATING ,DBInfo.EXERCISE_COLUMN_NAME_DURATION, DBInfo.EXERCISE_COLUMN_NAME_AGE, DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK};
+            return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
         }
     }
 

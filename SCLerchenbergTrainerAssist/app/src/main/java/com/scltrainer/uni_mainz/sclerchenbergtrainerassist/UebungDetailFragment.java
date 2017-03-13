@@ -1,9 +1,11 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,16 @@ public class UebungDetailFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    //TAG
+    //private static final String TAG = UebungDetail.class.getSimpleName();
+
+    // wird für die Listenansicht benötigt
+    private Cursor dbCursor;
+    // bildet den Cursor auf die ListView ab
+    private UebungDetailAdapter listAdapter;
+    // Schnittstelle zur Datenbank
+    private DBConnection dbConnection;
 
     public UebungDetailFragment() {
         // Required empty public constructor
@@ -58,6 +70,17 @@ public class UebungDetailFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //Log.i(TAG, "onCreate");
+        dbConnection= DBHelper.getConnection(this.getContext());
+        dbCursor = selectCursorUebungDetail();
+        //Log.i(TAG, "Cursor wurde initiiert");
+        getActivity().startManagingCursor(dbCursor);
+        //Log.i(TAG, "startManagingCursor");
+        listAdapter = new UebungDetailAdapter(this.getActivity(), dbCursor);
+        listAdapter.bindView(this.getView(), this.getContext(), dbCursor);
+        //Log.i(TAG, "listAdapter inintiiert");
+        //getActivity().setListAdapter(listAdapter);
+        //Log.i(TAG, "setListAdapter");
     }
 
     @Override
@@ -104,5 +127,10 @@ public class UebungDetailFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public Cursor selectCursorUebungDetail(){
+        String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC, DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS, DBInfo.EXERCISE_COLUMN_NAME_DURATION};
+        return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
     }
 }
