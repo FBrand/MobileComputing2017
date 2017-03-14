@@ -23,6 +23,10 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+/**
+ * Aktivity die das UebungDetailFragment hostet.
+ */
+
 public class UebungActivity extends AppCompatActivity {
 
     /**
@@ -72,9 +76,14 @@ public class UebungActivity extends AppCompatActivity {
     }
 
 
-
-    public void onClick(View v) {
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=eh7lp9umG2I"));
+    /**
+     * Startet Intent zu dem ausgelesenen Link.
+     * Muss in der XML definiert werden.
+     * @param tv
+     */
+    public void onClickOpenVideo(TextView tv) {
+        //TODO: Prüfen ob das mit beliebigen Youtubelinks klappt.
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tv.getText().toString()));
         startActivity(i);
         };
 

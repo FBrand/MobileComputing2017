@@ -163,6 +163,26 @@ public class DBHelper extends SQLiteOpenHelper {
         con.insert(DBInfo.EXERCISE_TABLE_NAME, row);
         row.clear();
 
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_ID, 4);
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_AGE, "D");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_AUTORMAIL, "mustermax@mail.com");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, "mustermaximal");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, "Dies ist eine Übung 3 gegen 1.");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_DURATION, 100);
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_GRAPHIC, "HFdadsadASFJK");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE, 6);
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, "Gruppenkampf");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATIRIAL, "3 Ball");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_NAME, "Körperschlächtung");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_PHYSIS, 3);
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_RATING, 0);
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_SPORT, "Fußball");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_TACTIC,3);
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,3);
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK, "https://www.youtube.com/watch?v=HnHatjXLBY8");
+        con.insert(DBInfo.EXERCISE_TABLE_NAME, row);
+        row.clear();
+
 
         row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_ID, 1);
         row.put(DBInfo.TRAININGSUNIT_COLUMN_NAME_AGE,"A B C");

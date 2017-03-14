@@ -2,6 +2,10 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 /**
  * Created by Yorrick on 13.03.2017.
+ *
+ * EinheitenListeAdapter stellt Verbindung zwischen DB und EinheitenListeFragment her.
+ *
+ * Verwendet fragment_einheiten_liste_element.xml als Layout.
  */
 
 import android.content.Context;

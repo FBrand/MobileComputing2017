@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 public class UebungenListeFragment extends ListFragment implements OnItemClickListener {
@@ -31,6 +30,12 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
                              ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView 1");
         View rootView = inflater.inflate(R.layout.fragment_uebungen_liste, container, false);
+        dbConnection= DBHelper.getConnection(getActivity());
+        dbCursor = selectCursorUebungenListe();
+        Log.i(TAG, "Cursor wurde initiiert");
+        Log.i(TAG, "startManagingCursor");
+        listAdapter = new UebungenListeAdapter(getActivity(), dbCursor);
+        setListAdapter(listAdapter);
 
 
         Log.i(TAG, "onCreateView fertig");
@@ -55,7 +60,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         getActivity().startManagingCursor(dbCursor);
         Log.i(TAG, "startManagingCursor");
         listAdapter = new UebungenListeAdapter(getActivity().getBaseContext(), dbCursor);
-        listAdapter.bindView(this.getView(), getActivity().getBaseContext(), dbCursor);
+        setListAdapter(listAdapter);
 
 
 

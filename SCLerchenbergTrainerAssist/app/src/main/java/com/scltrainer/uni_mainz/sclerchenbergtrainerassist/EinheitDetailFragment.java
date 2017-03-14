@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A placeholder fragment containing a simple view.
+ * EinheitDetailFragment zeigt eine konkrete Einheit an.
+ * Wird von EinheitDetailAdapter befüllt.
  */
 
 

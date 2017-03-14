@@ -70,7 +70,7 @@
             <TextView
                     android:text="https://www.youtube.com/watch?v=eh7lp9umG2I"
                     android:layout_width="match_parent"
-                    android:onClick="onClick"
+                    android:onClick="onClickOpenVideo"
                     android:layout_height="wrap_content" android:id="@+id/uebungVideoURL"/>
             <TextView
                     android:text="1 bis 2"

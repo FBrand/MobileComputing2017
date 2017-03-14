@@ -18,7 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 
-
+/**
+ * Enthält das Hauptmenü und die Verknüpfungen zu ÜbungenListe, EinheitenListe und Einstellungen
+ */
 public class MenuFragment extends ListFragment implements OnItemClickListener {
 
 

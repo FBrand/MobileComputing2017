@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 /**
  * Created by Yorrick on 13.03.2017.
+ *
+ * Adapter zwischen DB und EinheitDetailFragment.
+ * Zur Anzeige einer konkreten Einheit in Detailansicht
  */
 
 public class EinheitDetailAdapter extends CursorAdapter {

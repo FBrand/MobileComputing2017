@@ -18,6 +18,8 @@ import android.widget.Toast;
  * Lange Klicks öffnen Detailansicht der Übung (UebungActivity.java) und
  * erlauben editieren der Übung.
  *
+ * Leitet von der "reinen" Liste an Übungen ab
+ *
  */
 
 public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {

@@ -12,6 +12,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
+
+/**
+ * EinheitenListeFragment zeigt eine Liste aller Einheiten an und
+ * wird von EinheitenListeAdapter befüllt.
+ */
 public class EinheitenListeFragment extends ListFragment implements OnItemClickListener {
 
 
@@ -34,7 +39,7 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
         dbCursor = selectCursorEinheitenListe();
         Log.i(TAG, "Cursor wurde initiiert");
         Log.i(TAG, "startManagingCursor");
-        listAdapter = new EinheitenListeAdapter(getActivity().getBaseContext(), dbCursor);
+        listAdapter = new EinheitenListeAdapter(getActivity(), dbCursor);
         setListAdapter(listAdapter);
 
 
