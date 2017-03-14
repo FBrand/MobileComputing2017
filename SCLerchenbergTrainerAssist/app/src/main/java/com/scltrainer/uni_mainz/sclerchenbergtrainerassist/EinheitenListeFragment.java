@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 public class EinheitenListeFragment extends ListFragment implements OnItemClickListener {
@@ -30,14 +29,14 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_einheit_detail2, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_einheiten_liste, container, false);
         dbConnection= DBHelper.getConnection(getActivity());
         dbCursor = selectCursorEinheitenListe();
         Log.i(TAG, "Cursor wurde initiiert");
         Log.i(TAG, "startManagingCursor");
         listAdapter = new EinheitenListeAdapter(getActivity().getBaseContext(), dbCursor);
         setListAdapter(listAdapter);
-        
+
 
         return rootView;
     }
@@ -49,9 +48,9 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
 
         // TODO: Eigenen ArrayAdapter schreiben um eine schoenere Liste zu erzeugen
         /**ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.einheitenTest, android.R.layout.simple_list_item_1);
-        setListAdapter(adapter);
-        getListView().setOnItemClickListener(this);*/
+         R.array.einheitenTest, android.R.layout.simple_list_item_1);
+         setListAdapter(adapter);
+         getListView().setOnItemClickListener(this);*/
 
         Log.i("APP", "onActivityCreated ende");
     }
