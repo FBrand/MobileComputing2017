@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,10 +45,20 @@ public class UebungActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    //TODO: Kapseln!
+    public int entryID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uebung);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            return;
+        }
+        entryID = extras.getInt("_id");
+        Log.i("UebungActivity", "ID: " + entryID);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -164,6 +175,7 @@ public class UebungActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static int entryID;
 
         // wird für die Listenansicht benötigt
         private Cursor dbCursor;
@@ -185,6 +197,7 @@ public class UebungActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
+            entryID = sectionNumber;
             return fragment;
         }
 
@@ -193,7 +206,7 @@ public class UebungActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_uebung_detail, container, false);
             dbConnection= DBHelper.getConnection(this.getContext());
-            dbCursor = selectCursorUebungDetail();
+            dbCursor = selectCursorUebungDetail(entryID);
             //Log.i(TAG, "Cursor wurde initiiert");
             getActivity().startManagingCursor(dbCursor);
             //Log.i(TAG, "startManagingCursor");
@@ -204,9 +217,17 @@ public class UebungActivity extends AppCompatActivity {
             return rootView;
         }
 
-        public Cursor selectCursorUebungDetail(){
-            String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC, DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,DBInfo.EXERCISE_COLUMN_NAME_RATING ,DBInfo.EXERCISE_COLUMN_NAME_DURATION, DBInfo.EXERCISE_COLUMN_NAME_AGE, DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK};
-            return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
+        public Cursor selectCursorUebungDetail(int entryID){
+            /*String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC, DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,DBInfo.EXERCISE_COLUMN_NAME_RATING ,DBInfo.EXERCISE_COLUMN_NAME_DURATION, DBInfo.EXERCISE_COLUMN_NAME_AGE, DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK};
+            return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);*/
+            String s = DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ? ";
+            String[] sArgs = {"" + entryID};
+            Log.i("DetailFragment", "entryID in cursor: " + entryID);
+            String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME,
+                    DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,
+                    DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,
+                    DBInfo.EXERCISE_COLUMN_NAME_DURATION};
+            return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
         }
     }
 
@@ -228,7 +249,7 @@ public class UebungActivity extends AppCompatActivity {
                 case 0:
                     return PlaceholderFragment.newInstance(position + 1);
                 case 1:
-                    return DetailFragment.newInstance(position + 1);
+                    return DetailFragment.newInstance(entryID);
                 default:
                     return null;
             }

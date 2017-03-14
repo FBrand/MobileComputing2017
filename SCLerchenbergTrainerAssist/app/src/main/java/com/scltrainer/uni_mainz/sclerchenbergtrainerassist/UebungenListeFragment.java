@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class UebungenListeFragment extends ListFragment implements OnItemClickListener {
@@ -60,6 +61,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         getActivity().startManagingCursor(dbCursor);
         Log.i(TAG, "startManagingCursor");
         listAdapter = new UebungenListeAdapter(getActivity().getBaseContext(), dbCursor);
+
         setListAdapter(listAdapter);
 
 
@@ -67,6 +69,13 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         Log.i("APP", "onActivityCreated ende");
     }
 
+    /**
+     * Wird nicht benutzt?
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
         //TODO: Verbindung zwischen Position in Liste und DB herstellen
@@ -84,6 +93,29 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
                 DBInfo.EXERCISE_COLUMN_NAME_DURATION};
 
         return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int pos, long id) {
+        super.onListItemClick(l, v, pos, id);
+        int i = listAdapter.getIdListEntry(pos);
+        Intent intent = new Intent(getActivity(), UebungActivity.class);
+        intent.putExtra("_id", i);
+        startActivity(intent);
+        Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //outState.putString("message", "This is my message to be reloaded");
+        super.onSaveInstanceState(outState);
     }
 
 }

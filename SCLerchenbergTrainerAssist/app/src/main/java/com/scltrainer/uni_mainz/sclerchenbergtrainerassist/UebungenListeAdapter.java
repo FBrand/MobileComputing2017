@@ -6,6 +6,7 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +14,29 @@ import android.widget.CursorAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class UebungenListeAdapter extends CursorAdapter {
 
     private LayoutInflater inflator;
     //private int s;
     String TAG = "UebungenListeAdapter";
 
+    /**
+     * Dient zum Speichern der Reihenfolge der Ids der ListView-Einträge
+     * um die Detailansicht öffnen zu können.
+     */
+    private ArrayList<Integer> idList;
+
     public UebungenListeAdapter(Context context, Cursor c) {
         super(context, c);
         inflator = LayoutInflater.from(context);
         //s = c.getCount();
+        idList = new ArrayList<Integer>();
+    }
+
+    public int getIdListEntry(int entry){
+        return idList.get(entry);
     }
 
 
@@ -46,6 +60,10 @@ public class UebungenListeAdapter extends CursorAdapter {
         //uebungenListeSchwerpunkt.setText(cursor.getString());
         uebungenListeFavoriten.setNumStars((int)cursor.getDouble(4));
         uebungenListeDauer.setText(cursor.getString(5));
+
+        //TODO: Prüfen ob hier die von der Tabelle gesetzten ID übernommen wird oder die von Hand gesetzte.
+        idList.add(cursor.getInt(0));
+        //Log.i(TAG, "_id: " + idList.get(cursor.getInt(0)-1));
 
         cursor.moveToNext();
 

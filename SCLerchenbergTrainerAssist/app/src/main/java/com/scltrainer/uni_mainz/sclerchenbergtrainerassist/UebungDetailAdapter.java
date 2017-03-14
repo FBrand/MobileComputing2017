@@ -11,11 +11,14 @@ import android.widget.CursorAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class UebungDetailAdapter extends CursorAdapter {
 	
 	private LayoutInflater inflator;
 	//private int s;
 	String TAG = "UebungDetailAdapter";
+
 	
 	public UebungDetailAdapter(Context context, Cursor c) {
 		super(context, c);

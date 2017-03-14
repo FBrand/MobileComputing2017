@@ -45,6 +45,8 @@ public class UebungDetailFragment extends Fragment {
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
 
+    private int entryID;
+
     public UebungDetailFragment() {
         // Required empty public constructor
     }
@@ -58,11 +60,11 @@ public class UebungDetailFragment extends Fragment {
      * @return A new instance of fragment UebungDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UebungDetailFragment newInstance(String param1, String param2) {
+    public static UebungDetailFragment newInstance(int entryID) {
         UebungDetailFragment fragment = new UebungDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        /*args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);*/
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,9 +76,17 @@ public class UebungDetailFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras == null) {
+            return;
+        }
+        entryID = extras.getInt("_id");
+        Log.i("UebungDetailFragment", "ID: " + entryID);
+
         //Log.i(TAG, "onCreate");
         dbConnection= DBHelper.getConnection(this.getContext());
-        dbCursor = selectCursorUebungDetail();
+        dbCursor = selectCursorUebungDetail(entryID);
         //Log.i(TAG, "Cursor wurde initiiert");
         getActivity().startManagingCursor(dbCursor);
         //Log.i(TAG, "startManagingCursor");
@@ -84,7 +94,7 @@ public class UebungDetailFragment extends Fragment {
         listAdapter.bindView(this.getView(), this.getContext(), dbCursor);
         //Log.i(TAG, "listAdapter inintiiert");
         //getActivity().setListAdapter(listAdapter);
-        //Log.i(TAG, "setListAdapter");
+        Log.i("UebungDetailFragment", "setListAdapter");
     }
 
     @Override
@@ -133,8 +143,15 @@ public class UebungDetailFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public Cursor selectCursorUebungDetail(){
-        String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC, DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS, DBInfo.EXERCISE_COLUMN_NAME_DURATION};
-        return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
+    public Cursor selectCursorUebungDetail(int entryID){
+
+        String s = DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ? ";
+        String[] sArgs = {"" + entryID};
+        Log.i("UebungDetailFragment", "entryID in cursor: " + entryID);
+        String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME,
+                DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,
+                DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,
+                DBInfo.EXERCISE_COLUMN_NAME_DURATION};
+        return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
     }
 }
