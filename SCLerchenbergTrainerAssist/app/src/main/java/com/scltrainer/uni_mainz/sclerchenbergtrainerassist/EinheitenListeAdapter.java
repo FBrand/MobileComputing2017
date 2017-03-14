@@ -39,7 +39,6 @@ public class EinheitenListeAdapter extends CursorAdapter {
         RatingBar einheitListeFavoriten = (RatingBar) view.findViewById(R.id.einheitListeFavoriten);//Favorit-4
         TextView einheitListeDauer = (TextView) view.findViewById(R.id.einheitListeZeitaufwand);//Dauer-5
 
-        cursor.moveToFirst();
         einheitListeName.setText(cursor.getString(1));
         einheitListeAutor.setText(cursor.getString(2));
         einheitListeSchlagwoerter.setText(cursor.getString(3));
@@ -54,7 +53,7 @@ public class EinheitenListeAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent){
         //Log.i(TAG, "newView");
         //return inflator.inflate(R.layout.vertretungsplan2, null);
-        return null;
+        return LayoutInflater.from(context).inflate(R.layout.fragment_einheiten_liste, parent, false);
     }
 
 

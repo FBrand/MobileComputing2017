@@ -30,16 +30,14 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_einheit_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_einheit_detail2, container, false);
         dbConnection= DBHelper.getConnection(getActivity());
         dbCursor = selectCursorEinheitenListe();
         Log.i(TAG, "Cursor wurde initiiert");
-        getActivity().startManagingCursor(dbCursor);
         Log.i(TAG, "startManagingCursor");
         listAdapter = new EinheitenListeAdapter(getActivity().getBaseContext(), dbCursor);
-        listAdapter.bindView(rootView, getActivity().getBaseContext(), dbCursor);
-
-
+        setListAdapter(listAdapter);
+        
 
         return rootView;
     }
@@ -75,6 +73,6 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
                 DBInfo.TRAININGSUNIT_COLUMN_NAME_RATING,
                 DBInfo.TRAININGSUNIT_COLUMN_NAME_DURATION};
 
-        return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
+        return dbConnection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, sArr, null, null);
     }
 }
