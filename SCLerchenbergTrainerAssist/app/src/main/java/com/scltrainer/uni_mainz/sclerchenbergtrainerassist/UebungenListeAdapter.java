@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class UebungenListeAdapter extends CursorAdapter {
 
+    private ArrayList<Integer> ids = new ArrayList<Integer>();
     private LayoutInflater inflator;
     //private int s;
     String TAG = "UebungenListeAdapter";
@@ -46,7 +47,7 @@ public class UebungenListeAdapter extends CursorAdapter {
         if(cursor == null) return;
 
 
-
+        ids.add(cursor.getInt(0));
         TextView uebungenListeName = (TextView) view.findViewById(R.id.uebungListeName);//nameEinheit-1
         TextView uebungenListeAutor = (TextView) view.findViewById(R.id.uebungenListeAutor);//nameAutor-2
         TextView uebungenListeSchlagwoerter = (TextView) view.findViewById(R.id.uebungListeSchlagwoerter);//Schlagwörter-3
@@ -77,6 +78,9 @@ public class UebungenListeAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.fragment_uebungen_liste_element, parent, false);
     }
 
+    public ArrayList<Integer> getIds(){
+        return ids;
+    }
 }
 
 

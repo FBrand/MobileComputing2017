@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class UebungenListeFragment extends ListFragment implements OnItemClickListener {
 
@@ -24,6 +27,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
     private UebungenListeAdapter listAdapter;
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
+
 
 
     @Override
@@ -101,7 +105,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         Intent intent = new Intent(getActivity(), UebungActivity.class);
         intent.putExtra("_id", i);
         startActivity(intent);
-        Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Item " + listAdapter.getIds().get(i) + " was clicked", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -117,4 +121,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         super.onSaveInstanceState(outState);
     }
 
+    public UebungenListeAdapter getListAdapter(){
+        return this.listAdapter;
+    }
 }

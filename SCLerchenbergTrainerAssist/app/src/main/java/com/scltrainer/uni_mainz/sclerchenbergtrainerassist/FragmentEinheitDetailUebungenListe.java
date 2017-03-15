@@ -62,7 +62,7 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
      * Fügt einer Einheit die angeklickte Liste hinzu und schließt die Ansicht wieder
      * @param parent
      * @param view
-     * @param position
+     * @param posUebung
      * @param id
      */
     @Override
@@ -78,10 +78,10 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
         }
         int posEinheit = extras.getInt("_id");
 
-        addUebungToEinheit(posEinheit, posUebung, getActivity().getBaseContext());
+        addUebungToEinheit(posEinheit, this.getListAdapter().getIds().get(posUebung), getActivity().getBaseContext());
 
 
-        Toast.makeText(getActivity(), "Uebung " + posUebung + " hinzugefuegt", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Uebung " + this.getListAdapter().getIds().get(posUebung) + " hinzugefuegt", Toast.LENGTH_SHORT).show();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         //ft.replace(R.id.fragment, new EinheitDetailFragment(), null);
@@ -106,11 +106,13 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
         DBConnection dbConnection = DBHelper.getConnection(context);
 
         String s = DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ? ";
+        System.out.println("position !!!!!!!!!!!!!!!!!!!!!!!!!!: " + position);
         String[] sArgs = {"" + position};
         String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME,
                 DBInfo.EXERCISE_COLUMN_NAME_DURATION};
 
         Cursor cursor= dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
+        cursor.moveToFirst();
         String name=cursor.getString(1);
         String duration=cursor.getString(2);
 
