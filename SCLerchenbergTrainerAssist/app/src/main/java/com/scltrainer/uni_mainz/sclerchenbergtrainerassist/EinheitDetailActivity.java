@@ -56,7 +56,8 @@ public class EinheitDetailActivity extends AppCompatActivity {
                 Log.i("EinheitenDetailActivity", "BackstackEntryCount for FAB: " +fm.getBackStackEntryCount());
                 if (fm.getBackStackEntryCount() <2){
                     doTransaction(R.id.fragment, new FragmentEinheitDetailUebungenListe(), "EinheitDetailUebungListe");
-                    fab.setImageResource(android.R.drawable.ic_menu_search);
+                    //fab.setImageResource(android.R.drawable.ic_menu_search);
+                    fab.hide();
                 } else {
                     /**
                      * TODO: Hier soll der Filterdialog hin!
@@ -100,13 +101,25 @@ public class EinheitDetailActivity extends AppCompatActivity {
 
     }
 
+    public FloatingActionButton getFAB(){
+        return this.fab;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        fab.show();
+    }
+
     @Override
     public void onBackPressed(){
         if (getFragmentManager().getBackStackEntryCount()== 0){
             super.onBackPressed();
+            //fab.show();
         } else {
             getFragmentManager().popBackStack();
-            fab.setImageResource(android.R.drawable.ic_menu_add);
+            //fab.setImageResource(android.R.drawable.ic_menu_add);
+            fab.show();
         }
     }
 

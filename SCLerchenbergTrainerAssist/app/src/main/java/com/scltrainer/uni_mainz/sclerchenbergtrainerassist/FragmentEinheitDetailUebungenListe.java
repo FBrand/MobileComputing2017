@@ -3,6 +3,7 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
 
+    FloatingActionButton fab;
 
     /**
      * Layout und Adapter wird von Mutterklasse geerbt!
@@ -69,6 +71,8 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
         ft.remove(this);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.show();
         getFragmentManager().popBackStack();
         getFragmentManager().executePendingTransactions();
 
