@@ -17,18 +17,26 @@ import android.widget.CursorAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class EinheitenListeAdapter extends CursorAdapter {
 
     private LayoutInflater inflator;
     //private int s;
     String TAG = "EinheitenListeAdapter";
 
+    private ArrayList<Integer> idList;
+
     public EinheitenListeAdapter(Context context, Cursor c) {
         super(context, c);
         inflator = LayoutInflater.from(context);
         //s = c.getCount();
+        idList = new ArrayList<Integer>();
     }
 
+    public int getIdListEntry(int entry){
+        return idList.get(entry);
+    }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {

@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R.id.container;
 
 
 /**
@@ -49,24 +52,46 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.i("APP", "onActivityCreated start");
+        Log.i(TAG, "onActivityCreated start");
 
-        // TODO: Eigenen ArrayAdapter schreiben um eine schoenere Liste zu erzeugen
-        /**ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
-         R.array.einheitenTest, android.R.layout.simple_list_item_1);
-         setListAdapter(adapter);
-         getListView().setOnItemClickListener(this);*/
+        dbConnection= DBHelper.getConnection(getActivity());
+        dbCursor = selectCursorEinheitenListe();
+        Log.i(TAG, "Cursor wurde initiiert");
+        getActivity().startManagingCursor(dbCursor);
+        Log.i(TAG, "startManagingCursor");
+        listAdapter = new EinheitenListeAdapter(getActivity().getBaseContext(), dbCursor);
 
-        Log.i("APP", "onActivityCreated ende");
+        setListAdapter(listAdapter);
+
+        Log.i(TAG, "onActivityCreated ende");
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-        //TODO: Verbindung zwischen Position in Liste und DB herstellen
-        Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), EinheitDetailActivity.class);
+    public void onListItemClick(ListView l, View v, int pos, long id) {
+        super.onListItemClick(l, v, pos, id);
+        Log.i(TAG, "onListItemClick 1");
+        int i = listAdapter.getIdListEntry(pos);
+        Intent intent = new Intent(getActivity(), UebungActivity.class);
+        intent.putExtra("_id", i);
         startActivity(intent);
+        Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onListItemClick ende");
+
     }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //outState.putString("message", "This is my message to be reloaded");
+        super.onSaveInstanceState(outState);
+    }
+
+
 
     public Cursor selectCursorEinheitenListe(){
 
@@ -78,5 +103,10 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
                 DBInfo.TRAININGSUNIT_COLUMN_NAME_DURATION};
 
         return dbConnection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, sArr, null, null);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

@@ -78,10 +78,9 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-        //TODO: Verbindung zwischen Position in Liste und DB herstellen
-        Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), UebungActivity.class);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     public Cursor selectCursorUebungenListe(){
