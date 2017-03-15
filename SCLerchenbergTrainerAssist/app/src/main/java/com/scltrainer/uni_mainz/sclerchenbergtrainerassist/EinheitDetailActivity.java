@@ -108,7 +108,7 @@ public class EinheitDetailActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        fab.show();
+        //fab.show();
     }
 
     @Override

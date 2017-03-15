@@ -43,8 +43,9 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent(getActivity(), UebungActivity.class);
+                //TODO: Anpassen dass hier nicht die Position sondern die DB ID genommen wird
+                intent.putExtra("_id", position+1);
                 startActivity(intent);
                 Toast.makeText(getActivity(), "test: " + position, Toast.LENGTH_LONG).show();
 
