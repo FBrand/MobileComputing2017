@@ -1,6 +1,5 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util;
 
 /**
  * Aktivity die das UebungDetailFragment hostet.
@@ -51,6 +52,7 @@ public class UebungActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Util.init(this);
         setContentView(R.layout.activity_uebung);
 
         Bundle extras = getIntent().getExtras();
@@ -90,7 +92,7 @@ public class UebungActivity extends AppCompatActivity {
     /**
      * Startet Intent zu dem ausgelesenen Link.
      * Muss in der XML definiert werden.
-     * @param tv
+     * @param v
      */
     public void onClickOpenVideo(View v) {
         //TODO: Prüfen ob das mit beliebigen Youtubelinks klappt.
@@ -129,43 +131,6 @@ public class UebungActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_uebung, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
     }
 
     /**
@@ -252,7 +217,7 @@ public class UebungActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch(position) {
                 case 0:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    return new LayoutFragment();
                 case 1:
                     return DetailFragment.newInstance(entryID);
                 default:

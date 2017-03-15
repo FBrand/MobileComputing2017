@@ -35,7 +35,7 @@
     <!-- paddingBottom damit Spielfeldtextur komplett angezeigt wird,
     da ansonsten Teile des inneren Fragments über den Bildschirm hinaus ragen.
     TODO: anpassen damit openGL und Auswahl für Symbole rein passt -->
-    <android.support.v4.view.ViewPager
+    <com.scltrainer.uni_mainz.sclerchenbergtrainerassist.LayoutViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
