@@ -33,6 +33,7 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
 
+    private int entryID;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -49,6 +50,14 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
         return rootView;
     }
 
+    public EinheitenListeFragment newInstance(int entryID) {
+        EinheitenListeFragment fragment = new EinheitenListeFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        this.entryID = entryID;
+        return fragment;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -63,6 +72,13 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
 
         setListAdapter(listAdapter);
 
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras == null) {
+            return;
+        }
+        entryID = extras.getInt("_id");
+        Log.i(TAG, "onActivityCreated: ID: " + entryID);
+
         Log.i(TAG, "onActivityCreated ende");
     }
 
@@ -71,7 +87,7 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
         super.onListItemClick(l, v, pos, id);
         Log.i(TAG, "onListItemClick 1");
         int i = listAdapter.getIdListEntry(pos);
-        Intent intent = new Intent(getActivity(), UebungActivity.class);
+        Intent intent = new Intent(getActivity(), EinheitDetailActivity.class);
         intent.putExtra("_id", i);
         startActivity(intent);
         Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();

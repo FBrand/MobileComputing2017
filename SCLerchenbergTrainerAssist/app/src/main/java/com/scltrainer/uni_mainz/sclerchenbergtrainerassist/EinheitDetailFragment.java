@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class EinheitDetailFragment extends Fragment {
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
 
+    private int entryID;
+
     public EinheitDetailFragment() {
     }
 
@@ -38,7 +41,11 @@ public class EinheitDetailFragment extends Fragment {
     }
 
     //TODO: Von T
-    public Cursor selectCursorEinheitDetail(){
+    public Cursor selectCursorEinheitDetail(int entryID){
+
+        String s = DBInfo.TRAININGSUNIT_COLUMN_NAME_IDLOCAL + " = ? ";
+        String[] sArgs = {"" + entryID};
+        Log.i("DetailFragment", "entryID in cursor: " + entryID);
 
         String[] sArr = {"_id", DBInfo.TRAININGSUNIT_COLUMN_NAME_NAME,
                 DBInfo.TRAININGSUNIT_COLUMN_NAME_AUTORNAME,
@@ -48,7 +55,7 @@ public class EinheitDetailFragment extends Fragment {
                 DBInfo.TRAININGSUNIT_COLUMN_NAME_DURATION,
                 DBInfo.TRAININGSUNIT_COLUMN_NAME_LASTCHANGE};
 
-        return dbConnection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, sArr, null, null);
+        return dbConnection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, sArr, s, sArgs);
     }
 
 
@@ -56,8 +63,17 @@ public class EinheitDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_einheit_detail, container, false);
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras == null) {
+            return null;
+        }
+        entryID = extras.getInt("_id");
+        Log.i("EinheitDetailActivity", "ID: " + entryID);
+
+
         dbConnection= DBHelper.getConnection(getActivity());
-        dbCursor = selectCursorEinheitDetail();
+        dbCursor = selectCursorEinheitDetail(entryID);
         //Log.i(TAG, "Cursor wurde initiiert");
         getActivity().startManagingCursor(dbCursor);
         //Log.i(TAG, "startManagingCursor");
@@ -74,4 +90,6 @@ public class EinheitDetailFragment extends Fragment {
         ft.addToBackStack(tag);
         ft.commit();
     }
+
+
 }

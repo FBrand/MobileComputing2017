@@ -25,15 +25,16 @@ import android.widget.Toast;
 public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
 
 
+    /**
+     * Layout und Adapter wird von Mutterklasse geerbt!
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.i("APP", "onActivityCreated start");
 
-        // TODO: Eigenen ArrayAdapter schreiben um eine schoenere Liste zu erzeugen
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.uebungTest, android.R.layout.simple_list_item_1);
-        setListAdapter(adapter);
+
         getListView().setOnItemClickListener(this);
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 

@@ -57,6 +57,8 @@ public class EinheitenListeAdapter extends CursorAdapter {
         einheitListeFavoriten.setNumStars(cursor.getInt(4));
         einheitListeDauer.setText(cursor.getString(5));
 
+        idList.add(cursor.getInt(0));
+
         cursor.moveToNext();
     }
 

@@ -21,6 +21,8 @@ public class EinheitDetailActivity extends AppCompatActivity {
     FragmentManager fm;
     FloatingActionButton fab;
 
+    public int entryID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,13 @@ public class EinheitDetailActivity extends AppCompatActivity {
         Log.i("EinheitDetailActivity", "starting Fragment creation");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            return;
+        }
+        entryID = extras.getInt("_id");
+        Log.i("UebungActivity", "ID: " + entryID);
 
         fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
