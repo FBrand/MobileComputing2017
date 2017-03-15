@@ -1,7 +1,10 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -63,9 +66,22 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
      * @param id
      */
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int posUebung, long id) {
         //TODO: Verbindung zwischen Position in Liste und DB herstellen
-        Toast.makeText(getActivity(), "Uebung " + position + " hinzugefuegt", Toast.LENGTH_SHORT).show();
+
+        //neu
+        //TODO:Intent von EinheitDetailActivity mit position der Einheit schicken
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras == null) {
+            Log.e("FragmentEDUL", "FEHLER");
+        }
+        int posEinheit = extras.getInt("_id");
+
+        addUebungToEinheit(posEinheit, posUebung, getActivity().getBaseContext());
+
+
+        Toast.makeText(getActivity(), "Uebung " + posUebung + " hinzugefuegt", Toast.LENGTH_SHORT).show();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         //ft.replace(R.id.fragment, new EinheitDetailFragment(), null);
@@ -83,6 +99,26 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
          */
         //Intent intent = new Intent(getActivity(), UebungActivity.class);
         //startActivity(intent);
+    }
+
+    //neu
+    public void addUebungToEinheit(int einheit, int position, Context context){
+        DBConnection dbConnection = DBHelper.getConnection(context);
+
+        String s = DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ? ";
+        String[] sArgs = {"" + position};
+        String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME,
+                DBInfo.EXERCISE_COLUMN_NAME_DURATION};
+
+        Cursor cursor= dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
+        String name=cursor.getString(1);
+        String duration=cursor.getString(2);
+
+        ContentValues row = new ContentValues();
+        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT, einheit);
+        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE, name);
+        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_DURATION, duration);
+        dbConnection.insert(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, row);
     }
 
 
