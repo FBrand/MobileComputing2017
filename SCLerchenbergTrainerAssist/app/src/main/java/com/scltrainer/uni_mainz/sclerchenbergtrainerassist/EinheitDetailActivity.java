@@ -4,13 +4,19 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Intent;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -108,7 +114,7 @@ public class EinheitDetailActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        //fab.show();
+
     }
 
     @Override
@@ -121,6 +127,28 @@ public class EinheitDetailActivity extends AppCompatActivity {
             //fab.setImageResource(android.R.drawable.ic_menu_add);
             fab.show();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void createCalendarEvent(View b){
+
+        TextView title = (TextView) findViewById(R.id.einheitName);
+        TextView description = (TextView) findViewById(R.id.einheitBeschreibung);
+
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(2017, 2, 19, 7, 30);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(2017, 2, 19, 8, 30);
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                /*.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())*/
+                .putExtra(CalendarContract.Events.TITLE, title.getText().toString())
+                .putExtra(CalendarContract.Events.DESCRIPTION, description.getText().toString())
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "Auf dem Sportplatz")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+        //.putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
+        startActivity(intent);
     }
 
 }

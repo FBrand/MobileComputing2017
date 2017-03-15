@@ -64,6 +64,7 @@
                 android:id="@+id/addCalendarDateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="createCalendarEvent"
                 android:text="@string/addCalendarDate" />
 
             <ListView

@@ -7,7 +7,10 @@ import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -145,6 +148,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return result;
     }
-
 
 }

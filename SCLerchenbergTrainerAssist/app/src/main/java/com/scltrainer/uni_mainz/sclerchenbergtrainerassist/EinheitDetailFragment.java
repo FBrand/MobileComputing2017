@@ -1,14 +1,22 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.annotation.TargetApi;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.Cursor;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * EinheitDetailFragment zeigt eine konkrete Einheit an.
@@ -29,6 +37,8 @@ public class EinheitDetailFragment extends Fragment {
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
 
+    private Button calendarButton;
+
     private int entryID;
 
     public EinheitDetailFragment() {
@@ -38,7 +48,23 @@ public class EinheitDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*View.OnClickListener clickHandler1 = new View.OnClickListener() {
+
+            @TargetApi(Build.VERSION_CODES.N)
+            public void onClick(View v) {
+                Log.i("EinheitDetailFragment", "call createCalendarEvent");
+                createCalendarEvent();
+            }
+        };
+
+        calendarButton = (Button) getActivity().findViewById(R.id.addCalendarDateButton);
+        calendarButton.setOnClickListener(clickHandler1);*/
+
+
+
     }
+
+
 
     //TODO: Von T
     public Cursor selectCursorEinheitDetail(int entryID){
@@ -89,6 +115,27 @@ public class EinheitDetailFragment extends Fragment {
         ft.replace(frameID, fragment, tag);
         ft.addToBackStack(tag);
         ft.commit();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void createCalendarEvent(){
+
+        TextView title = (TextView) getActivity().findViewById(R.id.einheitName);
+
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(2017, 2, 19, 7, 30);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(2017, 2, 19, 8, 30);
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                .putExtra(CalendarContract.Events.TITLE, title.getText().toString())
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Mannschaft")
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "Auf dem Sportplatz")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+                //.putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
+        startActivity(intent);
     }
 
 
