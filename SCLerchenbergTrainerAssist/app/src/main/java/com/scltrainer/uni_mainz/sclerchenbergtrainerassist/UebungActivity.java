@@ -92,8 +92,10 @@ public class UebungActivity extends AppCompatActivity {
      * Muss in der XML definiert werden.
      * @param tv
      */
-    public void onClickOpenVideo(TextView tv) {
+    public void onClickOpenVideo(View v) {
         //TODO: Prüfen ob das mit beliebigen Youtubelinks klappt.
+        TextView tv = (TextView) findViewById(R.id.uebungVideoURL);
+        Log.i("UebungActivity", tv.getText().toString());
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tv.getText().toString()));
         startActivity(i);
         };
@@ -201,6 +203,8 @@ public class UebungActivity extends AppCompatActivity {
             return fragment;
         }
 
+
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -224,9 +228,10 @@ public class UebungActivity extends AppCompatActivity {
             String[] sArgs = {"" + entryID};
             Log.i("DetailFragment", "entryID in cursor: " + entryID);
             String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME,
-                    DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,
+                    DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_RATING, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,
                     DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,
-                    DBInfo.EXERCISE_COLUMN_NAME_DURATION};
+                    DBInfo.EXERCISE_COLUMN_NAME_DURATION, DBInfo.EXERCISE_COLUMN_NAME_AGE,
+                    DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK};
             return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
         }
     }

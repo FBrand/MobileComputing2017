@@ -50,11 +50,10 @@ public class UebungDetailAdapter extends CursorAdapter {
 		uebungTaktikPunkte.setText(cursor.getString(5));
 		uebungPhysisPunkte.setText(cursor.getString(6));
 		uebungFavoriten.setNumStars((int)cursor.getDouble(7));
-		//TODO: Dafür sorgen das die folgenden Zeilen wieder funktionieren!!!
-/*		uebungDauer.setText(cursor.getString(8));
+		uebungDauer.setText(cursor.getString(8));
 		uebungAltersklasse.setText(cursor.getString(9));
 		uebungStichpunkte.setText(cursor.getString(10));
-		uebungLink.setText(cursor.getString(11));*/
+		uebungLink.setText(cursor.getString(11));
 		
 		cursor.moveToNext();
 	}
