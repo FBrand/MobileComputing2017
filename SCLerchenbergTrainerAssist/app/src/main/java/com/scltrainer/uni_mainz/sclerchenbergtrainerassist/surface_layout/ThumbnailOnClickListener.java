@@ -30,11 +30,11 @@ public class ThumbnailOnClickListener implements OnItemClickListener {
                 p -= itemGroup.numItems;
             else {
                 if (adapter.selected >= 0) {
-                    adapter.getView(adapter.selected).setBackgroundColor(Color.WHITE);
+                    adapter.getView(adapter.selected).setBackgroundColor(adapter.defaultColor);
                 }
                 if (adapter.selected == position) {
                     itemGroup.onItemClickListener.onItemReClick(parent, view, p, id);
-                    adapter.getView(adapter.selected).setBackgroundColor(Color.WHITE);
+                    adapter.getView(adapter.selected).setBackgroundColor(adapter.defaultColor);
                     adapter.selected = -1;
                 } else {
                     view.setBackgroundColor(adapter.selectionColor);

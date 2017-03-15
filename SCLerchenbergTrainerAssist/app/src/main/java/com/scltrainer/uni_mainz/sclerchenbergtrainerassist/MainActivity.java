@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util;
+
 
 /**
  * Hauptmenu mit dem die Anwendung startet.
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("APP", "onCreate start");
         super.onCreate(savedInstanceState);
+        Util.init(this);
         setContentView(R.layout.activity_main);
 
 

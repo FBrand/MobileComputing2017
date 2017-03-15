@@ -8,6 +8,7 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl
 
 import org.joml.Vector2f;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
  * Created by Julian on 09.03.2017.
  */
 
-public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGroup, T> {
+public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGroup, T> implements Iterable<T> {
 
     private Set<T> components = new LinkedHashSet<>();
 
@@ -71,6 +72,11 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
             }
         }
         return selected;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return components.iterator();
     }
 
     public boolean isEmpty() {

@@ -32,6 +32,10 @@ public class PathComponent extends Component<Path, PathComponent> {
         planUpdate(new PointUpdate());
     }
 
+    private Vector2f worldPoint(int i) {
+        return pos.add(points.get(i), new Vector2f());
+    }
+
     @Override
     protected Path doMakeLayer() {
         Path layer = new Path();
@@ -62,11 +66,16 @@ public class PathComponent extends Component<Path, PathComponent> {
     @Override
     public boolean select(BoundingBox box, List<? super PathComponent> selection) {
         Layer layer = getLayer();
-        if (layer == null || !layer.boundingBox().intersect(box))
+        if (layer == null)
             return false;
+        for (int i = 1; i < points.size(); i++) {
+            if (box.intersect(worldPoint(i-1), worldPoint(i))) {
+                selection.add(this);
+                return true;
+            }
+        }
 
-        selection.add(this);
-        return true;
+        return false;
     }
 
     public int size() {

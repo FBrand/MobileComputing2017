@@ -62,6 +62,33 @@ public class BoundingBox {
         return true; // boxes overlap
     }
 
+    public boolean intersect(Vector2f start, Vector2f end) {
+        Vector2f r = end.sub(start, new Vector2f());
+        float length = r.length();
+        Vector2f d = end.sub(start, new Vector2f()).mul(1/length);
+
+        float tmin = -Float.MAX_VALUE;
+        float tmax = Float.MAX_VALUE;
+
+        if (d.x != 0.0) {
+            float tx1 = (min.x - start.x)/d.x;
+            float tx2 = (max.x - start.x)/d.x;
+
+            tmin = Math.max(tmin, Math.min(tx1, tx2));
+            tmax = Math.min(tmax, Math.max(tx1, tx2));
+        }
+
+        if (d.y != 0.0) {
+            float ty1 = (min.y - start.y)/d.y;
+            float ty2 = (max.y - start.y)/d.y;
+
+            tmin = Math.max(tmin, Math.min(ty1, ty2));
+            tmax = Math.min(tmax, Math.max(ty1, ty2));
+        }
+
+        return tmax >= 0 && tmin <= length && tmax >= tmin;
+    }
+
     public void enclose(Vector2f... points) {
         enclose(Arrays.asList(points));
     }

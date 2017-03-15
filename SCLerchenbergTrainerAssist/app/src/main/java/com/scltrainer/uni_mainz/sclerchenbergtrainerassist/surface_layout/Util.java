@@ -3,6 +3,10 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout;
 import android.app.Activity;
 import android.util.DisplayMetrics;
 
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.QuadVBO;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.TextureFactory;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.TriangleVBO;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -22,8 +26,8 @@ public class Util {
     public static final float REMOVE_LAYER_GREY = 0.5f;
     public static final Vector4f REMOVE_COLOR = new Vector4f(1,0f,0f,1);
     public static final float MAX_ZOOM = 8.0f;
-    public static final float PATH_ALPHA = 0.6f;
-    public static final float TOUCH_SIZE_INCH = 0.25f;
+    public static final float PATH_ALPHA = 0.65f;
+    public static final float TOUCH_SIZE_INCH = 0.2f;
     public static final float POINT_SIZE_INCH = 0.06f;
 
     private Util() {
@@ -37,5 +41,11 @@ public class Util {
         DisplayMetrics metrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         return new Vector2f(metrics.xdpi, metrics.ydpi);
+    }
+
+    public static void forceReloadResources() {
+        TextureFactory.reset();
+        QuadVBO.reset();
+        TriangleVBO.reset();
     }
 }

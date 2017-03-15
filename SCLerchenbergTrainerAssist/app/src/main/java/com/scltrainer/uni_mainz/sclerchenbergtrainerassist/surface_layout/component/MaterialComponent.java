@@ -61,4 +61,7 @@ public class MaterialComponent extends Component<TexturedQuad, MaterialComponent
         return true;
     }
 
+    public MaterialType getType() {
+        return type;
+    }
 }

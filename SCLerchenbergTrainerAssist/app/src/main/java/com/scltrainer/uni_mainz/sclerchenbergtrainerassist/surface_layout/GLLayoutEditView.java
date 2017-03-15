@@ -55,7 +55,7 @@ public class GLLayoutEditView extends GLLayoutView {
 
     private void createRemoveLayer() {
         TexturedQuad removeLayer = new TexturedQuad();
-        removeLayer.texture = TextureFactory.loadTexture(getContext(), R.drawable.remove);
+        removeLayer.texture = TextureFactory.loadTexture(getContext(), android.R.drawable.ic_delete);
         removeLayer.color = new Vector4f(Util.REMOVE_LAYER_GREY);
         removeLayer.scaleX = Util.REMOVE_LAYER_SCALE_NDC/renderer.getAspect();
         removeLayer.scaleY = Util.REMOVE_LAYER_SCALE_NDC;
@@ -236,22 +236,51 @@ public class GLLayoutEditView extends GLLayoutView {
             super(context, renderer);
         }
 
-        private void selectLayer(Component<?,?> component) {
+        private void selectLayer(Component<?,?> component, float scale) {
             Layer layer = component.getLayer();
-            layer.scale *= getScaleSelected(layer);
+            layer.scale *= scale;
             layer.transparency = Util.ALPHA_SELECTED;
             renderer.addLayer(removeLayer);
             updateLayer(component);
         }
 
-        private void selectForDrag(BoundingBox touchBB, MotionEvent e) {
+        private boolean selectPathForDrag(BoundingBox touchBB, MotionEvent e) {
             List<PathComponent> pathSelection = new ArrayList<>();
             if (layout.paths.select(touchBB, pathSelection)) {
                 PathComponent pathComponent = pathSelection.get(pathSelection.size()-1);
                 pathDragListener.setSelected(pathComponent, layout.paths, e);
-                selectLayer(pathComponent);
+                selectLayer(pathComponent, MIN_SCALE_SELECTED);
                 setOnTouchListener(pathDragListener);
+                return true;
             }
+            return false;
+        }
+
+        private boolean selectMaterialForDrag(BoundingBox touchBB, MotionEvent e) {
+            List<MaterialComponent> materialSelection = new ArrayList<>();
+            if (layout.materials.select(touchBB, materialSelection)) {
+                MaterialComponent materialComponent = materialSelection.get(materialSelection.size() - 1); // select highest component only
+                materialDragListener.setSelected(materialComponent, layout.materials, e);
+                selectLayer(materialComponent, getScaleSelected(materialComponent.getLayer()));
+                setOnTouchListener(materialDragListener);
+                return true;
+            }
+            return false;
+        }
+
+        private boolean selectPathPointForDrag(BoundingBox touchBB, MotionEvent e) {
+            if (pathComponent != null && pathComponent.size() >= 2) {
+                // check for point selection
+                Path path = pathComponent.getLayer();
+                for (int i = 0; i < path.size(); i++) {
+                    if (touchBB.contains(path.getPoint(i))) {
+                        pathPointListener.setSelected(path.line.getPoint(i), pathComponent, e);
+                        setOnTouchListener(pathPointListener);
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void resetPathComponent() {
@@ -331,35 +360,22 @@ public class GLLayoutEditView extends GLLayoutView {
 
         @Override
         public void onLongPress(MotionEvent e) {
-
-            List<MaterialComponent> materialSelection = new ArrayList<>();
-
             BoundingBox touchBB = touchBB(e);
-            // first check for material selection
-            if (layout.materials.select(touchBB, materialSelection)) {
-                MaterialComponent materialComponent = materialSelection.get(materialSelection.size()-1); // select highest component only
-                materialDragListener.setSelected(materialComponent, layout.materials, e);
-                selectLayer(materialComponent);
-                setOnTouchListener(materialDragListener);
-            } else if (selectionType == SelectionType.PATH_EDIT && pathComponent != null && pathComponent.size() >= 2){
-                // check for point selection
-                boolean pointSelected = false;
-                Path path = pathComponent.getLayer();
-                for (int i = 0; i < path.size(); i++) {
-                    if (touchBB.contains(path.getPoint(i))) {
-                        pathPointListener.setSelected(path.line.getPoint(i), pathComponent, e);
-                        setOnTouchListener(pathPointListener);
-                        pointSelected = true;
-                        break;
-                    }
-                }
-                if (!pointSelected) {
-                    selectForDrag(touchBB, e);
-                }
-            } else { // check for path selection
-                selectForDrag(touchBB, e);
+            switch (selectionType) {
+                case NONE:
+                case MATERIAL:
+                    if (!selectMaterialForDrag(touchBB, e))
+                        selectPathForDrag(touchBB, e);
+                    break;
+                case PATH:
+                    if (!selectPathForDrag(touchBB, e))
+                        selectMaterialForDrag(touchBB, e);
+                    break;
+                case PATH_EDIT:
+                    if (!selectPathPointForDrag(touchBB, e))
+                        if (!selectPathForDrag(touchBB, e))
+                            selectMaterialForDrag(touchBB, e);
             }
-
         }
 
     }

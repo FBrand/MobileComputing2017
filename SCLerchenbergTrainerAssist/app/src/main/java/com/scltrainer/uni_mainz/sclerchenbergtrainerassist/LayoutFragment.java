@@ -11,15 +11,13 @@ import android.widget.ListView;
 
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.GLLayoutView;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.ThumbnailListAdapter;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Background;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Layout;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialComponent;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialType;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathComponent;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathType;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.QuadVBO;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.TextureFactory;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.TriangleVBO;
 
 import org.joml.Vector2f;
 
@@ -38,7 +36,7 @@ public class LayoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_uebung, container, false);
-        forceReloadResources();
+        Util.forceReloadResources();
 
         // for testing
         Layout layout = new Layout();
@@ -55,12 +53,6 @@ public class LayoutFragment extends Fragment {
         ((FrameLayout) rootView.findViewById(R.id.gl_view)).addView(glView);
 
         return rootView;
-    }
-
-    private void forceReloadResources() {
-        TextureFactory.reset();
-        QuadVBO.reset();
-        TriangleVBO.reset();
     }
 
     @Override

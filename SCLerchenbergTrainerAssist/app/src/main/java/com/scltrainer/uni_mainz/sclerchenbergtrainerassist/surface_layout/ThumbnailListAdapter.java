@@ -22,6 +22,7 @@ public class ThumbnailListAdapter extends ArrayAdapter<Thumbnail> {
     private final Thumbnail[] values;
     public int selected = -1;
     public int selectionColor;
+    public int defaultColor;
     private ImageView[] views;
 
     public ThumbnailListAdapter(Context context, Thumbnail[] values) {
@@ -30,7 +31,8 @@ public class ThumbnailListAdapter extends ArrayAdapter<Thumbnail> {
         this.values = values;
         this.views = new ImageView[values.length];
 
-        selectionColor = ContextCompat.getColor(getContext(), R.color.colorPrimaryDark);
+        selectionColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
+        defaultColor = ContextCompat.getColor(getContext(), R.color.colorPrimary);
     }
 
     public View getView(int position) {
@@ -51,7 +53,7 @@ public class ThumbnailListAdapter extends ArrayAdapter<Thumbnail> {
         }
         views[position].setImageResource(values[position].getThumbnailResID());
         views[position].setLayoutParams(new ViewGroup.LayoutParams(parent.getWidth(), parent.getWidth()));
-        views[position].setBackgroundColor(position == selected? selectionColor : Color.WHITE);
+        views[position].setBackgroundColor(position == selected? selectionColor : defaultColor);
         return views[position];
     }
 }

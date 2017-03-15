@@ -12,7 +12,7 @@ public enum MaterialType implements Textured, Thumbnail, Scaled {
     PYLON(R.drawable.pylon, 0.04f),
     BALL(R.drawable.ball, 0.02f),
     FLAG(R.drawable.flag, 0.03f),
-    DUMMY(R.drawable.dummy, 0.03f),
+    DUMMY(R.drawable.dummy, 0.02f),
     BAR(R.drawable.bar, 0.05f),
     RING(R.drawable.ring, 0.035f),
     BENCH(R.drawable.bench, 0.03f),

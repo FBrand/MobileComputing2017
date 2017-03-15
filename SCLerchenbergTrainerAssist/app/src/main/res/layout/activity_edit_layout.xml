@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="scroll|enterAlways">
+            <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_save"
+                android:backgroundTint="@color/colorPrimaryDark"/>
+        </android.support.v7.widget.Toolbar>
+    <!--<LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    </LinearLayout>-->
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="7"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <FrameLayout
+            android:id="@+id/gl_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7">
+
+        </FrameLayout>
+        <ListView
+            android:layout_weight="1"
+            android:id="@+id/component_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:divider="@color/colorPrimaryDark"
+            android:dividerHeight="1dip"
+            android:background="@color/colorPrimary">
+        </ListView>
+    </LinearLayout>
+</LinearLayout>

@@ -105,7 +105,7 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
         queueEvent(new Runnable() {
             @Override
             public void run() {
-                renderer.updateWorldBounds(1.0f/layout.background.getFieldAspect());
+                renderer.updateWorldBounds(1,1/layout.background.getFieldAspect());
                 layout.background.setSurfaceSize(renderer.getWorldBounds());
             }
         });

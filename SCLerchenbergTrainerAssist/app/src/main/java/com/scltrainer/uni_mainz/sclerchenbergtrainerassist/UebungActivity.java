@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util;
 
 /**
  * Aktivity die das UebungDetailFragment hostet.
@@ -52,7 +51,6 @@ public class UebungActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Util.init(this);
         setContentView(R.layout.activity_uebung);
 
         Bundle extras = getIntent().getExtras();
@@ -81,8 +79,8 @@ public class UebungActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(UebungActivity.this, LayoutEditActivity.class);
+                startActivity(intent);
             }
         });
 

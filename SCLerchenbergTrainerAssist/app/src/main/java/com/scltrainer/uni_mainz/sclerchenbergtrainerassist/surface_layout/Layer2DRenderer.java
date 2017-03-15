@@ -5,6 +5,8 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util.MAX_ZOOM;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
@@ -126,7 +128,13 @@ public class Layer2DRenderer extends RendererBase {
 
     public void onCreateGL(EGLConfig config) {
         // Set the background frame color
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        int colorCode = ContextCompat.getColor(context, R.color.colorPrimary);
+        float r = Color.red(colorCode)/255f;
+        float g = Color.green(colorCode)/255f;
+        float b = Color.blue(colorCode)/255f;
+        glClearColor(r, g, b, 1.0f);
+
+
         // build the shader program
         program = new ShaderProgram();
         try {
@@ -174,7 +182,7 @@ public class Layer2DRenderer extends RendererBase {
         projection.identity();
 
         Log.e("SIZE", width +", " + height);
-        updateWorldBounds(1/aspect);
+        updateWorldBounds(1, 1/aspect);
         /*
         if (height > width)
             projection.ortho(-1, 1, -1/aspect, 1/aspect, -1, 1);
@@ -184,13 +192,14 @@ public class Layer2DRenderer extends RendererBase {
         updateArrowScale();
     }
 
-    public void updateWorldBounds(float sizeY) {
+    public void updateWorldBounds(float sizeX, float sizeY) {
         projection.identity();
         assert height > width;
-        float sizeX = sizeY*aspect;
-        projection.ortho(-sizeX, sizeX, -sizeY, sizeY, -1, 1);
-        worldBounds.x = sizeX;
-        worldBounds.y = sizeY;
+        float y = Math.max(sizeX/aspect, sizeY);
+        float x = y*aspect;
+        projection.ortho(-x, x, -y, y, -1, 1);
+        worldBounds.x = x;
+        worldBounds.y = y;
         updateView();
         updateCenterBounds();
     }
