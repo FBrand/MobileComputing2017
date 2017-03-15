@@ -65,13 +65,14 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
                 doTransaction(R.id.menu_frame, new EinheitenListeFragment(), "einheitenliste");
                 break;
             case 2:
+                doTransaction(R.id.menu_frame, new EinstellungenFragment(), "einstellungen");
                 break;
             default:
                 Toast.makeText(getActivity(), "default switch case", Toast.LENGTH_LONG);
         }
     }
 
-    private void doTransaction(int frameID, ListFragment fragment, String tag){
+    private void doTransaction(int frameID, Fragment fragment, String tag){
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(frameID, fragment, tag);

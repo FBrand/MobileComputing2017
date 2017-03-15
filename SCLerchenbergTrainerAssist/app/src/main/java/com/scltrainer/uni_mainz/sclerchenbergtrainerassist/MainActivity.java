@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
         //Startdialog
-        boolean startdialogUnterdrücken = false; //Boolean um Startdialog zu unterdrücken
+        boolean startdialogUnterdrücken = true; //Boolean um Startdialog zu unterdrücken
         SharedPreferences shared = this.getPreferences(Context.MODE_PRIVATE);
         boolean isFirstRun = shared.getBoolean("ISFIRSTRUN", true);
         isFirstRun = true; //Um ersten Start zu simulieren
