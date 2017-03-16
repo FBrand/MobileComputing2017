@@ -31,15 +31,23 @@ public class EinheitDetailFragment extends Fragment {
 //private static final String TAG = UebungDetail.class.getSimpleName();
 
     // wird für die Listenansicht benötigt
-    private Cursor dbCursor;
+
+    private Cursor dbCursor1;
+    private Cursor dbCursor2;
+
     // bildet den Cursor auf die ListView ab
-    private EinheitDetailAdapter listAdapter;
+
+    private EinheitDetailAdapter listAdapter1;
+    private EinheitDetailUebersichtEnthaltenerUebungenAdapter listAdapter2;
+
+
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
 
     private Button calendarButton;
 
     private int entryID;
+    String TAG = "EDUEU";
 
     public EinheitDetailFragment() {
     }
@@ -84,6 +92,29 @@ public class EinheitDetailFragment extends Fragment {
         return dbConnection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, sArr, s, sArgs);
     }
 
+    //neu
+    public Cursor selectCursorEinheitDetailUebuersichtEnthaltenerUebungen(int entryID){
+
+        //Suche des Namens der Einheit in Tabelle Trainingsunit, mittels ID
+        String s = DBInfo.TRAININGSUNIT_COLUMN_NAME_IDLOCAL + " = ? ";
+        String[] sArgs = {"" + entryID};
+        String[] sArr = {"_id", DBInfo.TRAININGSUNIT_COLUMN_NAME_NAME};
+
+        Cursor cursorEinheitenName= dbConnection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, sArr, s, sArgs);
+        Log.i(TAG, "Test ob Uebungen in Einheiten enthalten");
+        if( cursorEinheitenName == null ||cursorEinheitenName.getCount()<=0) return null;
+        Log.i(TAG, "Uebungen in Einheiten enthalten");
+        String[] nameEinheit= {cursorEinheitenName.getString(1)};
+        Log.i(TAG, "Name aus Cursor gelesen");
+
+        //Suche der Tabelleneinträge in Trainingsunitexercise zu der entsprechenden Einheit
+        s = DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT + " = ? ";
+        sArr = new String[]{"_id", DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE, DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_DURATION};
+
+        return dbConnection.select(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME , sArr, s, nameEinheit);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,12 +130,22 @@ public class EinheitDetailFragment extends Fragment {
 
 
         dbConnection= DBHelper.getConnection(getActivity());
-        dbCursor = selectCursorEinheitDetail(entryID);
+        dbCursor1 = selectCursorEinheitDetail(entryID);
+        //dbCursor2 = selectCursorEinheitDetailUebuersichtEnthaltenerUebungen(entryID);
+
         //Log.i(TAG, "Cursor wurde initiiert");
-        getActivity().startManagingCursor(dbCursor);
+        getActivity().startManagingCursor(dbCursor1);
+
         //Log.i(TAG, "startManagingCursor");
-        listAdapter = new EinheitDetailAdapter(getActivity().getBaseContext(), dbCursor);
-        listAdapter.bindView(rootView, getActivity().getBaseContext(), dbCursor);
+        listAdapter1 = new EinheitDetailAdapter(getActivity().getBaseContext(), dbCursor1);
+        listAdapter1.bindView(rootView, getActivity().getBaseContext(), dbCursor1);
+
+        //TODO: Majas Code zum laufen bekommen
+       /* if( dbCursor2.getCount()>0) {
+            getActivity().startManagingCursor(dbCursor2);
+            listAdapter2 = new EinheitDetailUebersichtEnthaltenerUebungenAdapter(getActivity().getBaseContext(), dbCursor2);
+            listAdapter2.bindView(rootView, getActivity().getBaseContext(), dbCursor2);
+        }*/
 
         return rootView;
     }
