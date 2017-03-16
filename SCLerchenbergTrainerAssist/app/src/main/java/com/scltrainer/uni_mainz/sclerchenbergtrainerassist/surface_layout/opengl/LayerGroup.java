@@ -76,4 +76,7 @@ public class LayerGroup extends Layer {
         return layers.isEmpty();
     }
 
+    public void clear() {
+        layers.clear();
+    }
 }

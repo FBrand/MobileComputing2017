@@ -2,6 +2,10 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compo
 
 import android.util.Pair;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +18,12 @@ import java.util.Map;
  */
 
 public class Layout {
+    private static final String BACKGROUND_JSON_NAME = "Background";
+    private static final String MATERIALS_JSON_NAME = "Materials";
+    private static final String PATHS_JSON_NAME = "Paths";
+
+
+
     public Background background;
     public ComponentGroup<MaterialComponent> materials = new ComponentGroup<>();
     public ComponentGroup<PathComponent> paths = new ComponentGroup<>();
@@ -45,5 +55,31 @@ public class Layout {
             }
         });
         return materialList;
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        return new JSONObject().put(BACKGROUND_JSON_NAME, background.toJSON())
+                .put(MATERIALS_JSON_NAME, materials.toJSONArray())
+                .put(PATHS_JSON_NAME, paths.toJSONArray());
+    }
+
+    public static Layout fromJSON(JSONObject json) throws JSONException {
+        Layout layout = new Layout();
+        layout.background = Background.fromJSON(json.getJSONObject(BACKGROUND_JSON_NAME));
+
+        JSONArray array = json.getJSONArray(MATERIALS_JSON_NAME);
+        layout.materials = new ComponentGroup<>();
+        for (int i = 0; i < array.length(); i++) {
+            MaterialComponent material = MaterialComponent.fromJSON(array.getJSONObject(i));
+            layout.materials.add(material);
+        }
+
+        array = json.getJSONArray(PATHS_JSON_NAME);
+        layout.paths = new ComponentGroup<>();
+        for (int i = 0; i < array.length(); i++) {
+            PathComponent path = PathComponent.fromJSON(array.getJSONObject(i));
+            layout.paths.add(path);
+        }
+        return layout;
     }
 }

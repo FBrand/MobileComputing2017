@@ -124,4 +124,28 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
     public UebungenListeAdapter getListAdapter(){
         return this.listAdapter;
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isResumed()) {
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "ÜBUNGEN", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

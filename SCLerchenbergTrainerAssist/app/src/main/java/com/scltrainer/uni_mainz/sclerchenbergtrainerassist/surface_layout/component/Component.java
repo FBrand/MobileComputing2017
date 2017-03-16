@@ -5,6 +5,8 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.LayerUpdate;
 
 import org.joml.Vector2f;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public abstract class Component<L extends Layer, C extends  Component<?, C>> extends Viewable<L, C> {
 
@@ -31,6 +33,8 @@ public abstract class Component<L extends Layer, C extends  Component<?, C>> ext
         pos.add(t);
         planUpdate(new LayerPositionUpdate());
     }
+
+    public abstract JSONObject toJSON() throws JSONException;
 
     private class LayerPositionUpdate implements LayerUpdate {
 

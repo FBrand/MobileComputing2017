@@ -101,6 +101,9 @@ public class Layer2DRenderer extends RendererBase {
     public void removeLayer(Layer layer) {
         layers.remove(layer);
     }
+    public void clearLayer() {
+        layers.clear();
+    }
 
     public void rotate(float angle, float x, float y, float z) {
         Quaternionf q = new Quaternionf();

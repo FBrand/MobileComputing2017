@@ -26,6 +26,7 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
     protected Layer2DRenderer renderer;
     protected Layout layout;
     protected Vector2f touchSize;
+    protected boolean glReady = false;
 
     public GLLayoutView(Context context){
         super(context);
@@ -75,41 +76,56 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
         return new BoundingBox(renderer.pixelToWorldCoords(min), renderer.pixelToWorldCoords(max));
     }
 
+    private void updateBackground() {
+        queueEvent(new Runnable() {
+            public void run() {
+                renderer.updateWorldBounds(1,1/layout.background.getFieldAspect());
+                layout.background.setSurfaceSize(renderer.getWorldBounds());
+            }});
+        updateLayer(layout.background);
+    }
+
+    private void updateLayout() {
+
+        queueEvent(new Runnable() {
+            public void run() {
+                renderer.clearLayer();
+                renderer.addLayer(layout.background.getLayer());
+                renderer.addLayer(layout.materials.getLayer());
+                renderer.addLayer(layout.paths.getLayer());
+            }});
+
+        initLayer(layout.background);
+        initLayer(layout.materials);
+        initLayer(layout.paths);
+        updateBackground();
+
+    }
 
     public void setLayout(final Layout layout) {
         this.layout = layout;
+        if (glReady) {
+            updateLayout();
+        }
     }
 
 
     @Override
     public void onCreateGL(EGLConfig eglConfig) {
-
-
+        glReady = true;
         queueEvent(new Runnable() {
             public void run() {
                 GLES10.glLineWidth(Util.pixelDensity.x*Util.LINE_WIDTH_INCH);
-                GLES20.glUniform1f(renderer.getProgramInfo().location(Layer2DRenderer.POINT_SIZE_NAME), Util.pixelDensity.x*Util.POINT_SIZE_INCH);
-                renderer.addLayer(layout.background.getLayer());
-                renderer.addLayer(layout.materials.getLayer());
-                renderer.addLayer(layout.paths.getLayer());
+                GLES20.glUniform1f(renderer.getProgramInfo().location(Layer2DRenderer.POINT_SIZE_NAME),
+                        Util.pixelDensity.x*Util.POINT_SIZE_INCH);
 
             }});
-        initLayer(layout.background);
-        initLayer(layout.materials);
-        initLayer(layout.paths);
+        updateLayout();
     }
 
     @Override
     public void onResizeGL(int w, int h) {
-        float aspect = (float) w/h;
-        queueEvent(new Runnable() {
-            @Override
-            public void run() {
-                renderer.updateWorldBounds(1,1/layout.background.getFieldAspect());
-                layout.background.setSurfaceSize(renderer.getWorldBounds());
-            }
-        });
-        updateLayer(layout.background);
+        updateBackground();
     }
 
     @Override

@@ -23,6 +23,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.app.FragmentManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
