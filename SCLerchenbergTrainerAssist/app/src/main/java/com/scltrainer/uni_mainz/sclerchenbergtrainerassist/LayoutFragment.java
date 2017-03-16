@@ -2,6 +2,7 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compon
 
 import org.joml.Vector2f;
 
+import java.util.List;
+
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.FieldType.SOCCER_FIELD;
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.SurfaceType.SOCCER_GRASS;
 
@@ -32,6 +35,9 @@ public class LayoutFragment extends Fragment {
 
     private GLLayoutView glView;
 
+    private Layout layout;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,7 +45,7 @@ public class LayoutFragment extends Fragment {
         Util.forceReloadResources();
 
         // for testing
-        Layout layout = new Layout();
+        layout = new Layout();
         layout.background = new Background(SOCCER_GRASS, SOCCER_FIELD);
         layout.materials.add(new MaterialComponent(MaterialType.BALL));
         PathComponent path = new PathComponent(PathType.PASS);
@@ -68,4 +74,9 @@ public class LayoutFragment extends Fragment {
         super.onPause();
         glView.onPause();
     }
+
+    public List<Pair<MaterialType, Integer>> returnMaterialList(){
+        return layout.materialList();
+    }
+
 }
