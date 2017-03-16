@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialType;
+
+import java.util.List;
 
 
 /**
@@ -51,6 +56,8 @@ public class UebungActivity extends AppCompatActivity {
 
     //TODO: Kapseln!
     public int entryID;
+    public List<Pair<MaterialType, Integer>> materialList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +139,12 @@ public class UebungActivity extends AppCompatActivity {
             return true;
         }
 
+        /**
+         * Hole die MaterialListe aus der Grafik.
+         */
+        LayoutFragment f = (LayoutFragment) mSectionsPagerAdapter.getItem(0);
+        materialList = f.returnMaterialList();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -153,6 +166,8 @@ public class UebungActivity extends AppCompatActivity {
         // Schnittstelle zur Datenbank
         private DBConnection dbConnection;
 
+        public static List<Pair<MaterialType, Integer>> mList;
+
 
         public DetailFragment() {
         }
@@ -161,12 +176,13 @@ public class UebungActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static DetailFragment newInstance(int sectionNumber) {
+        public static DetailFragment newInstance(int sectionNumber, List<Pair<MaterialType, Integer>> materialList) {
             DetailFragment fragment = new DetailFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             entryID = sectionNumber;
+            mList = materialList;
             return fragment;
         }
 
@@ -204,6 +220,9 @@ public class UebungActivity extends AppCompatActivity {
                 }
             });
 
+            //TextView materialliste = (TextView) View.findViewById(R.id.uebungMaterial);
+
+
             return rootView;
         }
 
@@ -240,7 +259,7 @@ public class UebungActivity extends AppCompatActivity {
                 case 0:
                     return new LayoutFragment();
                 case 1:
-                    return DetailFragment.newInstance(entryID);
+                    return DetailFragment.newInstance(entryID, materialList);
                 default:
                     return null;
             }

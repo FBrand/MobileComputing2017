@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Exercise Class Test
-       /* Exercise e = new Exercise();
+        /*Exercise e = new Exercise();
         e.setContext(getBaseContext());
         e.createTestExercise();
         Log.i("Main", "e");*/
