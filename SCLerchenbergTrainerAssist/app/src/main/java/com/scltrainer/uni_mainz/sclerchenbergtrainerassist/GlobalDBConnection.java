@@ -110,7 +110,12 @@ public class GlobalDBConnection {
      * @return              true if successfull, else false
      */
     public static Boolean delete(String tableName, int localId) {
-        String result = GlobalDBConnection.delete(host + "/" + autorMail + "/" + tableName + "/" + globalId);
+        String result = null;//TODO + globalId);
+        try {
+            result = GlobalDBConnection.delete(host + "/" + autorMail + "/" + tableName + "/" );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return result.contains("200");
     }
 
