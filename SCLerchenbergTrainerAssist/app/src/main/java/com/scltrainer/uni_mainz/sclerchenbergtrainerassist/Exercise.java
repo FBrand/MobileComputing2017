@@ -25,6 +25,7 @@ public class Exercise {
     private int physiqueRating;
     private int numbPlayerMin;
     private int numbPlayerMax;
+    //TODO: Ist groupSize in der DB ein Int oder ein String?
     private int groupSize;
     private int duration;
 
