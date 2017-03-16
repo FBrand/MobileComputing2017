@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        //Exercise Class Test
+       /* Exercise e = new Exercise();
+        e.setContext(getBaseContext());
+        e.createTestExercise();
+        Log.i("Main", "e");*/
+
         fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.menu_frame, new MenuFragment(),"menu");
