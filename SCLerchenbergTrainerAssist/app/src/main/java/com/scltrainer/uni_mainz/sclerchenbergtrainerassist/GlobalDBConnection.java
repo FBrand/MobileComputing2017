@@ -1,7 +1,9 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 
 import org.json.JSONArray;
@@ -66,10 +68,10 @@ public class GlobalDBConnection {
      * @param context       context of the calling activity
      * @return              true if successfull, else false
      */
-    public static Boolean upload(String tableName, int localId, Context context) {
+    public static Boolean upload(String tableName, int localId, Activity context) {
 
-        //SharedPreferences shared = context.getSharedPreferences();
-        //String autorMail = shared.getString(USEREMAIL, "");
+        SharedPreferences shared = context.getPreferences(Context.MODE_PRIVATE);
+        String autorMail = shared.getString("USEREMAIL", "");
 
         JSONObject data = loadFromDB(localId, tableName, context);
         String result = "";

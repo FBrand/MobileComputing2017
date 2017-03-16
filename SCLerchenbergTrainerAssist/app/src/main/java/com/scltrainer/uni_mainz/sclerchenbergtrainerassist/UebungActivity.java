@@ -21,7 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -166,8 +168,6 @@ public class UebungActivity extends AppCompatActivity {
             return fragment;
         }
 
-
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -181,6 +181,15 @@ public class UebungActivity extends AppCompatActivity {
             listAdapter.bindView(rootView, this.getContext(), dbCursor);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            Button uploadButton = (Button) rootView.findViewById(R.id.uploadButtonUebung);
+            uploadButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), "ÄTSCHIBÄTSCH", Toast.LENGTH_LONG).show();
+                }
+            });
+
             return rootView;
         }
 
