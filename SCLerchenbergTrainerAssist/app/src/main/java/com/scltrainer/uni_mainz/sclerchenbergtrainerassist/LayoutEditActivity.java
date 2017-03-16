@@ -3,6 +3,9 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageButton;
+import android.util.Log;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -19,6 +22,9 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compon
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathType;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Thumbnail;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.FieldType.SOCCER_FIELD;
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.SurfaceType.SOCCER_GRASS;
 
@@ -28,6 +34,7 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout
 
 public class LayoutEditActivity extends AppCompatActivity {
     private GLLayoutEditView glView;
+    private Layout layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +43,7 @@ public class LayoutEditActivity extends AppCompatActivity {
 
         // Create a GLSurfaceView instance
         glView = new GLLayoutEditView(this);
-        Layout layout = new Layout();
+        layout = new Layout();
         layout.background = new Background(SOCCER_GRASS, SOCCER_FIELD);
         glView.setLayout(layout);
 
@@ -53,6 +60,20 @@ public class LayoutEditActivity extends AppCompatActivity {
         listener.addItemGroup(new ItemGroup(glView.pathEditOnClickListener, 1));
 
         componentList.setOnItemClickListener(listener);
+
+        AppCompatImageButton saveButton = (AppCompatImageButton) findViewById(R.id.save_layout_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    JSONObject jsonLayout = layout.toJSON();
+                    layout = Layout.fromJSON(jsonLayout);
+                    glView.setLayout(layout);
+                } catch (JSONException e) {
+                    Log.e("JSON", e.getMessage());
+                }
+            }
+        });
     }
 
     private Thumbnail[] thumbnails() {
@@ -81,4 +102,7 @@ public class LayoutEditActivity extends AppCompatActivity {
         super.onPause();
         glView.onPause();
     }
+
+
+
 }

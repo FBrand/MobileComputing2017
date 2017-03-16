@@ -1,8 +1,12 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.joml.Vector2f;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +24,22 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout
 
 public class PathComponent extends Component<Path, PathComponent> {
 
+    private static final String TYPE_JSON_NAME = "Type";
+    private static final String POSITIONS_JSON_NAME = "Positions";
+    private static final String POSITION_JSON_NAME = "Position";
+    private static final String X_JSON_NAME = "x";
+    private static final String Y_JSON_NAME = "y";
+
     private PathType type;
     private List<Vector2f> points = new ArrayList<>();
 
     public PathComponent(PathType type) {
+        this(type, new Vector2f());
+    }
+
+    public PathComponent(PathType type, Vector2f pos) {
         this.type = type;
+        this.pos = pos;
     }
 
     public void addPoint(Vector2f point) {
@@ -47,8 +62,9 @@ public class PathComponent extends Component<Path, PathComponent> {
     }
 
     @Override
-    public void init(Context context) {
+    protected void doInit(Context context) {
         Path layer = getLayer();
+        layer.line.update();
         layer.triangle = TriangleVBO.getUnitTriangle();
         layer.texture = TextureFactory.loadTexture(context, R.drawable.empty);
     }
@@ -80,6 +96,35 @@ public class PathComponent extends Component<Path, PathComponent> {
 
     public int size() {
         return points.size();
+    }
+
+    @Override
+    public JSONObject toJSON() throws JSONException {
+        JSONArray temp = new JSONArray();
+        for(Vector2f point : points){
+            temp.put(new JSONObject().put(X_JSON_NAME, point.x).put(Y_JSON_NAME, point.y));
+        }
+        return new JSONObject().put(TYPE_JSON_NAME, type.ordinal())
+                .put(POSITION_JSON_NAME, new JSONObject().put(X_JSON_NAME, pos.x).put(Y_JSON_NAME, pos.y))
+                .put(POSITIONS_JSON_NAME, temp);
+    }
+
+    public static PathComponent fromJSON(JSONObject json) throws JSONException {
+
+        PathType type = PathType.values()[json.getInt(TYPE_JSON_NAME)];
+        JSONObject position = json.getJSONObject(POSITION_JSON_NAME);
+        float x = (float) position.getDouble(X_JSON_NAME);
+        float y = (float) position.getDouble(Y_JSON_NAME);
+        PathComponent path = new PathComponent(type, new Vector2f(x,y));
+
+        JSONArray points = json.getJSONArray(POSITIONS_JSON_NAME);
+        for (int i = 0; i < points.length(); i++) {
+            JSONObject point = points.getJSONObject(i);
+            x = (float) point.getDouble(X_JSON_NAME);
+            y = (float) point.getDouble(Y_JSON_NAME);
+            path.points.add(new Vector2f(x,y));
+        }
+        return path;
     }
 
     private class PointUpdate implements LayerUpdate {

@@ -7,6 +7,8 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.LayerUpdate;
 
 import org.joml.Vector2f;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -20,6 +22,7 @@ import java.util.Set;
 public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGroup, T> implements Iterable<T> {
 
     private Set<T> components = new LinkedHashSet<>();
+    private Context context;
 
     public ComponentGroup(T... components) {
         for (T component : components)
@@ -46,7 +49,8 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
     }
 
     @Override
-    public void init(Context context) {
+    protected void doInit(Context context) {
+        this.context = context;
         for (T component : components) {
             component.init(context);
         }
@@ -87,6 +91,14 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
         return components.size();
     }
 
+    public JSONArray toJSONArray() throws JSONException {
+        JSONArray temp = new JSONArray();
+        for(Component c : components){
+            temp.put(c.toJSON());
+        }
+        return temp;
+    }
+
     private class LayerAddUpdate implements LayerUpdate {
 
         private T component;
@@ -97,6 +109,7 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
 
         @Override
         public void run() {
+            component.init(context);
             getLayer().add(component.getLayer());
         }
     }

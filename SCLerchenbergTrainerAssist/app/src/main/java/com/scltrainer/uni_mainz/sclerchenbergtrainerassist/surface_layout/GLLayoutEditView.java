@@ -1,8 +1,10 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -172,6 +174,7 @@ public class GLLayoutEditView extends GLLayoutView {
             return true;
         }
 
+
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             final Vector2f end = new Vector2f(e2.getX(), e2.getY());
@@ -310,7 +313,6 @@ public class GLLayoutEditView extends GLLayoutView {
                     // create and add material
                     final Vector2f pos = worldCoord(e);
                     MaterialComponent component = new MaterialComponent(selectedMaterialType, pos);
-                    initLayer(component);
                     layout.materials.add(component);
                     updateLayer(layout.materials);
                     return true;
@@ -321,8 +323,7 @@ public class GLLayoutEditView extends GLLayoutView {
                     // add point
                     pathComponent.addPoint(worldCoord(e).sub(pathComponent.getPosition()));
                     updateLayer(pathComponent);
-                    if (pathComponent.size() == 2) { // a valid path has at leas 2 points
-                        initLayer(pathComponent);
+                    if (pathComponent.size() == 2) { // a valid path has at least 2 points
                         layout.paths.add(pathComponent);
                         updateLayer(layout.paths);
                     }
