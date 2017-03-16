@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Dies ist ein Platzhalter für die Detailansicht einer Übung!
@@ -95,6 +97,7 @@ public class UebungDetailFragment extends Fragment {
         //Log.i(TAG, "listAdapter inintiiert");
         //getActivity().setListAdapter(listAdapter);
         Log.i("UebungDetailFragment", "setListAdapter");
+
     }
 
     @Override

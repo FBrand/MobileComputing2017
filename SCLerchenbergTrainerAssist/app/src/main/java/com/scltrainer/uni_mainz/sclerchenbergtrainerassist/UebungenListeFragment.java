@@ -105,7 +105,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         Intent intent = new Intent(getActivity(), UebungActivity.class);
         intent.putExtra("_id", i);
         startActivity(intent);
-        Toast.makeText(getActivity(), "Item " + listAdapter.getIds().get(i) + " was clicked", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Item " + listAdapter.getIds().get(i) + " was clicked", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -78,6 +78,12 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         if(cursor == null) return;
 
 
+
+
+
+        ids.add(cursor.getInt(0));
+
+
         TextView uebungenListeName = (TextView) view.findViewById(R.id.uebungListeName);//nameUebung-1
         TextView uebungenListeDauer = (TextView) view.findViewById(R.id.uebungListeZeitaufwand);//Dauer-2
         TextView uebungenListeAutor = (TextView) view.findViewById(R.id.uebungenListeAutor);
@@ -125,6 +131,7 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         //Log.i(TAG, "newView");
 
         //return inflator.inflate(R.layout.vertretungsplan2, null);
+        //cursor.moveToFirst();
 
         return LayoutInflater.from(context).inflate(R.layout.fragment_uebungen_liste_element, parent, false);
 

@@ -1,6 +1,8 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -21,7 +23,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -166,8 +170,6 @@ public class UebungActivity extends AppCompatActivity {
             return fragment;
         }
 
-
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -181,6 +183,27 @@ public class UebungActivity extends AppCompatActivity {
             listAdapter.bindView(rootView, this.getContext(), dbCursor);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            Button uploadButton = (Button) rootView.findViewById(R.id.uploadButtonUebung);
+            uploadButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
+                    if (!sharedPreferences.getString("USEREMAIL", "").equals("")){
+                        //TODO: ID der derzeit angezeigten Übung geben lassen und in die richtige Tabelle hochladen!
+                        //AUCH TODO: Schauen ob diese Einheit schon hochgeladen wurde.
+                        try {
+                            GlobalDBConnection.upload("TABELLEN_NAME", 0, getActivity());
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Fehler beim Hochladen!", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Sie müssen zuerst Ihre Email freigeben!", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+
             return rootView;
         }
 
