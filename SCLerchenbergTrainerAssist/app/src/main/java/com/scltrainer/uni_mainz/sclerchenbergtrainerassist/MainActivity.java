@@ -60,10 +60,9 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
         //Startdialog
-        boolean startdialogUnterdrücken = true; //Boolean um Startdialog zu unterdrücken
+        boolean startdialogUnterdrücken = false; //Boolean um Startdialog zu unterdrücken
         SharedPreferences shared = this.getPreferences(Context.MODE_PRIVATE);
         boolean isFirstRun = shared.getBoolean("ISFIRSTRUN", true);
-        //isFirstRun = true; //Um ersten Start zu simulieren
 
         if(isFirstRun && !startdialogUnterdrücken){
             this.startdialog();
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.fab = (FloatingActionButton) findViewById(R.id.fab_menu);
-        this.fab.hide();
 
         Log.i("APP", "onCreate ende");
     }

@@ -45,7 +45,7 @@ public class DBInfo {
     public static final String TRAININGSUNIT_COLUMN_NAME_KEYWORDS = "keywords";
     public static final String TRAININGSUNIT_COLUMN_NAME_EXERCISE = "exercise"; //Nicht wichtig!
 
-    public static final String GRAPHIC_TABLE_NAME = "graphic";
+    public static final String GRAPHIC_TABLE_NAME = "graphic"; //unwichtig
     public static final String GRAPHIC_COLUMN_NAME_ID = "_id";
     public static final String GRAPHIC_COLUMN_NAME_EXERCIXE = "exercise";
     public static final String GRAPHIC_COLUMN_NAME_DESCRIPTION = "description";

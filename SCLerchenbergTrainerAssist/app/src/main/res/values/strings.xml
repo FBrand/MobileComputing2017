@@ -11,6 +11,7 @@
         <item>Übungen</item>
         <item>Einheiten</item>
         <item>Einstellungen</item>
+        <item>Datenbank aktualisieren</item>
     </string-array>
 
     <string-array name="uebungTest">
