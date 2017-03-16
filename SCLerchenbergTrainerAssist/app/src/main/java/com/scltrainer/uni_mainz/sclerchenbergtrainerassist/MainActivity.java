@@ -1,5 +1,7 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -9,8 +11,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.provider.CalendarContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +23,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.app.FragmentManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fm;
 
     Button startdialogButton;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +63,19 @@ public class MainActivity extends AppCompatActivity {
         boolean startdialogUnterdrücken = true; //Boolean um Startdialog zu unterdrücken
         SharedPreferences shared = this.getPreferences(Context.MODE_PRIVATE);
         boolean isFirstRun = shared.getBoolean("ISFIRSTRUN", true);
-        isFirstRun = true; //Um ersten Start zu simulieren
+        //isFirstRun = true; //Um ersten Start zu simulieren
 
         if(isFirstRun && !startdialogUnterdrücken){
             this.startdialog();
 
             SharedPreferences.Editor edit = shared.edit();
             edit.putBoolean("ISFIRSTRUN", false);
+            edit.putString("LASTDATABASEUPDATE", "0000-00-00 00:00:00");
             edit.commit();
         }
+
+        this.fab = (FloatingActionButton) findViewById(R.id.fab_menu);
+        this.fab.hide();
 
         Log.i("APP", "onCreate ende");
     }
@@ -72,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if (getFragmentManager().getBackStackEntryCount()== 0){
+        getFragmentManager().popBackStack();
+        fab.hide();
+        if (getFragmentManager().getBackStackEntryCount() == 0){
             super.onBackPressed();
-        } else {
-            getFragmentManager().popBackStack();
         }
     }
 
@@ -108,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences shared = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = shared.edit();
                 editor.putString("USERNAME", nutzername);
+                editor.commit();
             }
         });
         AlertDialog dialog = builder.create();
@@ -152,4 +164,20 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
+
+            String email = "";
+            if(accounts.length > 0) {
+                email = accounts[0].name;
+            }
+
+            SharedPreferences.Editor edit = this.getPreferences(Context.MODE_PRIVATE).edit();
+            edit.putString("USEREMAIL", email);
+            edit.commit();
+        }
+    }
 }

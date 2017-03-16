@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--
+    Editieransicht für Details von Einheiten.
+    Kann für Neuerzeugung und Änderungen von Einheitsdetails genutzt werden.
+    Der Buttontext sollte kontextbezogen angepasst werden durch die jeweiligen Fragments.
+    Dauer und Gruppengröße sollten durch die eingefügten Übungen in der reinen Detailansicht
+    errechnet werden und nicht hier durch den Nutzer eingegeben werden.
+    -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/editEinheitName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="@string/editEinheitName" />
+
+            <EditText
+                android:id="@+id/editEinheitSchwerpunkte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/editEinheitKeywords"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editEinheitBeschreibung"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:hint="@string/editEinheitDescription"/>
+
+            <Button
+                android:id="@+id/editEinheitSpeichern"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/save" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

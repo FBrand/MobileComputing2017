@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
 
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +24,14 @@ import android.widget.Toast;
  */
 public class MenuFragment extends ListFragment implements OnItemClickListener {
 
+    FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.i("APP", "onCreateView start");
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_menu);
         Log.i("APP", "onCreate ende");
         return view;
 
@@ -60,9 +63,11 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
         switch (position){
             case 0:
                 doTransaction(R.id.menu_frame, new UebungenListeFragment(), "uebungsliste");
+                fab.show();
                 break;
             case 1:
                 doTransaction(R.id.menu_frame, new EinheitenListeFragment(), "einheitenliste");
+                fab.show();
                 break;
             case 2:
                 doTransaction(R.id.menu_frame, new EinstellungenFragment(), "einstellungen");

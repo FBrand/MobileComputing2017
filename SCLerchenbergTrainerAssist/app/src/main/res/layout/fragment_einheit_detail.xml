@@ -32,7 +32,8 @@
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/einheitFavoriten" android:numStars="1"
-                android:rating="0" android:stepSize="1" />
+                android:rating="0" android:stepSize="1"
+                android:visibility="gone"/>
 
             <TextView
                 android:text="Autor"
@@ -65,6 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="createCalendarEvent"
+                android:visibility="gone"
                 android:text="@string/addCalendarDate" />
 
             <ListView
