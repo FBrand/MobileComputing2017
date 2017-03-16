@@ -1,7 +1,10 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 
 
 /**
@@ -14,8 +17,20 @@ import android.os.Bundle;
 
 public class CreateEinheitActivity extends Activity{
 
+    FragmentManager fm;
+    String TAG = "CreateEinheitActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i(TAG, "onCreate starts");
+
+        setContentView(R.layout.activity_create_einheit_detail);
+
+        fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.create_einheit_frame, new EinheitDetailEditFragment(),"EinheitDetail");
+        ft.commit();
     }
 }
