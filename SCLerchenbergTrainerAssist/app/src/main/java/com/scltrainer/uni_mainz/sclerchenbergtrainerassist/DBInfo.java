@@ -22,7 +22,7 @@ public class DBInfo {
     public static final String EXERCISE_COLUMN_NAME_GRAPHIC = "graphic";
     public static final String EXERCISE_COLUMN_NAME_GROUPSIZE = "groupsize";
     public static final String EXERCISE_COLUMN_NAME_LASTCHANGE = "lastChange";
-    public static final String EXERCISE_COLUMN_NAME_MATIRIAL = "matirial";
+    public static final String EXERCISE_COLUMN_NAME_MATERIAL = "material";
     public static final String EXERCISE_COLUMN_NAME_NAME = "name";
     public static final String EXERCISE_COLUMN_NAME_KEYWORDS = "keywords";
     public static final String EXERCISE_COLUMN_NAME_PHYSIS = "physis";
