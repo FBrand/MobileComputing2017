@@ -82,7 +82,6 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
                 renderer.updateWorldBounds(1,1/layout.background.getFieldAspect());
                 layout.background.setSurfaceSize(renderer.getWorldBounds());
             }});
-
         updateLayer(layout.background);
     }
 
