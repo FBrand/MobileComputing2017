@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Startdialog
         boolean startdialogUnterdrücken = false; //Boolean um Startdialog zu unterdrücken
-        SharedPreferences shared = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences shared = this.getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
         boolean isFirstRun = shared.getBoolean("ISFIRSTRUN", true);
 
         if(isFirstRun && !startdialogUnterdrücken){
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String nutzername = MainActivity.this.trimmeNutzernamen(input.getText().toString());
-                SharedPreferences shared = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences shared = MainActivity.this.getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = shared.edit();
                 editor.putString("USERNAME", nutzername);
                 editor.commit();
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 email = accounts[0].name;
             }
 
-            SharedPreferences.Editor edit = this.getPreferences(Context.MODE_PRIVATE).edit();
+            SharedPreferences.Editor edit = this.getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE).edit();
             edit.putString("USEREMAIL", email);
             edit.commit();
         }

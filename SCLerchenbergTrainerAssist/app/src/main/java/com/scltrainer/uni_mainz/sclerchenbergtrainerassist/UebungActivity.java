@@ -1,6 +1,8 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -186,7 +188,19 @@ public class UebungActivity extends AppCompatActivity {
             uploadButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "ÄTSCHIBÄTSCH", Toast.LENGTH_LONG).show();
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
+                    if (!sharedPreferences.getString("USEREMAIL", "").equals("")){
+                        //TODO: ID der derzeit angezeigten Übung geben lassen und in die richtige Tabelle hochladen!
+                        //AUCH TODO: Schauen ob diese Einheit schon hochgeladen wurde.
+                        try {
+                            GlobalDBConnection.upload("TABELLEN_NAME", 0, getActivity());
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Fehler beim Hochladen!", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Sie müssen zuerst Ihre Email freigeben!", Toast.LENGTH_LONG).show();
+                    }
+
                 }
             });
 
