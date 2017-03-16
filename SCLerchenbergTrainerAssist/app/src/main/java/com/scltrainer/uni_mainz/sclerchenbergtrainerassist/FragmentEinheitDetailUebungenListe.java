@@ -106,7 +106,6 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
         DBConnection dbConnection = DBHelper.getConnection(context);
 
         String s = DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ? ";
-        System.out.println("position !!!!!!!!!!!!!!!!!!!!!!!!!!: " + position);
         String[] sArgs = {"" + position};
         String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME,
                 DBInfo.EXERCISE_COLUMN_NAME_DURATION};
