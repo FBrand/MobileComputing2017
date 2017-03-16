@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
             DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS + " STRING," +
             DBInfo.EXERCISE_COLUMN_NAME_LASTCHANGE +" DATE," +
-            DBInfo.EXERCISE_COLUMN_NAME_MATIRIAL + " STRING," +
+            DBInfo.EXERCISE_COLUMN_NAME_MATERIAL + " STRING," +
             DBInfo.EXERCISE_COLUMN_NAME_NAME + " STRING," +
             DBInfo.EXERCISE_COLUMN_NAME_PHYSIS + " INTEGER," +
             DBInfo.EXERCISE_COLUMN_NAME_RATING + " DOUBLE," +
@@ -112,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GRAPHIC, "HFASFJK");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE, 5);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, "Passen");
-        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATIRIAL, "Ball, Tor");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATERIAL, "Ball, Tor");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_NAME, "Flanken");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_PHYSIS, 1);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_RATING, 3.5);
@@ -132,7 +132,7 @@ public class DBHelper extends SQLiteOpenHelper {
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GRAPHIC, "HFadASFJK");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE, 4);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, "Schuss");
-        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATIRIAL, "Ball, Tor");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATERIAL, "Ball, Tor");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_NAME, "Topspin");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_PHYSIS, 1);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_RATING, 4.5);
@@ -152,7 +152,7 @@ public class DBHelper extends SQLiteOpenHelper {
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GRAPHIC, "HFdadsadASFJK");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE, 6);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, "Zweikampf");
-        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATIRIAL, "3 Ball");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATERIAL, "3 Ball");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_NAME, "Körpertäuschung");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_PHYSIS, 3);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_RATING, 1.5);
@@ -172,7 +172,7 @@ public class DBHelper extends SQLiteOpenHelper {
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GRAPHIC, "HFdadsadASFJK");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE, 6);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, "Gruppenkampf");
-        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATIRIAL, "3 Ball");
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_MATERIAL, "3 Ball");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_NAME, "Körperschlächtung");
         row.put(DBInfo.EXERCISE_COLUMN_NAME_PHYSIS, 3);
         row.put(DBInfo.EXERCISE_COLUMN_NAME_RATING, 0);
