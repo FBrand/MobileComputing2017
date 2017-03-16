@@ -5,6 +5,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +23,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import java.util.Date;
 
 
 /**
@@ -72,9 +80,53 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
             case 2:
                 doTransaction(R.id.menu_frame, new EinstellungenFragment(), "einstellungen");
                 break;
+            case 3:
+                aktualisiereDatenbank();
+                break;
             default:
                 Toast.makeText(getActivity(), "default switch case", Toast.LENGTH_LONG);
         }
+    }
+
+    private void aktualisiereDatenbank() {
+        SharedPreferences shared = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String lastUpdate = shared.getString("LASTDATABASEUPDATE", "");
+
+        java.util.Calendar c = new java.util.GregorianCalendar();
+        String year = String.valueOf(c.get(java.util.Calendar.YEAR));
+        int monthInt = c.get(java.util.Calendar.MONTH) +1;
+        String month = myToString(monthInt);
+        int dayInt = c.get(java.util.Calendar.DAY_OF_MONTH);
+        String day = myToString(dayInt);
+        int hourInt = c.get(java.util.Calendar.HOUR_OF_DAY);
+        String hour = myToString(hourInt);
+        int minuteInt = c.get(java.util.Calendar.MINUTE);
+        String minute = myToString(minuteInt);
+        int secondInt = c.get(java.util.Calendar.SECOND);
+        String second = myToString(secondInt);
+
+        String currentDateTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+
+        try {
+            GlobalDBConnection.fetch(DBInfo.EXERCISE_TABLE_NAME, getActivity(), currentDateTime);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Fehler beim Aktualisieren der Datenbank.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+
+        SharedPreferences.Editor editor = shared.edit();
+        //editor.putString();
+
+    }
+
+    private String myToString(int value){
+        String result = "";
+        if(value < 10){
+            result = "0" + String.valueOf(value);
+        } else {
+            result = String.valueOf(value);
+        }
+        return result;
     }
 
     private void doTransaction(int frameID, Fragment fragment, String tag){
