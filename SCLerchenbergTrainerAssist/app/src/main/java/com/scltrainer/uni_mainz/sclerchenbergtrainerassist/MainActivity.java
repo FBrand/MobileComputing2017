@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fm;
 
     Button startdialogButton;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +59,22 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
         //Startdialog
-        boolean startdialogUnterdrücken = false; //Boolean um Startdialog zu unterdrücken
+        boolean startdialogUnterdrücken = true; //Boolean um Startdialog zu unterdrücken
         SharedPreferences shared = this.getPreferences(Context.MODE_PRIVATE);
         boolean isFirstRun = shared.getBoolean("ISFIRSTRUN", true);
-        isFirstRun = true; //Um ersten Start zu simulieren
+        //isFirstRun = true; //Um ersten Start zu simulieren
 
         if(isFirstRun && !startdialogUnterdrücken){
             this.startdialog();
 
             SharedPreferences.Editor edit = shared.edit();
             edit.putBoolean("ISFIRSTRUN", false);
+            edit.putString("LASTDATABASEUPDATE", "0000-00-00 00:00:00");
             edit.commit();
         }
+
+        this.fab = (FloatingActionButton) findViewById(R.id.fab_menu);
+        this.fab.hide();
 
         Log.i("APP", "onCreate ende");
     }
@@ -76,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if (getFragmentManager().getBackStackEntryCount()== 0){
+        getFragmentManager().popBackStack();
+        fab.hide();
+        if (getFragmentManager().getBackStackEntryCount() == 0){
             super.onBackPressed();
-        } else {
-            getFragmentManager().popBackStack();
         }
     }
 

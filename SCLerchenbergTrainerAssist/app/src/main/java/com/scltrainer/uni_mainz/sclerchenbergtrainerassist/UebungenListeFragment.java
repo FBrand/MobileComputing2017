@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,6 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         Log.i(TAG, "startManagingCursor");
         listAdapter = new UebungenListeAdapter(getActivity(), dbCursor);
         setListAdapter(listAdapter);
-
 
         Log.i(TAG, "onCreateView fertig");
 
