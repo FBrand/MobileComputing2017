@@ -1,5 +1,6 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Context;
@@ -26,7 +27,9 @@ import android.widget.Toast;
  *
  */
 
-public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
+public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment implements DurationDialog.DurationDialogListener{
+    private int exercise;
+    private int trainingsunit;
 
     FloatingActionButton fab;
 
@@ -80,8 +83,31 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
 
         addUebungToEinheit(posEinheit, this.getListAdapter().getIds().get(posUebung), getActivity().getBaseContext());
 
+    }
 
-        Toast.makeText(getActivity(), "Uebung " + this.getListAdapter().getIds().get(posUebung) + " hinzugefuegt", Toast.LENGTH_SHORT).show();
+    //neu
+    public void addUebungToEinheit(int einheit, int position, Context context){
+
+        exercise = position;
+        trainingsunit = einheit;
+
+        DurationDialog d = new DurationDialog();
+        d.addListener(this);
+        d.show(getFragmentManager(),"Übungsdauer eingeben");
+
+    }
+
+
+    @Override
+    public void onDialogPoistiveClick(int duration) {
+        DBConnection dbConnection = DBHelper.getConnection(this.getActivity().getBaseContext());
+        ContentValues row = new ContentValues();
+        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT, trainingsunit);
+        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE, exercise);
+        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_DURATION, duration);
+        dbConnection.insert(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, row);
+
+        Toast.makeText(getActivity(), "Uebung " + exercise + " hinzugefuegt", Toast.LENGTH_SHORT).show();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         //ft.replace(R.id.fragment, new EinheitDetailFragment(), null);
@@ -92,35 +118,10 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
         fab.show();
         getFragmentManager().popBackStack();
         getFragmentManager().executePendingTransactions();
-
-        /**
-         * TODO: Aktion: Uebung der Einheit hinzufügen!
-         * TODO: Dialog zur Abfrage der gewünschten Dauer einfügen
-         */
-        //Intent intent = new Intent(getActivity(), UebungActivity.class);
-        //startActivity(intent);
     }
 
-    //neu
-    public void addUebungToEinheit(int einheit, int position, Context context){
-        DBConnection dbConnection = DBHelper.getConnection(context);
+    @Override
+    public void onDialogNegativeClick(int duration) {
 
-        String s = DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ? ";
-        String[] sArgs = {"" + position};
-        String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME,
-                DBInfo.EXERCISE_COLUMN_NAME_DURATION};
-
-        Cursor cursor= dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
-        cursor.moveToFirst();
-        String name=cursor.getString(1);
-        String duration=cursor.getString(2);
-
-        ContentValues row = new ContentValues();
-        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT, einheit);
-        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE, position);
-        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_DURATION, duration);
-        dbConnection.insert(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, row);
     }
-
-
 }
