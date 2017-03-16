@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
 
 
 public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAdapter {
@@ -77,16 +78,23 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         if(cursor == null) return;
 
 
-        ids.add(cursor.getInt(0));
-
         TextView uebungenListeName = (TextView) view.findViewById(R.id.uebungListeName);//nameUebung-1
         TextView uebungenListeDauer = (TextView) view.findViewById(R.id.uebungListeZeitaufwand);//Dauer-2
+        TextView uebungenListeAutor = (TextView) view.findViewById(R.id.uebungenListeAutor);
+        TextView uebungenListeKeywords = (TextView) view.findViewById(R.id.uebungListeSchwerpunkt);
+        TextView schlag = (TextView) view.findViewById(R.id.uebungListeSchlagwoerter);
 
 
-
-
-        uebungenListeName.setText(cursor.getString(1));
-        uebungenListeDauer.setText(cursor.getString(2));
+        DBConnection dbConnection = DBHelper.getConnection(context);
+        String[]sArr = {DBInfo.EXERCISE_COLUMN_NAME_NAME};
+        String[] args = {cursor.getString(0)};
+        Cursor c = dbConnection.select(DBInfo.EXERCISE_TABLE_NAME , sArr, DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ?", args);
+        c.moveToFirst();
+        uebungenListeAutor.setVisibility(GONE);
+        uebungenListeKeywords.setVisibility(GONE);
+        schlag.setVisibility(GONE);
+        uebungenListeName.setText(c.getString(0));
+        uebungenListeDauer.setText(cursor.getString(1));
 
         Log.i(TAG,uebungenListeName.getText().toString());
 
@@ -97,10 +105,10 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         idList.add(cursor.getInt(0));
 
         //Log.i(TAG, "_id: " + idList.get(cursor.getInt(0)-1));
-
-
-
         cursor.moveToNext();
+
+
+
 
 
 

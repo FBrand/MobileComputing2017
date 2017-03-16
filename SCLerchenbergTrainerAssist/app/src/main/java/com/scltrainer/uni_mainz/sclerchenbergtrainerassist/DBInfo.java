@@ -53,6 +53,7 @@ public class DBInfo {
     public static final String GRAPHIC_COLUMN_NAME_TYPE = "type";
 
     public static final String TRAININGSUNITEXERCISE_TABLE_NAME = "trainingsunitexercise";
+    public static final String TRAININGSUNITEXERCISE_COLUMN_NAME_ID = "_id";
     public static final String TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT = "trainingsunit";
     public static final String TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE = "exercise";
     public static final String TRAININGSUNITEXERCISE_COLUMN_NAME_DURATION = "duration";
