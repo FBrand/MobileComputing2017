@@ -89,7 +89,7 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
     }
 
     private void aktualisiereDatenbank() {
-        SharedPreferences shared = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences shared = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
         String lastUpdate = shared.getString("LASTDATABASEUPDATE", "");
 
         java.util.Calendar c = new java.util.GregorianCalendar();

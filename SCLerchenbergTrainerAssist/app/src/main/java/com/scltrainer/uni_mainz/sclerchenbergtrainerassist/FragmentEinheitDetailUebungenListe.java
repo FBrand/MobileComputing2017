@@ -117,7 +117,7 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment {
 
         ContentValues row = new ContentValues();
         row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT, einheit);
-        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE, name);
+        row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_EXERCISE, position);
         row.put(DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_DURATION, duration);
         dbConnection.insert(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, row);
     }

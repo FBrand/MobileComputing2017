@@ -43,7 +43,7 @@ public class EinstellungenFragment extends Fragment {
         final Button acceptButton = (Button) (getActivity().findViewById(R.id.acceptButton));
         acceptButton.setEnabled(false);
 
-        final SharedPreferences shared = getActivity().getPreferences(Context.MODE_PRIVATE);
+        final SharedPreferences shared = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
         String username = shared.getString("USERNAME", "");
 
         final EditText usernameText = (EditText) (getActivity().findViewById(R.id.usernameText));
