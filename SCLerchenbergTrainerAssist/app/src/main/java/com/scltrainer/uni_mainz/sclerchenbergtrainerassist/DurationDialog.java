@@ -3,6 +3,8 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by lars on 16.03.17.
@@ -21,7 +24,7 @@ import android.widget.TextView;
 
 public class DurationDialog extends DialogFragment {
 
-    private Integer duration;
+    private DialogFragment thisdialog = this;
 
     public void addListener(DurationDialogListener list){
         dialogListener = list;
@@ -48,11 +51,15 @@ public class DurationDialog extends DialogFragment {
         builder.setMessage(R.string.duratioDialog)
                 .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if (durationEditText == null || durationEditText.getText().toString() == ""){
-                            dialogListener.onDialogNegativeClick(0);
+                        if (durationEditText == null || durationEditText.getText().toString().equals("")){
+                            Toast.makeText(getActivity().getBaseContext(),"Geben Sie bitte eine Zeit für die Übung ein.", Toast.LENGTH_SHORT).show();
+                            DurationDialog d = new DurationDialog();
+                            d.addListener(dialogListener);
+                            d.show(getFragmentManager(),"Duration Dialog");
+                        }else {
+                            String dur = durationEditText.getText().toString();
+                            dialogListener.onDialogPoistiveClick(Integer.parseInt(dur));
                         }
-                        String dur = durationEditText.getText().toString();
-                        dialogListener.onDialogPoistiveClick(Integer.parseInt(dur));
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
