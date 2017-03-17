@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * EinheitDetailFragment zeigt eine konkrete Einheit an.
  * Wird von EinheitDetailAdapter befüllt.
@@ -27,13 +29,13 @@ import android.widget.TextView;
 
 
 
-public class EinheitDetailFragment extends Fragment {
+public class EinheitDetailFragment extends Fragment implements DeleteDialog.DeleteDialogListener{
 
     //TAG
 //private static final String TAG = UebungDetail.class.getSimpleName();
 
     // wird für die Listenansicht benötigt
-
+    private DeleteDialog.DeleteDialogListener dListener = this;
     private Cursor dbCursor1;
     private Cursor dbCursor2;
 
@@ -42,6 +44,8 @@ public class EinheitDetailFragment extends Fragment {
     private EinheitDetailAdapter listAdapter1;
     private EinheitDetailUebersichtEnthaltenerUebungenAdapter listAdapter2;
 
+    private int trainingsunitexercise = -1;
+    private ArrayList<Integer> trainingsunitexerciseID;
 
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
@@ -148,6 +152,17 @@ public class EinheitDetailFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+            uebung.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    trainingsunitexerciseID = listAdapter2.getTrainingsunitexerciseID();
+                    trainingsunitexercise = trainingsunitexerciseID.get(position);
+                    DeleteDialog d = new DeleteDialog();
+                    d.addListener(dListener);
+                    d.show(getFragmentManager(),"DeleteDialog");
+                    return true;
+                }
+            });
 
 
         }
@@ -185,4 +200,21 @@ public class EinheitDetailFragment extends Fragment {
     }
 
 
+    @Override
+    public void onDialogPoistiveClick(int duration) {
+        DBConnection con = DBHelper.getConnection(this.getActivity().getBaseContext());
+        String[] args = {""+trainingsunitexercise};
+        con.delete(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_ID+" = ?",args);
+        Fragment currentFragment = this;
+        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
+        fragTransaction.detach(currentFragment);
+        fragTransaction.attach(currentFragment);
+        fragTransaction.commit();
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(int duration) {
+
+    }
 }

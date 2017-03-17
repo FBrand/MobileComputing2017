@@ -168,6 +168,12 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
+    public void resetDB(View v){
+        DBHelper db = new  DBHelper(getBaseContext());
+        db.onUpgrade(db.getWritableDatabase(),1,1);
+        Log.i("Einstellungen", "DB reset");
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
