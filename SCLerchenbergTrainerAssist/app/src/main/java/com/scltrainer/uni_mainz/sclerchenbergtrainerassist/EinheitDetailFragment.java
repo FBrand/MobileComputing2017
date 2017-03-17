@@ -157,13 +157,23 @@ public class EinheitDetailFragment extends Fragment implements DeleteDialog.Dele
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
                 if (!sharedPreferences.getString("USEREMAIL", "").equals("")){
-                    /*
+
                     DBConnection connection = DBHelper.getConnection(getActivity());
-                    Cursor cursor = connection.select(DBInfo._TABLE_NAME, new String[] {DBInfo.EXERCISE_COLUMN_NAME_ID}, (DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {String.valueOf(entryID)});
+                    Cursor cursor = connection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, new String[] {DBInfo.TRAININGSUNIT_COLUMN_NAME_ID}, (DBInfo.TRAININGSUNIT_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {String.valueOf(entryID)});
                     cursor.moveToNext();
                     String globalID = cursor.getString(0);
                     if((globalID == null || globalID.equals("null"))) {
-                        try {
+                        try{
+                            Cursor exCusor = connection.select(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, new String[] {DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_ID}, (DBInfo.TRAININGSUNIT_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {String.valueOf(entryID)});
+                            while (exCusor.moveToNext()){
+                                String id = exCusor.getString(0);
+                                Cursor cursorp = connection.select(DBInfo.EXERCISE_TABLE_NAME, new String[] {DBInfo.EXERCISE_COLUMN_NAME_ID}, (DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {id});
+                                cursorp.moveToNext();
+                                String globalIDp = cursorp.getString(0);
+                                if((globalIDp == null || globalIDp.equals("null"))) {
+                                    GlobalDBConnection.upload(DBInfo.EXERCISE_TABLE_NAME, Integer.parseInt(id), getActivity());
+                                }
+                            }
                             GlobalDBConnection.upload(DBInfo.EXERCISE_TABLE_NAME, entryID, getActivity());
                             Toast.makeText(getActivity(), "Hochladen erfolgreich!", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
@@ -172,7 +182,7 @@ public class EinheitDetailFragment extends Fragment implements DeleteDialog.Dele
                     } else {
                         Toast.makeText(getActivity(), "Diese Einheit wurde bereits hochgeladen!", Toast.LENGTH_SHORT).show();
                     }
-                    */
+
                     Toast.makeText(getActivity(), "Die Einheit wurde hochgeladen...NICHT! #Kappa", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Sie müssen zuerst Ihre Email freigeben!", Toast.LENGTH_LONG).show();

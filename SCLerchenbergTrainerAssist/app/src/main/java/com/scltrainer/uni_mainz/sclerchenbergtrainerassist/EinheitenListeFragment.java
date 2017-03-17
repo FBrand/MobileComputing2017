@@ -111,7 +111,7 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
         Intent intent = new Intent(getActivity(), EinheitDetailActivity.class);
         intent.putExtra("_id", i);
         startActivity(intent);
-        Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onListItemClick ende");
 
     }
