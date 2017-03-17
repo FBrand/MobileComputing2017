@@ -130,7 +130,6 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
 
     }
 
-
     private void downloadDiaglog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
