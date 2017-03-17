@@ -4,7 +4,9 @@ import android.annotation.TargetApi;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -19,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -147,6 +150,47 @@ public class EinheitDetailFragment extends Fragment implements DeleteDialog.Dele
                 }
             });
         }
+
+        Button uploadButton = (Button) rootView.findViewById(R.id.uploadButtonEinheit);
+        uploadButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
+                if (!sharedPreferences.getString("USEREMAIL", "").equals("")){
+
+                    DBConnection connection = DBHelper.getConnection(getActivity());
+                    Cursor cursor = connection.select(DBInfo.TRAININGSUNIT_TABLE_NAME, new String[] {DBInfo.TRAININGSUNIT_COLUMN_NAME_ID}, (DBInfo.TRAININGSUNIT_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {String.valueOf(entryID)});
+                    cursor.moveToNext();
+                    String globalID = cursor.getString(0);
+                    if((globalID == null || globalID.equals("null"))) {
+                        try{
+                            Cursor exCusor = connection.select(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, new String[] {DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_ID}, (DBInfo.TRAININGSUNIT_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {String.valueOf(entryID)});
+                            while (exCusor.moveToNext()){
+                                String id = exCusor.getString(0);
+                                Cursor cursorp = connection.select(DBInfo.EXERCISE_TABLE_NAME, new String[] {DBInfo.EXERCISE_COLUMN_NAME_ID}, (DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {id});
+                                cursorp.moveToNext();
+                                String globalIDp = cursorp.getString(0);
+                                if((globalIDp == null || globalIDp.equals("null"))) {
+                                    GlobalDBConnection.upload(DBInfo.EXERCISE_TABLE_NAME, Integer.parseInt(id), getActivity());
+                                }
+                            }
+                            GlobalDBConnection.upload(DBInfo.EXERCISE_TABLE_NAME, entryID, getActivity());
+                            Toast.makeText(getActivity(), "Hochladen erfolgreich!", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Fehler beim Hochladen!", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Diese Einheit wurde bereits hochgeladen!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    Toast.makeText(getActivity(), "Die Einheit wurde hochgeladen...NICHT! #Kappa", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Sie müssen zuerst Ihre Email freigeben!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
         return rootView;
     }
 
