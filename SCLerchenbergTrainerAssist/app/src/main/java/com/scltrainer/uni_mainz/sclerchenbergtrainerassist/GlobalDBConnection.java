@@ -34,7 +34,7 @@ public class GlobalDBConnection {
     static boolean offline = false;
 
 
-    static String host = "http://10.0.2.2:80";//10.0.2.2:80"http://134.93.143.94:80"
+    static String host = "http://134.93.143.94:80";//10.0.2.2:80"http://134.93.143.94:80"
     static String autorMail = "test@mail.de";
     //static String date = "11.03.2017";
 
