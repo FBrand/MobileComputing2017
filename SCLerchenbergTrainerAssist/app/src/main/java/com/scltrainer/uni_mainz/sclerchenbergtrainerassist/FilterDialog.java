@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -20,7 +21,16 @@ import android.widget.TextView;
 
 public class FilterDialog extends DialogFragment {
 
-    private String[] filter;
+    public void addListener(FilterDialogListener list){
+        dialogListener = list;
+    }
+    public interface FilterDialogListener{
+        public void onDialogPoistiveClick(String[] args);
+        public void onDialogNegativeClick(String[] args);
+
+    }
+    private FilterDialogListener dialogListener;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,9 +47,14 @@ public class FilterDialog extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
 
         //final TextView tv = (TextView) this.getActivity().findViewById(R.id.np);
-        NumberPicker technic = (NumberPicker) dialogView.findViewById(R.id.technik_picker);
-        NumberPicker tactic = (NumberPicker) dialogView.findViewById(R.id.taktik_picker);
-        NumberPicker physis = (NumberPicker) dialogView.findViewById(R.id.physis_picker);
+        final NumberPicker technic = (NumberPicker) dialogView.findViewById(R.id.technik_picker);
+        final NumberPicker tactic = (NumberPicker) dialogView.findViewById(R.id.taktik_picker);
+        final NumberPicker physis = (NumberPicker) dialogView.findViewById(R.id.physis_picker);
+        final EditText maxMember = (EditText) dialogView.findViewById(R.id.editText);
+        final Spinner ageSpinner = (Spinner) dialogView.findViewById(R.id.age);
+        final Spinner keywordsSpinner = (Spinner) dialogView.findViewById(R.id.keyword);
+
+
 
         //Set TextView text color
         //tv.setTextColor(Color.parseColor("#ffd32b3b"));
@@ -71,57 +86,19 @@ public class FilterDialog extends DialogFragment {
         builder.setMessage(R.string.filterDialog)
                 .setPositiveButton(R.string.filtern, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
+                        String[] args = {"%" + keywordsSpinner.getSelectedItem().toString()+ "%", "%" + ageSpinner.getSelectedItem().toString()+ "%" ,maxMember.getText().toString(),physis.getValue()+"",tactic.getValue()+"", + technic.getValue()+""};
+                        dialogListener.onDialogPoistiveClick(args);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
+                        dialogListener.onDialogNegativeClick(null);
                     }
                 });
         builder.setView(dialogView);
         // Create the AlertDialog object and return it
         return builder.create();
     }
-    public Dialog onCreateDialog(Bundle savedInstanceState, String[] filter){
-        this.filter = filter;
-        return onCreateDialog(savedInstanceState);
-    }
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        Spinner spinner = (Spinner) view.getRootView().findViewById(R.id.keyword);
-
-        boolean checked = ((RadioButton) view).isChecked();
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(),
-                R.array.default_array, android.R.layout.simple_spinner_item);
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radio_fitness:
-                if (checked)
-                    adapter = ArrayAdapter.createFromResource(view.getContext(),
-                            R.array.fitness_array, android.R.layout.simple_spinner_item);
-                break;
-            case R.id.radio_taktik:
-                if (checked)
-                    adapter = ArrayAdapter.createFromResource(view.getContext(),
-                            R.array.taktik_array, android.R.layout.simple_spinner_item);
-                break;
-            case R.id.radio_technik:
-                if (checked)
-                    adapter = ArrayAdapter.createFromResource(view.getContext(),
-                            R.array.technik_array, android.R.layout.simple_spinner_item);
-                break;
-            case R.id.radio_torwart:
-                if (checked)
-                    adapter = ArrayAdapter.createFromResource(view.getContext(),
-                            R.array.torwart_array, android.R.layout.simple_spinner_item);
-                break;
-        }
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.performClick();
-    }
 
 }

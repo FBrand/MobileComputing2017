@@ -24,8 +24,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.app.FragmentManager;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util;
@@ -189,5 +192,40 @@ public class MainActivity extends AppCompatActivity {
             edit.putString("USEREMAIL", email);
             edit.commit();
         }
+    }
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        Spinner spinner = (Spinner) view.getRootView().findViewById(R.id.keyword);
+
+        boolean checked = ((RadioButton) view).isChecked();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(),
+                R.array.default_array, android.R.layout.simple_spinner_item);
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_fitness:
+                if (checked)
+                    adapter = ArrayAdapter.createFromResource(view.getContext(),
+                            R.array.fitness_array, android.R.layout.simple_spinner_item);
+                break;
+            case R.id.radio_taktik:
+                if (checked)
+                    adapter = ArrayAdapter.createFromResource(view.getContext(),
+                            R.array.taktik_array, android.R.layout.simple_spinner_item);
+                break;
+            case R.id.radio_technik:
+                if (checked)
+                    adapter = ArrayAdapter.createFromResource(view.getContext(),
+                            R.array.technik_array, android.R.layout.simple_spinner_item);
+                break;
+            case R.id.radio_torwart:
+                if (checked)
+                    adapter = ArrayAdapter.createFromResource(view.getContext(),
+                            R.array.torwart_array, android.R.layout.simple_spinner_item);
+                break;
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.performClick();
     }
 }

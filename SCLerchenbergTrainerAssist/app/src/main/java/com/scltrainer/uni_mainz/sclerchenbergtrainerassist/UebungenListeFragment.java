@@ -1,5 +1,7 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,7 +20,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class UebungenListeFragment extends ListFragment implements OnItemClickListener {
+public class UebungenListeFragment extends ListFragment implements OnItemClickListener,FilterDialog.FilterDialogListener{
 
     private final String selection = DBInfo.EXERCISE_COLUMN_NAME_AGE + " like ? AND " + DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS + " like ? AND " + DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE + " < ? AND " +
             DBInfo.EXERCISE_COLUMN_NAME_PHYSIS + " <= ? AND " + DBInfo.EXERCISE_COLUMN_NAME_TACTIC + " <= ? AND " + DBInfo.EXERCISE_COLUMN_NAME_TECHNIC + " <= ?"
@@ -34,7 +36,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
 
-
+    private FilterDialog.FilterDialogListener filterDialogListener = this;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -45,7 +47,9 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FilterDialog filter =  new FilterDialog();
+                        filter.addListener(filterDialogListener);
+                filter.show(getFragmentManager(),"FilterDialog");
             }
         });
         dbConnection= DBHelper.getConnection(getActivity());
@@ -179,6 +183,21 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
                 }
             });
         }
+
+    }
+
+    @Override
+    public void onDialogPoistiveClick(String[] args) {
+        this.args = args;
+        Fragment currentFragment = this;
+        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
+        fragTransaction.detach(currentFragment);
+        fragTransaction.attach(currentFragment);
+        fragTransaction.commit();
+    }
+
+    @Override
+    public void onDialogNegativeClick(String[] args) {
 
     }
 }
