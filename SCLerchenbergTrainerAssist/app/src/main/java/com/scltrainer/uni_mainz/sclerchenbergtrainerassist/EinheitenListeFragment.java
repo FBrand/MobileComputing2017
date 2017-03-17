@@ -23,7 +23,6 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R.id.container
  */
 public class EinheitenListeFragment extends ListFragment implements OnItemClickListener {
 
-
     //TAG
     private static final String TAG = EinheitenListeFragment.class.getSimpleName();
 
@@ -111,7 +110,7 @@ public class EinheitenListeFragment extends ListFragment implements OnItemClickL
         Intent intent = new Intent(getActivity(), EinheitDetailActivity.class);
         intent.putExtra("_id", i);
         startActivity(intent);
-        Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Item " + i + " was clicked", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onListItemClick ende");
 
     }

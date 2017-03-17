@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,6 +23,10 @@ import java.util.ArrayList;
 
 public class UebungenListeFragment extends ListFragment implements OnItemClickListener {
 
+    private final String selection = DBInfo.EXERCISE_COLUMN_NAME_AGE + " like ? AND " + DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS + " like ? AND " + DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE + " < ? AND " +
+            DBInfo.EXERCISE_COLUMN_NAME_PHYSIS + " <= ? AND " + DBInfo.EXERCISE_COLUMN_NAME_TACTIC + " <= ? AND " + DBInfo.EXERCISE_COLUMN_NAME_TECHNIC + " <= ?"
+            ;
+    private String[] args = {"%", "%", "100", "7", "7" ,"7"};
     //TAG
     private static final String TAG = UebungenListeFragment.class.getSimpleName();
 
@@ -39,6 +44,13 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
                              ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView 1");
         View rootView = inflater.inflate(R.layout.fragment_uebungen_liste, container, false);
+        Button filter = (Button) rootView.findViewById(R.id.filterButton);
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         dbConnection= DBHelper.getConnection(getActivity());
         dbCursor = selectCursorUebungenListe();
         Log.i(TAG, "Cursor wurde initiiert");
@@ -117,7 +129,7 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
                 DBInfo.EXERCISE_COLUMN_NAME_RATING,
                 DBInfo.EXERCISE_COLUMN_NAME_DURATION};
 
-        return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);
+        return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, selection, args);
     }
 
     @Override
