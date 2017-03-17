@@ -9,11 +9,14 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Layout;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Viewable;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.BoundingBox;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.GLRenderer;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.GLRendererListener;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.QuadVBO;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl.TriangleVBO;
 
 import org.joml.Vector2f;
 
@@ -109,7 +112,6 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
         }
     }
 
-
     @Override
     public void onCreateGL(EGLConfig eglConfig) {
         glReady = true;
@@ -118,6 +120,10 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
                 GLES10.glLineWidth(Util.pixelDensity.x*Util.LINE_WIDTH_INCH);
                 GLES20.glUniform1f(renderer.getProgramInfo().location(Layer2DRenderer.POINT_SIZE_NAME),
                         Util.pixelDensity.x*Util.POINT_SIZE_INCH);
+
+                Util.loadDrawables(getContext());
+                TriangleVBO.getUnitTriangle();
+                QuadVBO.getUnitQuad();
 
             }});
         updateLayout();

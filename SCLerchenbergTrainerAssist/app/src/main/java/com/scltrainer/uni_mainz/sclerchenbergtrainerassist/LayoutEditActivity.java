@@ -1,6 +1,5 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
@@ -15,18 +14,12 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.ItemGr
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.ThumbnailListAdapter;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.ThumbnailOnClickListener;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Background;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Layout;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialType;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathEditType;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathType;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Thumbnail;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.FieldType.SOCCER_FIELD;
-import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.SurfaceType.SOCCER_GRASS;
+import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungActivity.EXTRA_LOCALID;
 
 /**
  * Created by Julian on 15.03.2017.
@@ -35,16 +28,25 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout
 public class LayoutEditActivity extends AppCompatActivity {
     private GLLayoutEditView glView;
     private Layout layout;
+    private int entryID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Util.forceReloadResources();
 
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+
+        if (extras == null) {
+            layout = Util.defaultLayout();
+        } else {
+            entryID = extras.getInt(EXTRA_LOCALID);
+            layout = Util.loadLayoutFromDB(entryID, this);
+        }
+
         // Create a GLSurfaceView instance
         glView = new GLLayoutEditView(this);
-        layout = new Layout();
-        layout.background = new Background(SOCCER_GRASS, SOCCER_FIELD);
         glView.setLayout(layout);
 
         setContentView(R.layout.activity_edit_layout);
@@ -62,18 +64,7 @@ public class LayoutEditActivity extends AppCompatActivity {
         componentList.setOnItemClickListener(listener);
 
         AppCompatImageButton saveButton = (AppCompatImageButton) findViewById(R.id.save_layout_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    JSONObject jsonLayout = layout.toJSON();
-                    layout = Layout.fromJSON(jsonLayout);
-                    glView.setLayout(layout);
-                } catch (JSONException e) {
-                    Log.e("JSON", e.getMessage());
-                }
-            }
-        });
+        saveButton.setOnClickListener(new SaveOnClickListener());
     }
 
     private Thumbnail[] thumbnails() {
@@ -103,6 +94,14 @@ public class LayoutEditActivity extends AppCompatActivity {
         glView.onPause();
     }
 
-
+    private class SaveOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (entryID >= 0) {
+                boolean success = Util.saveLayoutToDB(entryID, layout, LayoutEditActivity.this);
+                Log.e("SAVE", ""+success);
+            }
+        }
+    }
 
 }

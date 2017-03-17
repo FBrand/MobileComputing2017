@@ -68,6 +68,25 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
 
         setListAdapter(listAdapter);
 
+        /**
+         * Löschen einer Übung durch longclick.
+         */
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                //TODO: Datenbankinteraktion einfügen
+                //TODO: Bei Bedarf hier ein Intent zur vorgänger Activity einfügen
+                /*Intent intent = new Intent(getActivity(), UebungActivity.class);
+                //TODO: Anpassen dass hier nicht die Position sondern die DB ID genommen wird
+                intent.putExtra("_id", position+1);
+                startActivity(intent);*/
+                Toast.makeText(getActivity(), "Lösche Übung " + position, Toast.LENGTH_LONG).show();
+
+                return true;
+            }
+        });
 
 
         Log.i("APP", "onActivityCreated ende");
