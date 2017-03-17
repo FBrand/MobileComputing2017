@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -138,6 +139,15 @@ public class EinheitDetailFragment extends Fragment {
             //listAdapter2.bindView(rootView, getActivity().getBaseContext(), dbCursor2);
             ListView uebung = (ListView)rootView.findViewById(R.id.einheitUebungen);
             uebung.setAdapter(listAdapter2);
+            uebung.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    int i = listAdapter2.getIdListEntry(position);
+                    Intent intent = new Intent(getActivity(), UebungActivity.class);
+                    intent.putExtra("_id", i);
+                    startActivity(intent);
+                }
+            });
 
 
         }

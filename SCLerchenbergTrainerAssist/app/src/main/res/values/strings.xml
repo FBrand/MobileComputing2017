@@ -54,8 +54,9 @@
     <string name="editEinheitName">Name</string>
     <string name="editEinheitDescription">Beschreibung</string>
     <string name="editEinheitKeywords">Schlagwörter</string>
-
-
+    <string name="duratioDialog">Geben sie die Dauer der Übung ein.</string>
+    <string name="okay">Speichern</string>
+    <string name="cancel">Abbrechen</string>
 
 
 </resources>
