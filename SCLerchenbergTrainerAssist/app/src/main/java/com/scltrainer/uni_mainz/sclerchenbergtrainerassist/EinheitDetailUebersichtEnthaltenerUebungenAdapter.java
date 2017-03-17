@@ -29,6 +29,7 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
 
 
     private ArrayList<Integer> ids = new ArrayList<Integer>();
+    private ArrayList<Integer> trainingsunitexerciseID = new ArrayList<Integer>();
 
     private LayoutInflater inflator;
 
@@ -65,7 +66,9 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         return idList.get(entry);
 
     }
-
+    public ArrayList<Integer> getTrainingsunitexerciseID(){
+        return trainingsunitexerciseID;
+    }
 
 
 
@@ -102,6 +105,7 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         uebungenListeName.setText(c.getString(0));
         uebungenListeDauer.setText(cursor.getString(1));
 
+
         Log.i(TAG,uebungenListeName.getText().toString());
 
 
@@ -109,6 +113,7 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         //TODO: Prüfen ob hier die von der Tabelle gesetzten ID übernommen wird oder die von Hand gesetzte.
 
         idList.add(cursor.getInt(0));
+        trainingsunitexerciseID.add(cursor.getInt(2));
 
         //Log.i(TAG, "_id: " + idList.get(cursor.getInt(0)-1));
         cursor.moveToNext();
