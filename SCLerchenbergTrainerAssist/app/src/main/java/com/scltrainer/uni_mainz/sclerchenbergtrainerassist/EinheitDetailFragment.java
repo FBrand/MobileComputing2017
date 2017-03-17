@@ -61,21 +61,6 @@ public class EinheitDetailFragment extends Fragment implements DeleteDialog.Dele
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*View.OnClickListener clickHandler1 = new View.OnClickListener() {
-
-            @TargetApi(Build.VERSION_CODES.N)
-            public void onClick(View v) {
-                Log.i("EinheitDetailFragment", "call createCalendarEvent");
-                createCalendarEvent();
-            }
-        };
-
-        calendarButton = (Button) getActivity().findViewById(R.id.addCalendarDateButton);
-        calendarButton.setOnClickListener(clickHandler1);*/
-
-
-
     }
 
 
@@ -135,8 +120,6 @@ public class EinheitDetailFragment extends Fragment implements DeleteDialog.Dele
         listAdapter1 = new EinheitDetailAdapter(getActivity().getBaseContext(), dbCursor1);
         listAdapter1.bindView(rootView, getActivity().getBaseContext(), dbCursor1);
 
-        //TODO: Majas Code zum laufen bekommen
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+dbCursor2.getCount());
         if( dbCursor2.getCount()>0) {
             getActivity().startManagingCursor(dbCursor2);
             listAdapter2 = new EinheitDetailUebersichtEnthaltenerUebungenAdapter(getActivity().getBaseContext(), dbCursor2);
@@ -163,10 +146,7 @@ public class EinheitDetailFragment extends Fragment implements DeleteDialog.Dele
                     return true;
                 }
             });
-
-
         }
-
         return rootView;
     }
 

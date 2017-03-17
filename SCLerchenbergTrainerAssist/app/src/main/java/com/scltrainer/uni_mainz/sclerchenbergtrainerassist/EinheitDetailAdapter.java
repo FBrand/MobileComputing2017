@@ -43,13 +43,19 @@ public class EinheitDetailAdapter extends CursorAdapter {
         TextView einheitLetzteAenderung = (TextView) view.findViewById(R.id.einheitLetzteAenderung);//letzte Änderung-6
 
         cursor.moveToFirst();
-
+        String[] sel = {DBInfo.TRAININGSUNIT_COLUMN_NAME_DURATION};
+        String[] args = {cursor.getString(0)};
+        Cursor c = DBHelper.getConnection(context).select(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, sel, DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_TRAININGSUNIT + " = ?", args);
+        int dur = 0;
+        while (c.moveToNext()){
+            dur = dur + c.getInt(0);
+        }
         einheitName.setText(cursor.getString(1));
         einheitAutor.setText(cursor.getString(2));
         einheitBeschreibung.setText(cursor.getString(3));
         //einheitSchwerpunkt.setText(cursor.getString());
         einheitFavoriten.setNumStars(cursor.getInt(4));
-        einheitDauer.setText(cursor.getString(5));
+        einheitDauer.setText(""+dur);
         einheitLetzteAenderung.setText(cursor.getString(6));
 
         cursor.moveToNext();

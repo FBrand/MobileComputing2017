@@ -30,6 +30,7 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
 
     private ArrayList<Integer> ids = new ArrayList<Integer>();
     private ArrayList<Integer> trainingsunitexerciseID = new ArrayList<Integer>();
+    private int duration = 0;
 
     private LayoutInflater inflator;
 
@@ -69,7 +70,9 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
     public ArrayList<Integer> getTrainingsunitexerciseID(){
         return trainingsunitexerciseID;
     }
-
+    public int getDuration(){
+        return duration;
+    }
 
 
 
@@ -114,7 +117,7 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
 
         idList.add(cursor.getInt(0));
         trainingsunitexerciseID.add(cursor.getInt(2));
-
+        duration = duration + cursor.getInt(1);
         //Log.i(TAG, "_id: " + idList.get(cursor.getInt(0)-1));
         cursor.moveToNext();
 

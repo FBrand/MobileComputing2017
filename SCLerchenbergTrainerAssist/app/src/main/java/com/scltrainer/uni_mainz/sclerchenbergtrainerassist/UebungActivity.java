@@ -224,12 +224,18 @@ public class UebungActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
                     if (!sharedPreferences.getString("USEREMAIL", "").equals("")){
-                        //TODO: ID der derzeit angezeigten Übung geben lassen und in die richtige Tabelle hochladen!
-                        //AUCH TODO: Schauen ob diese Einheit schon hochgeladen wurde.
-                        try {
-                            GlobalDBConnection.upload("TABELLEN_NAME", 0, getActivity());
-                        } catch (Exception e) {
-                            Toast.makeText(getActivity(), "Fehler beim Hochladen!", Toast.LENGTH_LONG).show();
+                        DBConnection connection = DBHelper.getConnection(getActivity());
+                        Cursor cursor = connection.select(DBInfo.EXERCISE_TABLE_NAME, new String[] {DBInfo.EXERCISE_COLUMN_NAME_ID}, (DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ?"), new String[] {String.valueOf(entryID)});
+                        cursor.moveToNext();
+                        String globalID = cursor.getString(0);
+                        if((globalID == null || globalID.equals("null"))) {
+                            try {
+                                GlobalDBConnection.upload(DBInfo.EXERCISE_TABLE_NAME, entryID, getActivity());
+                            } catch (Exception e) {
+                                Toast.makeText(getActivity(), "Fehler beim Hochladen!", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Diese Einheit wurde bereits hochgeladen!", Toast.LENGTH_SHORT);
                         }
                     } else {
                         Toast.makeText(getActivity(), "Sie müssen zuerst Ihre Email freigeben!", Toast.LENGTH_LONG).show();
