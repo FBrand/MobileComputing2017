@@ -1,9 +1,7 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +11,10 @@ import android.widget.FrameLayout;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.GLLayoutView;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Layout;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialType;
+
+import java.util.List;
+
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungActivity.EXTRA_LOCALID;
 
 /**
