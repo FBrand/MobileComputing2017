@@ -70,8 +70,6 @@ public class LayoutEditActivity extends AppCompatActivity {
 
         componentList.setOnItemClickListener(listener);
 
-        ((TextView) findViewById(R.id.exerciseName)).setText(name);
-
         AppCompatImageButton saveButton = (AppCompatImageButton) findViewById(R.id.save_layout_button);
         saveButton.setOnClickListener(new SaveOnClickListener());
     }
