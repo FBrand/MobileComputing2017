@@ -62,10 +62,8 @@ public class DurationDialog extends DialogFragment {
                 .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (durationEditText == null || durationEditText.getText().toString().equals("")){
-                            Toast.makeText(getActivity().getBaseContext(),"Geben Sie bitte eine Zeit für die Übung ein.", Toast.LENGTH_SHORT).show();
-                            DurationDialog d = new DurationDialog();
-                            d.addListener(dialogListener);
-                            d.show(getFragmentManager(),"Duration Dialog");
+                            String dur = durationEditText.getHint().toString();
+                            dialogListener.onDialogPoistiveClick(Integer.parseInt(dur));
                         }else {
                             String dur = durationEditText.getText().toString();
                             dialogListener.onDialogPoistiveClick(Integer.parseInt(dur));

@@ -60,6 +60,8 @@
     <string name="cancel">Abbrechen</string>
     <string name="delete">Löschen</string>
     <string name="deleteDialog">Wollen Sie diese Übung aus der Einheit löschen?</string>
+    <string name="filterDialog">Wählen sie Parameter zum Filtern</string>
+    <string name="filtern">Filtern</string>
 
 
 </resources>

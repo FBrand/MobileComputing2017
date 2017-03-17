@@ -94,7 +94,11 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment im
         trainingsunit = einheit;
 
         //TODO: Echte Standardzeit in Hint eintragen
-        int duration = 20000;
+        String[] pro = {DBInfo.EXERCISE_COLUMN_NAME_DURATION};
+        String[] args = {""+exercise};
+        Cursor c = DBHelper.getConnection(context).select(DBInfo.EXERCISE_TABLE_NAME, pro , DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ?", args);
+        c.moveToFirst();
+        int duration =c.getInt(0);
 
         DurationDialog d = new DurationDialog();
         d.addListener(this);

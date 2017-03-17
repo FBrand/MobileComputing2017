@@ -11,8 +11,8 @@ public class DBInfo {
     public static final String DATABASE_NAME = "test3.db";
 
     public static final String EXERCISE_TABLE_NAME = "exercise";
-    public static final String EXERCISE_COLUMN_NAME_ID = "_id";
-    public static final String EXERCISE_COLUMN_NAME_IDLOCAL = "idLocal";
+    public static final String EXERCISE_COLUMN_NAME_ID = "globalid";
+    public static final String EXERCISE_COLUMN_NAME_IDLOCAL = "_id";
     public static final String EXERCISE_COLUMN_NAME_AGE = "age";
     public static final String EXERCISE_COLUMN_NAME_AUTORMAIL = "autorMail";
     public static final String EXERCISE_COLUMN_NAME_AUTORNAME = "autorName";
@@ -32,8 +32,8 @@ public class DBInfo {
     public static final String EXERCISE_COLUMN_NAME_VIDEOLINK = "videolink";
 
     public static final String TRAININGSUNIT_TABLE_NAME = "trainingsunit";
-    public static final String TRAININGSUNIT_COLUMN_NAME_ID = "_id";
-    public static final String TRAININGSUNIT_COLUMN_NAME_IDLOCAL = "idLocal";
+    public static final String TRAININGSUNIT_COLUMN_NAME_ID = "globalid";
+    public static final String TRAININGSUNIT_COLUMN_NAME_IDLOCAL = "_id";
     public static final String TRAININGSUNIT_COLUMN_NAME_AGE = "age";
     public static final String TRAININGSUNIT_COLUMN_NAME_AUTORMAIL = "autorMail";
     public static final String TRAININGSUNIT_COLUMN_NAME_AUTORNAME = "autorName";

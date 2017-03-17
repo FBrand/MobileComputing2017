@@ -5,4 +5,50 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+    <string-array name="fitness_array">
+        <item>Ausdauer</item>
+        <item>Koordination</item>
+        <item>Schnelligkeit</item>
+    </string-array>
+    <string-array name="taktik_array">
+        <item>Gruppe(Angriff)</item>
+        <item>Gruppe(Ball erobern)</item>
+        <item>Gruppe(Ballzirkulation)</item>
+        <item>Gruppe(Tore verhindern)</item>
+        <item>Gruppe(Umschalten)</item>
+        <item>Team(als Manschaft angreifen)</item>
+        <item>Team(als Manschaft verteidigen)</item>
+        <item>Team(kompakt verteidigen)</item>
+        <item>Team(Pressing)</item>
+        <item>Team(Spielaufbau/Angriff)</item>
+        <item>Team(Torchancen herauspielen)</item>
+        <item>Team(Umschalten)</item>
+        <item>Zweikampf(Angriff)</item>
+        <item>Zweikampf(Verteidigung)</item>
+    </string-array>
+    <string-array name="technik_array">
+        <item>Ballan-/mitnahme</item>
+        <item>Dribbeln</item>
+        <item>Finten(Ausspielen)</item>
+        <item>Köpfen</item>
+        <item>Passen</item>
+        <item>Schießen</item>
+    </string-array>
+    <string-array name="torwart_array">
+        <item>Torwart</item>
+    </string-array>
+    <string-array name="default_array">
+    </string-array>
+    <string-array name="altersgruppen_array">
+        <item>Keine Auswahl</item>
+        <item>Bambini</item>
+        <item>F-Junioren</item>
+        <item>E-Junioren</item>
+        <item>D-Junioren</item>
+        <item>C-Junioren</item>
+        <item>B-Junioren</item>
+        <item>A-Junioren</item>
+        <item>Aktive</item>
+        <item>Senioren</item>
+    </string-array>
 </resources>

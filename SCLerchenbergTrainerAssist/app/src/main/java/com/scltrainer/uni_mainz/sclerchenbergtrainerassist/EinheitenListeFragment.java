@@ -23,7 +23,6 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R.id.container
  */
 public class EinheitenListeFragment extends ListFragment implements OnItemClickListener {
 
-
     //TAG
     private static final String TAG = EinheitenListeFragment.class.getSimpleName();
 
