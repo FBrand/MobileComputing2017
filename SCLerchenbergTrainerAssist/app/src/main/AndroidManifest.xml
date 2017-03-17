@@ -13,6 +13,7 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".MainActivity"
+                android:label="Hauptmenü"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait">
             <intent-filter>
@@ -24,7 +25,7 @@
         <activity
                 android:name=".UebungActivity"
                 android:configChanges="orientation|keyboardHidden"
-                android:label="@string/title_activity_uebung"
+                android:label="Übung Details"
                 android:parentActivityName=".MainActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -34,7 +35,7 @@
         </activity>
         <activity
                 android:name=".EinheitDetailActivity"
-                android:label="@string/title_activity_einheit_detail"
+                android:label="Einheit Details"
                 android:parentActivityName=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:configChanges="orientation|keyboardHidden"
@@ -44,7 +45,7 @@
                     android:value="com.scltrainer.uni_mainz.sclerchenbergtrainerassist.MainActivity"/>
         </activity>
         <activity android:name=".LayoutEditActivity"
-            android:label="@string/title_activity_layout_edit"
+            android:label="Spielplan bearbeiten"
             android:parentActivityName=".UebungActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|keyboardHidden"
@@ -59,7 +60,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".CreateEinheitActivity"
-            android:label="CreateEinheitActivity"
+            android:label="Erstelle neue Einheit"
             android:parentActivityName=".CreateEinheitActivity"
             android:configChanges="orientation|keyboardHidden" />
 
