@@ -31,10 +31,10 @@ public class GlobalDBConnection {
     //gibt debugnachrichten aus
     static boolean debug = true;
     //deaktiviert die verbindung zur globalen datenbank
-    static boolean offline = true;
+    static boolean offline = false;
 
 
-    static String host = "http://134.93.143.94:80";//10.0.2.2:80"http://134.93.143.94:80"
+    static String host = "http://10.0.2.2:80";//10.0.2.2:80"http://134.93.143.94:80"
     static String autorMail = "test@mail.de";
     //static String date = "11.03.2017";
 
@@ -62,6 +62,9 @@ public class GlobalDBConnection {
                 }
 
                 try {
+                    if(result.length()<20){
+                        return;
+                    }
                     JSONArray ja = new JSONArray(result.substring(17));
                     //Log.i("get",jo.toString());
                     //JSONArray ja = jo.getJSONArray("");
@@ -203,7 +206,7 @@ public class GlobalDBConnection {
         dbCursor.moveToFirst();
         try {
             for (String column : dbCursor.getColumnNames()) {
-                if (put || column != "_id") {
+                if (put || column != DBInfo.EXERCISE_COLUMN_NAME_ID) {
                     data.put(column, dbCursor.getString(dbCursor.getColumnIndex(column)));
 
                 }
@@ -293,14 +296,21 @@ public class GlobalDBConnection {
         Iterator<String> it = data.keys();
         ContentValues row = new ContentValues();
         it.next();
-        it.next();
         try {
             row.put(DBInfo.EXERCISE_COLUMN_NAME_ID, data.getString("id"));
             while (it.hasNext()) {
                 String key = it.next();
-                //Log.i("DBRow", key);
-                //Log.i("RowContent", data.getString(key));
-                //row.put(key, data.getString(key));
+                if(!key.equals("idLocal") ){//&& !key.equals("lastChange")) {
+                    Log.i("DBRow", key);
+                    /*if (ints.contains(key)) {
+                        System.out.println("///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+                        Log.i("RowContent int",""+ data.getInt(key));
+                        row.put(key, data.getInt(key));
+                    }else {*/
+                        Log.i("RowContent", data.getString(key));
+                        row.put(key, data.getString(key));
+                    //}
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
