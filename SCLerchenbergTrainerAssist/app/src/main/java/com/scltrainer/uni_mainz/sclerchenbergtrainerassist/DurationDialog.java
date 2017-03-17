@@ -35,7 +35,15 @@ public class DurationDialog extends DialogFragment {
 
     }
     private DurationDialogListener dialogListener;
+
     private EditText durationEditText;
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    private int duration = 0;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,6 +53,8 @@ public class DurationDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.duration_dialog, null);
         durationEditText = (EditText) dialogView.findViewById(R.id.duration);
+
+        durationEditText.setHint(""+duration);
 
 
 
@@ -70,6 +80,11 @@ public class DurationDialog extends DialogFragment {
         builder.setView(dialogView);
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+
+    public EditText getDurationEditText() {
+        return durationEditText;
     }
 
 

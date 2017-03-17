@@ -119,12 +119,6 @@ public class EinheitDetailUebersichtEnthaltenerUebungenAdapter extends CursorAda
         cursor.moveToNext();
 
 
-
-
-
-
-
-
     }
 
 
