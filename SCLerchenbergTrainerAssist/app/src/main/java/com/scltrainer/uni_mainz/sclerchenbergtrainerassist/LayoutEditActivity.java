@@ -1,5 +1,6 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
@@ -30,7 +31,7 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungActivity
  * Created by Julian on 15.03.2017.
  */
 
-public class LayoutEditActivity extends AppCompatActivity {
+public class LayoutEditActivity extends Activity {
     private GLLayoutEditView glView;
     private Layout layout;
     private int entryID;
