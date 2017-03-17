@@ -206,7 +206,7 @@ public class GlobalDBConnection {
         dbCursor.moveToFirst();
         try {
             for (String column : dbCursor.getColumnNames()) {
-                if (put || column != DBInfo.EXERCISE_COLUMN_NAME_ID) {
+                if (put || !column.equals(DBInfo.EXERCISE_COLUMN_NAME_ID)) {
                     data.put(column, dbCursor.getString(dbCursor.getColumnIndex(column)));
 
                 }
