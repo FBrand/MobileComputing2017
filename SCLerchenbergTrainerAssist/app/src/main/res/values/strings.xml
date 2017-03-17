@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SC Lerchenberg TrainerAssist</string>
     <string name="save">Speichern</string>
+    <string name="resetButton">Datenbank zurücksetzen</string>
 
     <!-- main Activity strings -->
     <string name="uebungen_button">Übungen</string>

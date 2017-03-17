@@ -28,11 +28,13 @@ import java.util.Iterator;
 public class GlobalDBConnection {
 
 //TODO tabellen erzeugen, upload fehlender übungen triggern, neue tabelle(check), admin/whitelist interface
-
+    //gibt debugnachrichten aus
     static boolean debug = true;
+    //deaktiviert die verbindung zur globalen datenbank
+    static boolean offline = true;
 
 
-    static String host = "http://10.0.2.2:80";//10.0.2.2:80"http://134.93.143.94:80"
+    static String host = "http://134.93.143.94:80";//10.0.2.2:80"http://134.93.143.94:80"
     static String autorMail = "test@mail.de";
     //static String date = "11.03.2017";
 
@@ -45,6 +47,8 @@ public class GlobalDBConnection {
      * @throws IOException
      */
     public static void fetch(final String tableName, final Context context, final String lastChange) {
+        if(offline)
+            return;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -83,12 +87,14 @@ public class GlobalDBConnection {
      * @return true if successfull, else false
      */
     public static void upload(final String tableName, final int localId, final Activity context) {
+        if(offline)
+            return;
         new Thread(new Runnable() {
             @Override
             public void run() {
 // do the thing that takes a long time
 
-                SharedPreferences shared = context.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences shared = context.getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
                 String autorMail = shared.getString("USEREMAIL", "");
 
                 JSONObject data = loadFromDB(localId, tableName, context);
@@ -98,7 +104,15 @@ public class GlobalDBConnection {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-//TODO write globalId in local db
+                // write globalId in local db
+                int globalId = Integer.parseInt(result.substring(result.indexOf(":"), result.indexOf("{")).trim());
+                DBConnection dbc = DBHelper.getConnection(context);
+                ContentValues row = new ContentValues();
+                row.put(DBInfo.EXERCISE_COLUMN_NAME_ID, globalId);
+                String[] args = {"" + localId};
+
+                dbc.update(tableName, row, DBInfo.EXERCISE_COLUMN_NAME_IDLOCAL + " = ?", args);
+                row.clear();
             }
         }).start();
         //return result.contains("201");
@@ -112,7 +126,7 @@ public class GlobalDBConnection {
      * @param context   context of the calling activity
      * @return true if successfull, else false
      */
-    public static Boolean update(String tableName, int localId, Context context) {
+/*   public static Boolean update(String tableName, int localId, Context context) {
         JSONObject data = loadFromDB(localId, tableName, context, true);
         String result = "";
         try {
@@ -125,22 +139,30 @@ public class GlobalDBConnection {
 
         return result.contains("200");
     }
+*/
 
     /**
      * @param tableName name of the table to delete from
      * @param localId   local id of the row to delete
      * @return true if successfull, else false
      */
-    public static Boolean delete(String tableName, int localId) {
-        String result = null;//TODO + globalId);
-        try {
-            result = GlobalDBConnection.delete(host + "/" + autorMail + "/" + tableName + "/");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result.contains("200");
+    public static void delete(final String tableName, final int localId) {
+        if(offline)
+            return;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+// do the thing that takes a long time
+                String result = null;//TODO + globalId);
+                try {
+                    result = GlobalDBConnection.delete(host + "/" + autorMail + "/" + tableName + "/");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        //return result.contains("200");
     }
-
 
 
     /**
@@ -192,6 +214,7 @@ public class GlobalDBConnection {
         if (debug) {
             System.out.println("///////////////////////////////////////////////////////// finished to read from Database //////////////////////////////////////////////////////////\n" + data.toString());
             Log.i("JSON", data.toString());
+
         }
 /*
         String projection =
@@ -275,9 +298,9 @@ public class GlobalDBConnection {
             row.put(DBInfo.EXERCISE_COLUMN_NAME_ID, data.getString("id"));
             while (it.hasNext()) {
                 String key = it.next();
-                Log.i("DBRow", key);
-                Log.i("RowContent",data.getString(key));
-                row.put(key, data.getString(key));
+                //Log.i("DBRow", key);
+                //Log.i("RowContent", data.getString(key));
+                //row.put(key, data.getString(key));
             }
         } catch (JSONException e) {
             e.printStackTrace();
