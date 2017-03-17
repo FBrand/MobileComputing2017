@@ -1,6 +1,8 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -15,13 +17,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialType;
+
+import java.util.List;
 
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Background;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Layout;
@@ -64,6 +73,8 @@ public class UebungActivity extends AppCompatActivity {
 
     //TODO: Kapseln!
     public int entryID;
+    public List<Pair<MaterialType, Integer>> materialList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +157,12 @@ public class UebungActivity extends AppCompatActivity {
             return true;
         }
 
+        /**
+         * Hole die MaterialListe aus der Grafik.
+         */
+        LayoutFragment f = (LayoutFragment) mSectionsPagerAdapter.getItem(0);
+        materialList = f.returnMaterialList();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -167,6 +184,8 @@ public class UebungActivity extends AppCompatActivity {
         // Schnittstelle zur Datenbank
         private DBConnection dbConnection;
 
+        public static List<Pair<MaterialType, Integer>> mList;
+
 
         public DetailFragment() {
         }
@@ -175,16 +194,15 @@ public class UebungActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static DetailFragment newInstance(int sectionNumber) {
+        public static DetailFragment newInstance(int sectionNumber, List<Pair<MaterialType, Integer>> materialList) {
             DetailFragment fragment = new DetailFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             entryID = sectionNumber;
+            mList = materialList;
             return fragment;
         }
-
-
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -199,6 +217,30 @@ public class UebungActivity extends AppCompatActivity {
             listAdapter.bindView(rootView, this.getContext(), dbCursor);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            Button uploadButton = (Button) rootView.findViewById(R.id.uploadButtonUebung);
+            uploadButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
+                    if (!sharedPreferences.getString("USEREMAIL", "").equals("")){
+                        //TODO: ID der derzeit angezeigten Übung geben lassen und in die richtige Tabelle hochladen!
+                        //AUCH TODO: Schauen ob diese Einheit schon hochgeladen wurde.
+                        try {
+                            GlobalDBConnection.upload("TABELLEN_NAME", 0, getActivity());
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "Fehler beim Hochladen!", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Sie müssen zuerst Ihre Email freigeben!", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+
+            //TextView materialliste = (TextView) View.findViewById(R.id.uebungMaterial);
+
+
             return rootView;
         }
 
@@ -235,7 +277,7 @@ public class UebungActivity extends AppCompatActivity {
                 case 0:
                     return LayoutFragment.newInstance(entryID);
                 case 1:
-                    return DetailFragment.newInstance(entryID);
+                    return DetailFragment.newInstance(entryID, materialList);
                 default:
                     return null;
             }
