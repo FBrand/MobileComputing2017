@@ -41,6 +41,7 @@ public class UebungDetailAdapter extends CursorAdapter {
 		TextView uebungAltersklasse = (TextView) view.findViewById(R.id.uebungAltersklassen);//Altersklassen-8
 		TextView uebungStichpunkte = (TextView) view.findViewById(R.id.uebungSchlagwoerter);//Schlagwörter-9
 		TextView uebungLink = (TextView) view.findViewById(R.id.uebungVideoURL);//Link-10
+		TextView uebungGruppe = (TextView) view.findViewById(R.id.uebungGruppengroesse);//Gruppengroesse
 
 		cursor.moveToFirst();
 		uebungName.setText(cursor.getString(1));
@@ -54,6 +55,7 @@ public class UebungDetailAdapter extends CursorAdapter {
 		uebungAltersklasse.setText(cursor.getString(9));
 		uebungStichpunkte.setText(cursor.getString(10));
 		uebungLink.setText(cursor.getString(11));
+		uebungGruppe.setText(cursor.getString(12));
 		
 		cursor.moveToNext();
 	}

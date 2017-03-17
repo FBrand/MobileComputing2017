@@ -51,6 +51,14 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".DetailsEditActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_uebung"
+            android:parentActivityName=".UebungActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".CreateEinheitActivity"
             android:label="Erstelle neue Einheit"
             android:parentActivityName=".CreateEinheitActivity"

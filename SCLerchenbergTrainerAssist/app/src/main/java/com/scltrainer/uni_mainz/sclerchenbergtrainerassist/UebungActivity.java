@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -32,19 +31,6 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compon
 
 import java.util.List;
 
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Background;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Layout;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialComponent;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialType;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathComponent;
-import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathType;
-
-import org.joml.Vector2f;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.FieldType.SOCCER_FIELD;
-import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.SurfaceType.SOCCER_GRASS;
 
 
 /**
@@ -54,6 +40,9 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout
 public class UebungActivity extends AppCompatActivity {
 
     public static final String EXTRA_LOCALID = "_id";
+    public static final String EXTRA_EXERCISE_DETAIL = "detail";
+    private static final int SECTION_LAYOUT = 0;
+    private static final int SECTION_DETAILS = 1;
 
 
     /**
@@ -70,6 +59,8 @@ public class UebungActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    private int section = SECTION_LAYOUT;
 
     //TODO: Kapseln!
     public int entryID;
@@ -107,13 +98,30 @@ public class UebungActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UebungActivity.this, LayoutEditActivity.class);
-                intent.putExtra(EXTRA_LOCALID, entryID);
-                startActivity(intent);
+                switch (section) {
+                    case SECTION_LAYOUT:
+                        Intent intent = new Intent(UebungActivity.this, LayoutEditActivity.class);
+                        intent.putExtra(EXTRA_LOCALID, entryID);
+                        startActivity(intent);
+                        break;
+                    case SECTION_DETAILS:
+                        intent = new Intent(UebungActivity.this, DetailsEditActivity.class);
+                        Cursor dbCursor = DetailFragment.getInstance().dbCursor;
+                        dbCursor.moveToFirst();
+                        String[] dbvalues = new String[13];
+                        for (int i = 0; i < 13; i++) {
+                            dbvalues[i] = dbCursor.getString(i);
+                        }
+                        intent.putExtra(EXTRA_EXERCISE_DETAIL, dbvalues);
+                        intent.putExtra(EXTRA_LOCALID, entryID);
+                        startActivity(intent);
+                        break;
+                }
             }
         });
 
     }
+
 
 
     /**
@@ -170,6 +178,9 @@ public class UebungActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class DetailFragment extends Fragment {
+
+        private static DetailFragment instance;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -177,12 +188,11 @@ public class UebungActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static int entryID;
 
-        // wird für die Listenansicht benötigt
-        private Cursor dbCursor;
         // bildet den Cursor auf die ListView ab
         private UebungDetailAdapter listAdapter;
         // Schnittstelle zur Datenbank
         private DBConnection dbConnection;
+        private Cursor dbCursor;
 
         public static List<Pair<MaterialType, Integer>> mList;
 
@@ -201,7 +211,11 @@ public class UebungActivity extends AppCompatActivity {
             fragment.setArguments(args);
             entryID = sectionNumber;
             mList = materialList;
-            return fragment;
+            return instance = fragment;
+        }
+
+        public static DetailFragment getInstance() {
+            return instance;
         }
 
         @Override
@@ -251,6 +265,19 @@ public class UebungActivity extends AppCompatActivity {
             return rootView;
         }
 
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            View rootView = getView();
+            dbConnection= DBHelper.getConnection(this.getContext());
+            dbCursor = selectCursorUebungDetail(entryID);
+            getActivity().startManagingCursor(dbCursor);
+            listAdapter = new UebungDetailAdapter(this.getContext(), dbCursor);
+            listAdapter.bindView(rootView, this.getContext(), dbCursor);
+
+        }
+
         public Cursor selectCursorUebungDetail(int entryID){
             /*String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC, DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,DBInfo.EXERCISE_COLUMN_NAME_RATING ,DBInfo.EXERCISE_COLUMN_NAME_DURATION, DBInfo.EXERCISE_COLUMN_NAME_AGE, DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK};
             return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, null, null);*/
@@ -258,10 +285,13 @@ public class UebungActivity extends AppCompatActivity {
             String[] sArgs = {"" + entryID};
             Log.i("DetailFragment", "entryID in cursor: " + entryID);
             String[] sArr = {"_id", DBInfo.EXERCISE_COLUMN_NAME_NAME, DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME,
-                    DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_RATING, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,
+                    DBInfo.EXERCISE_COLUMN_NAME_DESCRIPTION, DBInfo.EXERCISE_COLUMN_NAME_TECHNIC,
                     DBInfo.EXERCISE_COLUMN_NAME_TACTIC, DBInfo.EXERCISE_COLUMN_NAME_PHYSIS,
-                    DBInfo.EXERCISE_COLUMN_NAME_DURATION, DBInfo.EXERCISE_COLUMN_NAME_AGE,
-                    DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK};
+                    DBInfo.EXERCISE_COLUMN_NAME_RATING,
+                    DBInfo.EXERCISE_COLUMN_NAME_DURATION,
+                    DBInfo.EXERCISE_COLUMN_NAME_AGE,
+                    DBInfo.EXERCISE_COLUMN_NAME_KEYWORDS, DBInfo.EXERCISE_COLUMN_NAME_VIDEOLINK,
+                    DBInfo.EXERCISE_COLUMN_NAME_GROUPSIZE};
             return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
         }
     }
@@ -280,10 +310,12 @@ public class UebungActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+
+            section = position;
             switch(position) {
-                case 0:
+                case SECTION_LAYOUT:
                     return LayoutFragment.newInstance(entryID);
-                case 1:
+                case SECTION_DETAILS:
                     return DetailFragment.newInstance(entryID, materialList);
                 default:
                     return null;
