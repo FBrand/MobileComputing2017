@@ -92,6 +92,17 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
         SharedPreferences shared = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
         String lastUpdate = shared.getString("LASTDATABASEUPDATE", "");
 
+        try {
+            GlobalDBConnection.fetch(DBInfo.EXERCISE_TABLE_NAME, getActivity(), lastUpdate);
+            GlobalDBConnection.fetch(DBInfo.TRAININGSUNIT_TABLE_NAME, getActivity(), lastUpdate);
+            GlobalDBConnection.fetch(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, getActivity(), lastUpdate);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Fehler beim Aktualisieren der Datenbank.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+
+        SharedPreferences.Editor editor = shared.edit();
+
         java.util.Calendar c = new java.util.GregorianCalendar();
         String year = String.valueOf(c.get(java.util.Calendar.YEAR));
         int monthInt = c.get(java.util.Calendar.MONTH) +1;
@@ -106,16 +117,7 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
         String second = myToString(secondInt);
 
         String currentDateTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-
-        try {
-            GlobalDBConnection.fetch(DBInfo.EXERCISE_TABLE_NAME, getActivity(), currentDateTime);
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), "Fehler beim Aktualisieren der Datenbank.", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
-        SharedPreferences.Editor editor = shared.edit();
-        //editor.putString();
+        editor.putString("LASTDATABASEUPDATE", currentDateTime);
 
     }
 
