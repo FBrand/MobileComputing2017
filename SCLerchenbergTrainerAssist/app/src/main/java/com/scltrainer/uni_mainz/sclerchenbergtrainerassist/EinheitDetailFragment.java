@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * EinheitDetailFragment zeigt eine konkrete Einheit an.
  * Wird von EinheitDetailAdapter befüllt.
@@ -27,13 +29,13 @@ import android.widget.TextView;
 
 
 
-public class EinheitDetailFragment extends Fragment {
+public class EinheitDetailFragment extends Fragment implements DeleteDialog.DeleteDialogListener{
 
     //TAG
 //private static final String TAG = UebungDetail.class.getSimpleName();
 
     // wird für die Listenansicht benötigt
-
+    private DeleteDialog.DeleteDialogListener dListener = this;
     private Cursor dbCursor1;
     private Cursor dbCursor2;
 
@@ -42,6 +44,8 @@ public class EinheitDetailFragment extends Fragment {
     private EinheitDetailAdapter listAdapter1;
     private EinheitDetailUebersichtEnthaltenerUebungenAdapter listAdapter2;
 
+    private int trainingsunitexercise = -1;
+    private ArrayList<Integer> trainingsunitexerciseID;
 
     // Schnittstelle zur Datenbank
     private DBConnection dbConnection;
@@ -57,21 +61,6 @@ public class EinheitDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*View.OnClickListener clickHandler1 = new View.OnClickListener() {
-
-            @TargetApi(Build.VERSION_CODES.N)
-            public void onClick(View v) {
-                Log.i("EinheitDetailFragment", "call createCalendarEvent");
-                createCalendarEvent();
-            }
-        };
-
-        calendarButton = (Button) getActivity().findViewById(R.id.addCalendarDateButton);
-        calendarButton.setOnClickListener(clickHandler1);*/
-
-
-
     }
 
 
@@ -131,8 +120,6 @@ public class EinheitDetailFragment extends Fragment {
         listAdapter1 = new EinheitDetailAdapter(getActivity().getBaseContext(), dbCursor1);
         listAdapter1.bindView(rootView, getActivity().getBaseContext(), dbCursor1);
 
-        //TODO: Majas Code zum laufen bekommen
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+dbCursor2.getCount());
         if( dbCursor2.getCount()>0) {
             getActivity().startManagingCursor(dbCursor2);
             listAdapter2 = new EinheitDetailUebersichtEnthaltenerUebungenAdapter(getActivity().getBaseContext(), dbCursor2);
@@ -148,10 +135,18 @@ public class EinheitDetailFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-
-
+            uebung.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    trainingsunitexerciseID = listAdapter2.getTrainingsunitexerciseID();
+                    trainingsunitexercise = trainingsunitexerciseID.get(position);
+                    DeleteDialog d = new DeleteDialog();
+                    d.addListener(dListener);
+                    d.show(getFragmentManager(),"DeleteDialog");
+                    return true;
+                }
+            });
         }
-
         return rootView;
     }
 
@@ -185,4 +180,21 @@ public class EinheitDetailFragment extends Fragment {
     }
 
 
+    @Override
+    public void onDialogPoistiveClick(int duration) {
+        DBConnection con = DBHelper.getConnection(this.getActivity().getBaseContext());
+        String[] args = {""+trainingsunitexercise};
+        con.delete(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, DBInfo.TRAININGSUNITEXERCISE_COLUMN_NAME_ID+" = ?",args);
+        Fragment currentFragment = this;
+        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
+        fragTransaction.detach(currentFragment);
+        fragTransaction.attach(currentFragment);
+        fragTransaction.commit();
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(int duration) {
+
+    }
 }

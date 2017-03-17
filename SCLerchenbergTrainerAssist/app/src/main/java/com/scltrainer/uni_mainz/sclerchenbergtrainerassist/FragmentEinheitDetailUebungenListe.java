@@ -1,5 +1,6 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
@@ -91,12 +93,21 @@ public class FragmentEinheitDetailUebungenListe extends UebungenListeFragment im
         exercise = position;
         trainingsunit = einheit;
 
+        //TODO: Echte Standardzeit in Hint eintragen
+        int duration = 20000;
+
         DurationDialog d = new DurationDialog();
         d.addListener(this);
+        d.setDuration(duration);
         d.show(getFragmentManager(),"Übungsdauer eingeben");
 
     }
 
+    private int getDurationOfUnit(int position){
+        DBConnection dbConnection = DBHelper.getConnection(this.getActivity().getBaseContext());
+        ContentValues row = new ContentValues();
+        return 0;
+    }
 
     @Override
     public void onDialogPoistiveClick(int duration) {

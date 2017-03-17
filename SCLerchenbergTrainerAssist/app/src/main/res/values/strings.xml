@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SC Lerchenberg TrainerAssist</string>
     <string name="save">Speichern</string>
+    <string name="resetButton">Datenbank zurücksetzen</string>
 
     <!-- main Activity strings -->
     <string name="uebungen_button">Übungen</string>
@@ -57,6 +58,8 @@
     <string name="duratioDialog">Geben sie die Dauer der Übung ein.</string>
     <string name="okay">Speichern</string>
     <string name="cancel">Abbrechen</string>
+    <string name="delete">Löschen</string>
+    <string name="deleteDialog">Wollen Sie diese Übung aus der Einheit löschen?</string>
 
 
 </resources>
