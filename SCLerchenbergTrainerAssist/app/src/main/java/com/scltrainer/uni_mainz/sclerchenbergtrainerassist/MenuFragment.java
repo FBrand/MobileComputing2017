@@ -1,11 +1,14 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -14,6 +17,9 @@ import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -81,7 +89,7 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
                 doTransaction(R.id.menu_frame, new EinstellungenFragment(), "einstellungen");
                 break;
             case 3:
-                aktualisiereDatenbank();
+                this.downloadDiaglog();
                 break;
             default:
                 Toast.makeText(getActivity(), "default switch case", Toast.LENGTH_LONG);
@@ -96,6 +104,7 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
             GlobalDBConnection.fetch(DBInfo.EXERCISE_TABLE_NAME, getActivity(), lastUpdate);
             GlobalDBConnection.fetch(DBInfo.TRAININGSUNIT_TABLE_NAME, getActivity(), lastUpdate);
             GlobalDBConnection.fetch(DBInfo.TRAININGSUNITEXERCISE_TABLE_NAME, getActivity(), lastUpdate);
+            Toast.makeText(getActivity(), "Aktualisieren erfolgreich.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getActivity(), "Fehler beim Aktualisieren der Datenbank.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -119,6 +128,26 @@ public class MenuFragment extends ListFragment implements OnItemClickListener {
         String currentDateTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
         editor.putString("LASTDATABASEUPDATE", currentDateTime);
 
+    }
+
+
+    private void downloadDiaglog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                aktualisiereDatenbank();
+            }
+        });
+        builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("Hinweis");
+        dialog.setMessage("Beim Aktualisieren der Daten wird Internetzugang benötigt. Dies kann unter Umständen Ihr mobiles Datenvolumen in Anspruch nehmen. Wollen Sie die Aktualisierung starten?");
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     private String myToString(int value){
