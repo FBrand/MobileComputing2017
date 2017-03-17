@@ -231,11 +231,12 @@ public class UebungActivity extends AppCompatActivity {
                         if((globalID == null || globalID.equals("null"))) {
                             try {
                                 GlobalDBConnection.upload(DBInfo.EXERCISE_TABLE_NAME, entryID, getActivity());
+                                Toast.makeText(getActivity(), "Hochladen erfolgreich!", Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
                                 Toast.makeText(getActivity(), "Fehler beim Hochladen!", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(getActivity(), "Diese Einheit wurde bereits hochgeladen!", Toast.LENGTH_SHORT);
+                            Toast.makeText(getActivity(), "Diese Einheit wurde bereits hochgeladen!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(getActivity(), "Sie müssen zuerst Ihre Email freigeben!", Toast.LENGTH_LONG).show();
