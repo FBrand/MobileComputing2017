@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.GLLayoutEditView;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.ItemGroup;
@@ -19,6 +20,10 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compon
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathEditType;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathType;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Thumbnail;
+
+import org.w3c.dom.Text;
+
+import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungActivity.EXTRA_EXERCISE_NAME;
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.UebungActivity.EXTRA_LOCALID;
 
 /**
@@ -29,6 +34,7 @@ public class LayoutEditActivity extends AppCompatActivity {
     private GLLayoutEditView glView;
     private Layout layout;
     private int entryID;
+    private String name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,7 @@ public class LayoutEditActivity extends AppCompatActivity {
             layout = Util.defaultLayout();
         } else {
             entryID = extras.getInt(EXTRA_LOCALID);
+            name = extras.getString(EXTRA_EXERCISE_NAME);
             layout = Util.loadLayoutFromDB(entryID, this);
         }
 

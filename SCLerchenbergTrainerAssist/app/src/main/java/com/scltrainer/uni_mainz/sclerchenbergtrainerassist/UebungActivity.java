@@ -41,6 +41,7 @@ public class UebungActivity extends AppCompatActivity {
 
     public static final String EXTRA_LOCALID = "_id";
     public static final String EXTRA_EXERCISE_DETAIL = "detail";
+    public static final String EXTRA_EXERCISE_NAME = "name";
     private static final int SECTION_LAYOUT = 0;
     private static final int SECTION_DETAILS = 1;
 
@@ -60,7 +61,6 @@ public class UebungActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    private int section = SECTION_LAYOUT;
 
     //TODO: Kapseln!
     public int entryID;
@@ -98,16 +98,17 @@ public class UebungActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (section) {
+                Cursor dbCursor = DetailFragment.getInstance().dbCursor;
+                dbCursor.moveToFirst();
+                switch (mViewPager.getCurrentItem()) {
                     case SECTION_LAYOUT:
                         Intent intent = new Intent(UebungActivity.this, LayoutEditActivity.class);
                         intent.putExtra(EXTRA_LOCALID, entryID);
+                        intent.putExtra(EXTRA_EXERCISE_NAME, dbCursor.getString(1));
                         startActivity(intent);
                         break;
                     case SECTION_DETAILS:
                         intent = new Intent(UebungActivity.this, DetailsEditActivity.class);
-                        Cursor dbCursor = DetailFragment.getInstance().dbCursor;
-                        dbCursor.moveToFirst();
                         String[] dbvalues = new String[13];
                         for (int i = 0; i < 13; i++) {
                             dbvalues[i] = dbCursor.getString(i);
@@ -311,7 +312,6 @@ public class UebungActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            section = position;
             switch(position) {
                 case SECTION_LAYOUT:
                     return LayoutFragment.newInstance(entryID);
