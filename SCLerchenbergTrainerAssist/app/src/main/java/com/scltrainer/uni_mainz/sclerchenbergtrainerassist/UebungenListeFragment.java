@@ -1,7 +1,10 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist;
 
 import android.app.ListFragment;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -163,10 +166,24 @@ public class UebungenListeFragment extends ListFragment implements OnItemClickLi
             mainActivity.fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    insertEmptyExercise();
                     Toast.makeText(getActivity(), "ÜBUNGEN", Toast.LENGTH_LONG).show();
                 }
             });
         }
 
+    }
+
+    private void insertEmptyExercise() {
+        SharedPreferences s = getActivity().getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
+        DBConnection dbConnection = DBHelper.getConnection(getActivity());
+
+        String[] aArr = {"_id"};
+        ContentValues row = new ContentValues();
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_AUTORMAIL, s.getString("USERMAIL",""));
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_AUTORNAME, s.getString("USERNAME",""));
+        row.put(DBInfo.EXERCISE_COLUMN_NAME_NAME, "Neue leere Übung");
+        long id = dbConnection.insert(DBInfo.EXERCISE_TABLE_NAME, row);
+        row.clear();
     }
 }
