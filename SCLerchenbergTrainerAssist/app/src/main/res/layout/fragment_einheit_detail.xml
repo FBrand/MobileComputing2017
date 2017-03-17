@@ -15,63 +15,76 @@
     <!-- TODO: ListView für Übungen einfügen -->
     <!-- Detailansicht einer Einheit mit Informationen über die Einheit und
     der Liste der in der Einheit enthaltenen Übungen -->
-           <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Name der Einheit"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:id="@+id/einheitName"/>
+        <TextView
+            android:id="@+id/einheitName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Name der Einheit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/einheitFavoriten" android:numStars="1"
-                android:rating="0" android:stepSize="1"
-                android:visibility="gone"/>
+        <RatingBar
+            android:id="@+id/einheitFavoriten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="1"
+            android:rating="0"
+            android:stepSize="1"
+            android:visibility="gone" />
 
-            <TextView
-                android:text="Autor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/einheitAutor"/>
+        <TextView
+            android:id="@+id/einheitAutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Autor" />
 
-            <TextView
-                android:id="@+id/einheitDauer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="tatsächliche Dauer" />
+        <TextView
+            android:id="@+id/einheitDauer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="tatsächliche Dauer" />
 
-            <TextView
-                android:text="Beschreibung"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/einheitBeschreibung"/>
-            <TextView
-                android:text="Schwerpunkt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/einheitSchwerpunkt"/>
+        <TextView
+            android:id="@+id/einheitBeschreibung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beschreibung" />
 
-            <TextView
-                android:text="letzte Änderung"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/einheitLetzteAenderung"/>
+        <TextView
+            android:id="@+id/einheitSchwerpunkt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Schwerpunkt" />
 
-            <!-- TODO: Mit der in Einheit befindeten Übungen füllen. -->
-            <Button
-                android:id="@+id/addCalendarDateButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="createCalendarEvent"
-                android:visibility="gone"
-                android:text="@string/addCalendarDate" />
-               <ListView
-                   android:id="@+id/einheitUebungen"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent" />
-           </LinearLayout>
+        <Button
+            android:id="@+id/uploadButtonEinheit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Einheit hochladen" />
 
+        <TextView
+            android:id="@+id/einheitLetzteAenderung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="letzte Änderung" />
 
+        <!-- TODO: Mit der in Einheit befindeten Übungen füllen. -->
+        <Button
+            android:id="@+id/addCalendarDateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="createCalendarEvent"
+            android:text="Als Kalenderevent hinzufügen" />
 
+        <ListView
+            android:id="@+id/einheitUebungen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 
 </LinearLayout>
