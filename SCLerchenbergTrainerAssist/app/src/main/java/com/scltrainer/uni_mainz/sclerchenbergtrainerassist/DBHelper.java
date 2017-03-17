@@ -96,7 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public static DBConnection getConnection (Context context){
         DBHelper db = new  DBHelper(context);
-        db.onUpgrade(db.getWritableDatabase(),1,1);
+        //db.onUpgrade(db.getWritableDatabase(),1,1);
         return new LocalDBConnection(db.getReadableDatabase());
     }
 

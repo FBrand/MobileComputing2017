@@ -23,12 +23,29 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Background;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Layout;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialComponent;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.MaterialType;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathComponent;
+import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.PathType;
+
+import org.joml.Vector2f;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.FieldType.SOCCER_FIELD;
+import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.SurfaceType.SOCCER_GRASS;
+
 
 /**
  * Aktivity die das UebungDetailFragment hostet.
  */
 
 public class UebungActivity extends AppCompatActivity {
+
+    public static final String EXTRA_LOCALID = "_id";
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -57,7 +74,7 @@ public class UebungActivity extends AppCompatActivity {
         if (extras == null) {
             return;
         }
-        entryID = extras.getInt("_id");
+        entryID = extras.getInt(EXTRA_LOCALID);
         Log.i("UebungActivity", "ID: " + entryID);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -80,6 +97,7 @@ public class UebungActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UebungActivity.this, LayoutEditActivity.class);
+                intent.putExtra(EXTRA_LOCALID, entryID);
                 startActivity(intent);
             }
         });
@@ -215,7 +233,7 @@ public class UebungActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch(position) {
                 case 0:
-                    return new LayoutFragment();
+                    return LayoutFragment.newInstance(entryID);
                 case 1:
                     return DetailFragment.newInstance(entryID);
                 default:
