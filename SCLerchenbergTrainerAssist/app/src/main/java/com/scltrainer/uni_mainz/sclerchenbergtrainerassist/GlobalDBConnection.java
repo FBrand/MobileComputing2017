@@ -33,10 +33,8 @@ public class GlobalDBConnection {
     //deaktiviert die verbindung zur globalen datenbank
     static boolean offline = false;
 
-
-    static String host = "http://134.93.143.94:80";//10.0.2.2:80"http://134.93.143.94:80"
-    static String autorMail = "test@mail.de";
-    //static String date = "11.03.2017";
+    //Server adresse. Unbedingt anpassen.
+    static String host = "http://XMG:80";//10.0.2.2:80"http://134.93.143.94:80"
 
     /**
      * function to add new data from the global to the local database
@@ -90,6 +88,7 @@ public class GlobalDBConnection {
      * @return true if successfull, else false
      */
     public static void upload(final String tableName, final int localId, final Activity context) {
+        Log.i("upload","/////////////////////////////////////////////////////////////////////////upload starting/////////////////////////////////////////////////////////////////////////////////////");
         if(offline)
             return;
         new Thread(new Runnable() {
@@ -108,7 +107,8 @@ public class GlobalDBConnection {
                     e.printStackTrace();
                 }
                 // write globalId in local db
-                int globalId = Integer.parseInt(result.substring(result.indexOf(":"), result.indexOf("{")).trim());
+                Log.d("result",result);
+                int globalId = Integer.parseInt(result.substring(result.indexOf("lastInsertId:")+14, result.indexOf("{")-1).trim());
                 DBConnection dbc = DBHelper.getConnection(context);
                 ContentValues row = new ContentValues();
                 row.put(DBInfo.EXERCISE_COLUMN_NAME_ID, globalId);
@@ -149,13 +149,18 @@ public class GlobalDBConnection {
      * @param localId   local id of the row to delete
      * @return true if successfull, else false
      */
-    public static void delete(final String tableName, final int localId) {
+    public static void delete(final String tableName, final int localId, final Activity context) {
         if(offline)
             return;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
 // do the thing that takes a long time
+
+                SharedPreferences shared = context.getSharedPreferences("SHAREDPREFERENCES", Context.MODE_PRIVATE);
+                String autorMail = shared.getString("USEREMAIL", "");
+
                 String result = null;//TODO + globalId);
                 try {
                     result = GlobalDBConnection.delete(host + "/" + autorMail + "/" + tableName + "/");
@@ -206,7 +211,11 @@ public class GlobalDBConnection {
         dbCursor.moveToFirst();
         try {
             for (String column : dbCursor.getColumnNames()) {
-                if (put || !column.equals(DBInfo.EXERCISE_COLUMN_NAME_ID)) {
+                Log.d("db",column + "   " + !column.equals("_id"));
+                if (put || ( !column.equals(DBInfo.EXERCISE_COLUMN_NAME_ID )&& !column.equals("_id") ) ) {
+                    if(dbCursor.getString(dbCursor.getColumnIndex(column))!=null) {
+                        Log.d("db", dbCursor.getString(dbCursor.getColumnIndex(column)));
+                    }
                     data.put(column, dbCursor.getString(dbCursor.getColumnIndex(column)));
 
                 }
