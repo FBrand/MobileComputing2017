@@ -19,6 +19,7 @@ import static android.opengl.GLES20.glVertexAttribPointer;
 
 /**
  * Created by Julian on 13.03.2017.
+ * Klasse um Dreieicke zu zeichnen
  */
 
 public class TriangleVBO {
@@ -40,7 +41,10 @@ public class TriangleVBO {
         glBufferData(GL_ARRAY_BUFFER, 24, vboBuffer, GL_STATIC_DRAW);
     }
 
-
+    /**
+     * Erstllt ein einheitliches Dreieick
+     * @return
+     */
     public static TriangleVBO getUnitTriangle() {
         if (unitTriangle == null) {
             float cosP = (float) Math.cos(Math.toRadians(120));
@@ -61,6 +65,11 @@ public class TriangleVBO {
         unitTriangle = null;
     }
 
+    /**
+     * Zeichnet ein Dreieck
+     * @param posLocation
+     * @param texLocation
+     */
     public void draw(int posLocation, int texLocation) {
         glBindBuffer(GL_ARRAY_BUFFER, id);
         if (posLocation >= 0) {
@@ -70,6 +79,9 @@ public class TriangleVBO {
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 
+    /**
+     * Löscht die Dreiecke
+     */
     public void delete() {
         glDeleteBuffers(1, new int[] {id}, 0);
     }

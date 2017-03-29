@@ -7,8 +7,8 @@ import java.util.Collection;
 
 /**
  * Created by Julian on 13.03.2017.
+ * Klasse, die eine unsichtbare Box um geometrische Objekte bildet
  */
-
 public class BoundingBox {
 
     private Vector2f min,max,center;
@@ -32,12 +32,19 @@ public class BoundingBox {
         this(new Vector2f(Float.MAX_VALUE), new Vector2f(-Float.MAX_VALUE));
     }
 
+    /**
+     *
+     */
     private void update() {
         this.center = new Vector2f(min);
         center.add(max).mul(0.5f);
         extent = max.sub(min, new Vector2f()).length();
     }
 
+    /**
+     * Berechnet, ob die BoundingBox ein Punkt umschließt
+     * @param p
+     */
     private void enclosePoint(Vector2f p) {
         min.x = Math.min(min.x, p.x);
         min.y = Math.min(min.y, p.y);
@@ -45,15 +52,28 @@ public class BoundingBox {
         max.y = Math.max(max.y, p.y);
     }
 
+    /**
+     * Setzt die Attribute auf den Minimalwert bzw. Maximalwert zurück
+     */
     public void reset() {
         min.x = min.y = Float.MAX_VALUE;
         max.x = max.y = -Float.MAX_VALUE;
     }
 
+    /**
+     * Prüft, ob ein Punkt in der BoundingBox ist
+     * @param v
+     * @return
+     */
     public boolean contains(Vector2f v) {
         return v.x >= min.x && v.y >= min.y && v.x <= max.x && v.y <= max.y;
     }
 
+    /**
+     * Prüft ob zwei BoundingBoxen sich schneiden
+     * @param bb
+     * @return
+     */
     public boolean intersect(BoundingBox bb) {
         if (max.x < bb.min.x) return false; // is left of bb
         if (min.x > bb.max.x) return false; // is right of bb
@@ -62,6 +82,12 @@ public class BoundingBox {
         return true; // boxes overlap
     }
 
+    /**
+     * Prüft, ob eine BoundingBox und eine Pfad sich schneiden
+     * @param start
+     * @param end
+     * @return
+     */
     public boolean intersect(Vector2f start, Vector2f end) {
         Vector2f r = end.sub(start, new Vector2f());
         float length = r.length();
@@ -89,10 +115,18 @@ public class BoundingBox {
         return tmax >= 0 && tmin <= length && tmax >= tmin;
     }
 
+    /**
+     * Berechnet, ob die BoundingBox mehrere Punkte umschließt
+     * @param points
+     */
     public void enclose(Vector2f... points) {
         enclose(Arrays.asList(points));
     }
 
+    /**
+     *Berechnet, ob die BoundingBox mehrere Punkte umschließt
+     * @param points
+     */
     public void enclose(Collection<Vector2f> points) {
         for (Vector2f p : points) {
             enclosePoint(p);
@@ -101,28 +135,52 @@ public class BoundingBox {
         update();
     }
 
+    /**
+     * Berechnet, ob die BoundingBox eine andere BoundingBox umschließt
+     * @param boundingBox
+     */
     public void enclose(BoundingBox boundingBox) {
         enclose(boundingBox.min, boundingBox.max);
     }
 
+    /**
+     * Translatiert die BoundingBox
+     * @param t
+     */
     public void translate(Vector2f t) {
         min.add(t);
         max.add(t);
         center.add(t);
     }
 
+    /**
+     * Getter für center
+     * @return
+     */
     public Vector2f getCenter() {
         return center;
     }
 
+    /**
+     * Getter für max
+     * @return
+     */
     public Vector2f getMax() {
         return max;
     }
 
+    /**
+     * Getter für min
+     * @return
+     */
     public Vector2f getMin() {
         return min;
     }
 
+    /**
+     * Getter für Extent
+     * @return
+     */
     public float getExtent() {
         return extent;
     }

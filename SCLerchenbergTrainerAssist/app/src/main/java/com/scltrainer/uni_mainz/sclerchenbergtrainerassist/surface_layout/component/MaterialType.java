@@ -3,9 +3,8 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compo
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
 
 /**
- * Created by Julian on 09.03.2017.
+ * New materials can be defined here.
  */
-
 public enum MaterialType implements Textured, Thumbnail, Scaled {
     GOAL(R.drawable.goal, 0.06f),
     CONE(R.drawable.cone, 0.02f),

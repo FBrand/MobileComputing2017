@@ -4,13 +4,12 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compo
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
 
 /**
- * Created by Julian on 09.03.2017.
+ * New field types can be declared here.
  */
-
 public enum FieldType implements Thumbnail, Textured {
     SOCCER_FIELD(R.drawable.soccer_field);
 
-    public final int texResID;
+    public final int texResID; // the texture resource id
 
     FieldType(int texResID) {
         this.texResID = texResID;

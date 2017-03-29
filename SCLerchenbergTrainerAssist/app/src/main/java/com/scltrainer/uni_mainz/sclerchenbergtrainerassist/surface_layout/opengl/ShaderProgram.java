@@ -36,6 +36,10 @@ public class ShaderProgram {
         this.name = name;
     }
 
+    /**
+     * Fügt einen neuen Shader hinzu
+     * @param shaders
+     */
     public void attachShader(Shader... shaders) {
         for (Shader shader : shaders) {
             glAttachShader(id, shader.id);
@@ -45,6 +49,10 @@ public class ShaderProgram {
             linked = false;
     }
 
+    /**
+     * Compiled alle Shader
+     * @throws ShaderCompileException
+     */
     public void compile() throws ShaderCompileException {
         for (Shader shader : attachedShaders)
             shader.compile();

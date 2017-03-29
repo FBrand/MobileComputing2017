@@ -14,9 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Julian on 09.03.2017.
+ * This class contains all parts of a layout.
+ * The layout can be stored to and loaded from a JSONObject.
+ * Furthermore it provides a method to generate material list from.
  */
-
 public class Layout {
     private static final String BACKGROUND_JSON_NAME = "Background";
     private static final String MATERIALS_JSON_NAME = "Materials";
@@ -57,12 +58,24 @@ public class Layout {
         return materialList;
     }
 
+    /**
+     * Converts the Layout to a JSON object.
+     * @return The created JSON object.
+     * @throws JSONException if something went wrong.
+     */
     public JSONObject toJSON() throws JSONException {
         return new JSONObject().put(BACKGROUND_JSON_NAME, background.toJSON())
                 .put(MATERIALS_JSON_NAME, materials.toJSONArray())
                 .put(PATHS_JSON_NAME, paths.toJSONArray());
     }
 
+
+    /**
+     * Creates a layout from a JSON object.
+     * @param json The json object to create the layout from.
+     * @return The created layout.
+     * @throws JSONException if something went wrong.
+     */
     public static Layout fromJSON(JSONObject json) throws JSONException {
         Layout layout = new Layout();
         layout.background = Background.fromJSON(json.getJSONObject(BACKGROUND_JSON_NAME));

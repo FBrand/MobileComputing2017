@@ -14,6 +14,10 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+/**
+ * A Component representing a Material, e.g. a cone.
+ * The viewable layer of a material component is a textured quad.
+ */
 public class MaterialComponent extends Component<TexturedQuad, MaterialComponent> {
 
     private static final String TYPE_JSON_NAME = "Type";
@@ -78,6 +82,12 @@ public class MaterialComponent extends Component<TexturedQuad, MaterialComponent
                     .put(POSITION_JSON_NAME, new JSONObject().put(X_JSON_NAME, pos.x()).put(Y_JSON_NAME, pos.y()));
     }
 
+    /**
+     * Creates a MaterialComponent from a JSON object.
+     * @param json The json object to create the MaterialComponent from.
+     * @return The created material component.
+     * @throws JSONException if something went wrong.
+     */
     public static MaterialComponent fromJSON(JSONObject json) throws JSONException {
         MaterialType type = MaterialType.values()[json.getInt(TYPE_JSON_NAME)];
         JSONObject position = json.getJSONObject(POSITION_JSON_NAME);

@@ -13,6 +13,7 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout
 
 /**
  * Created by Julian on 09.03.2017.
+ * Klasse um die Schichte eines Objektes darzustellen
  */
 
 public abstract class Layer {
@@ -22,11 +23,22 @@ public abstract class Layer {
     public float transparency = 1.0f;
     public float scale;
 
-
+    /**
+     * Zeichnet den Editor
+     * @param PV
+     * @param M
+     * @param info
+     */
     protected abstract void doDraw(Matrix4f PV, Matrix4f M, ShaderProgramInfo info);
 
     protected abstract BoundingBox localBoundingBox();
 
+    /**
+     * Setzt Defaultwerte für das Zeichnen des Editors
+     * @param PV
+     * @param M
+     * @param info
+     */
     public final void draw(Matrix4f PV, Matrix4f M, ShaderProgramInfo info) {
         glUniform1i(info.location(TEXTURE_NAME), 0);
         glUniform4f(info.location(COLOR_NAME), color.x, color.y, color.z, color.w);
@@ -34,6 +46,10 @@ public abstract class Layer {
         doDraw(PV,M,info);
     }
 
+    /**
+     * Erstellt die BoundingBox einer Schicht
+     * @return
+     */
     public BoundingBox boundingBox() {
         BoundingBox bb = new BoundingBox(localBoundingBox());
         bb.translate(pos);

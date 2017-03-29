@@ -11,6 +11,7 @@ import static android.opengl.GLES20.*;
 
 /**
  * Created by Julian on 06.03.2017.
+ * Klasse um eine  Shader zu Laden
  */
 
 public class Shader {
@@ -28,11 +29,19 @@ public class Shader {
         setShaderSource(source);
     }
 
+    /**
+     *
+     * @param source
+     */
     public void setShaderSource(String source) {
         glShaderSource(id, source);
         compiled = false;
     }
 
+    /**
+     * Compiled einen Shader
+     * @throws ShaderCompileException
+     */
     public void compile() throws ShaderCompileException {
         if (!compiled) {
             glCompileShader(id);
@@ -45,6 +54,12 @@ public class Shader {
         }
     }
 
+    /**
+     * Lädt eine Shader aus den Resource Ordner
+     * @param resId
+     * @param context
+     * @throws IOException
+     */
     public void loadFromResource(int resId, Context context) throws IOException {
         InputStream inputstream = context.getResources().openRawResource(resId);
 

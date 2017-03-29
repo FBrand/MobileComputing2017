@@ -22,6 +22,9 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl
 
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util.PATH_ALPHA;
 
+/**
+ * A component representing a path.
+ */
 public class PathComponent extends Component<Path, PathComponent> {
 
     private static final String TYPE_JSON_NAME = "Type";
@@ -42,6 +45,10 @@ public class PathComponent extends Component<Path, PathComponent> {
         this.pos = pos;
     }
 
+    /**
+     * Adds a point at the end of the path.
+     * @param point The point to add.
+     */
     public void addPoint(Vector2f point) {
         points.add(point);
         planUpdate(new PointUpdate());
@@ -94,6 +101,10 @@ public class PathComponent extends Component<Path, PathComponent> {
         return false;
     }
 
+    /**
+     * The number of points of this path.
+     * @return The point count.
+     */
     public int size() {
         return points.size();
     }
@@ -109,6 +120,12 @@ public class PathComponent extends Component<Path, PathComponent> {
                 .put(POSITIONS_JSON_NAME, temp);
     }
 
+    /**
+     * Creates a PathComponent from a JSON object.
+     * @param json The json object to create the PathComponent from.
+     * @return The created path component.
+     * @throws JSONException if something went wrong.
+     */
     public static PathComponent fromJSON(JSONObject json) throws JSONException {
 
         PathType type = PathType.values()[json.getInt(TYPE_JSON_NAME)];
@@ -127,6 +144,9 @@ public class PathComponent extends Component<Path, PathComponent> {
         return path;
     }
 
+    /**
+     * Updates the layer if a point was added or moved.
+     */
     private class PointUpdate implements LayerUpdate {
         @Override
         public void run() {

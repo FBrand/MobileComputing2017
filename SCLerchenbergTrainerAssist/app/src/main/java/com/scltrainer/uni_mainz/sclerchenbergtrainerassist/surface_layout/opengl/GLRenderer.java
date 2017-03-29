@@ -10,8 +10,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 /**
  * Created by Julian on 12.03.2017.
+ * Klasse zum Rendern von OpenGL Anwendungen
  */
-
 public class GLRenderer implements GLSurfaceView.Renderer {
 
     private List<GLRendererListener> listeners = new ArrayList<>();
@@ -37,6 +37,10 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         }
     }
 
+    /**
+     * Fügt einen GLRendererListener hinzu
+     * @param listener
+     */
     public void addListener(GLRendererListener listener) {
         this.listeners.add(listener);
     }

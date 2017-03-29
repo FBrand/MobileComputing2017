@@ -32,6 +32,11 @@ import javax.microedition.khronos.egl.EGLConfig;
 
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Util.*;
 
+/**
+ * The GLSurface to view and edit the layout.
+ * It handles several touch gestures to edit the layout.
+ * @see GLLayoutView
+ */
 public class GLLayoutEditView extends GLLayoutView {
 
     private Layer removeLayer;
@@ -44,6 +49,10 @@ public class GLLayoutEditView extends GLLayoutView {
     public final PathOnClickListener pathOnClickListener;
     public final PathEditOnClickListener pathEditOnClickListener;
 
+    /**
+     * Creates a new GLLayoutEditView.
+     * @param context The app context.
+     */
     public GLLayoutEditView(Context context){
         super(context);
 
@@ -85,6 +94,9 @@ public class GLLayoutEditView extends GLLayoutView {
             }});
     }
 
+    /**
+     * Handles the clicks on material thumbnails within the selection list.
+     */
     public class MaterialOnClickListener implements OnItemMultiClickListener {
 
         @Override
@@ -102,7 +114,9 @@ public class GLLayoutEditView extends GLLayoutView {
             setOnTouchListener(layoutListener);
         }
     }
-
+    /**
+     * Handles the clicks on path thumbnails within the selection list.
+     */
     public class PathOnClickListener implements OnItemMultiClickListener {
 
         @Override
@@ -121,6 +135,9 @@ public class GLLayoutEditView extends GLLayoutView {
         }
     }
 
+    /**
+     * Handles the clicks on path edit thumbnails within the selection list.
+     */
     public class PathEditOnClickListener implements OnItemMultiClickListener {
 
         @Override
@@ -140,7 +157,7 @@ public class GLLayoutEditView extends GLLayoutView {
 
 
     /**
-     * Handles drag and drop gestures.
+     * Handles drag and drop gestures of a arbitrary component, e.g. a material or path.
      */
     private class DragAndDropListener<T extends Component<?, T>> extends
             GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
@@ -223,11 +240,9 @@ public class GLLayoutEditView extends GLLayoutView {
 
 
     /**
-     * Handles Layout edit gestures.
+     * Handles several Layout edit and view gestures and delegates them to other listeners if not handled directly.
      */
     private class LayoutEditGestureListener extends LayoutGestureListener {
-
-
 
         public SelectionType selectionType = SelectionType.NONE;
         public MaterialType selectedMaterialType;
@@ -381,6 +396,9 @@ public class GLLayoutEditView extends GLLayoutView {
 
     }
 
+    /**
+     * Handles gestures to drag a path point.
+     */
     private class PathPointGestureListener
             extends GestureDetector.SimpleOnGestureListener implements
             View.OnTouchListener {
@@ -427,6 +445,9 @@ public class GLLayoutEditView extends GLLayoutView {
         }
     }
 
+    /**
+     * The several types that can be selected from the selection list.
+     */
     private enum SelectionType {
         NONE,MATERIAL,PATH,PATH_EDIT;
     }

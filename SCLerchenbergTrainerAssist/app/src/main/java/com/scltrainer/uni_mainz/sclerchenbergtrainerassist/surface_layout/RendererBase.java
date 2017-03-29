@@ -5,6 +5,10 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.opengl
 import org.joml.Vector2f;
 
 
+/**
+ * The base class of a renderer.
+ * It listens to GLSurface events such as create, resize and draw.
+ */
 public abstract class RendererBase implements GLRendererListener {
 
     protected float zoom = 1.0f;
@@ -19,6 +23,11 @@ public abstract class RendererBase implements GLRendererListener {
     public abstract Vector2f worldCoords(Vector2f ndc);
 
 
+    /**
+     * Converts pixel coordinates to normalized device coordinates.
+     * @param pixel The pixel to convert.
+     * @return The NDC coordinates of the pixel.
+     */
     public Vector2f ndcCoords(Vector2f pixel) {
         Vector2f v = new Vector2f();
         v.x = 2.0f*pixel.x/width - 1.0f;
@@ -26,6 +35,11 @@ public abstract class RendererBase implements GLRendererListener {
         return v;
     }
 
+    /**
+     * Converts pixel coordinates to world coordinates.
+     * @param pixel The pixel to convert.
+     * @return The world coordinates of the pixel.
+     */
     public Vector2f pixelToWorldCoords(Vector2f pixel) {
         return worldCoords(ndcCoords(pixel));
     }

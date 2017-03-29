@@ -6,6 +6,9 @@ import org.joml.Vector2f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Layer2DRenderer.*;
 
+/**
+ * Klasse um eine Texture im Editor darzustellen
+ */
 public class TexturedQuad extends Layer {
     public QuadVBO quadVBO;
     public Texture2D texture;
@@ -30,6 +33,9 @@ public class TexturedQuad extends Layer {
         return M;
     }
 
+    /**
+     * Skaliert eine Texture
+     */
     public void scaleToTexture() {
         if (texture != null) {
             if (texture.width > texture.height) {

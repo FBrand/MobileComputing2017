@@ -3,9 +3,8 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compo
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
 
 /**
- * Created by Julian on 09.03.2017.
+ * New surface types can be declared here.
  */
-
 public enum SurfaceType implements Thumbnail, Textured{
     SOCCER_GRASS(R.drawable.soccer_grass);
 

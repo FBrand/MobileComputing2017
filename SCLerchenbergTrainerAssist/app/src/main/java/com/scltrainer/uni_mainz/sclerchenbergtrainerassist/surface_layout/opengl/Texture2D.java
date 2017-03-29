@@ -14,6 +14,7 @@ import static android.opengl.GLES20.glTexParameteri;
 
 /**
  * Created by Julian on 07.03.2017.
+ * Klasse um Teturen darstellen
  */
 
 public class Texture2D {

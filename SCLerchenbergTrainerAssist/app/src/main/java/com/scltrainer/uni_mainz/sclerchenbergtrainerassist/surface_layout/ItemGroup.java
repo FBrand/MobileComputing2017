@@ -1,9 +1,8 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout;
 
 /**
- * Created by Julian on 12.03.2017.
+ * Groups several items within a list together to provide a click listener for a part of a list.
  */
-
 public class ItemGroup {
     public int numItems;
     public OnItemMultiClickListener onItemClickListener;

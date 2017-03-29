@@ -22,7 +22,12 @@ import org.joml.Vector2f;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
-
+/**
+ * The GLSurface to view (no edit) the layout.
+ * It handles several touch gestures to view the layout, such as zoom or scroll gestures.
+ * Furthermore it updates the layers and provides them to the Layer2DRenderer.
+ * @see Layer2DRenderer
+ */
 public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
 
 
@@ -105,6 +110,10 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
 
     }
 
+    /**
+     * Sets the layout to view.
+     * @param layout The layout to view by this surface.
+     */
     public void setLayout(final Layout layout) {
         this.layout = layout;
         if (glReady) {
@@ -138,7 +147,7 @@ public class GLLayoutView extends GLSurfaceView implements GLRendererListener {
     public void onDrawGL() {}
 
     /**
-     * Handles Layout view gestures.
+     * Handles Layout view gestures, e.g. zooming.
      */
     public class LayoutGestureListener extends GestureDetector.SimpleOnGestureListener
             implements ScaleGestureDetector.OnScaleGestureListener, View.OnTouchListener {

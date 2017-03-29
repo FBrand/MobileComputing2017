@@ -9,18 +9,29 @@ import org.joml.Vector3f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.Layer2DRenderer.*;
 
+/**
+ * Klasse, um eine Weg darzustellen
+ */
 public class Path extends Layer {
     public Line line;
     public TriangleVBO triangle;
     public Texture2D texture;
     public static float arrowScale = 1.0f;
 
+    /**
+     * Berechnet den Winkel des Pfeils
+     * @return
+     */
     private float getArrowRotation() {
         int end = line.end();
         Vector2f v = line.getPoint(end).sub(line.getPoint(end-1), new Vector2f());
         return (float) ((-v.x > 0? 1 : -1) * Math.acos(v.y/v.length()));
     }
 
+    /**
+     * Berechnet die Modelmatrix
+     * @return
+     */
     private Matrix4f modelMatrix() {
         BoundingBox bb = line.getBoundingBox();
         Vector2f center = bb.getCenter();

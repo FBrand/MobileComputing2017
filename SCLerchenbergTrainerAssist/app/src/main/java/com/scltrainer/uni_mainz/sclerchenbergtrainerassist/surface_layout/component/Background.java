@@ -12,7 +12,10 @@ import org.joml.Vector2f;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/**
+ * The background of the layout.
+ * A background is composed from a surface type, e.g. grass and a field type, e.g a football field.
+ */
 public class Background extends Viewable<LayerGroup, Background> {
 
     private static final String SURFACE_TYPE_JSON_NAME = "surfaceType";

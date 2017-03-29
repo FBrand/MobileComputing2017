@@ -20,6 +20,7 @@ import static android.opengl.GLES20.glVertexAttribPointer;
 
 /**
  * Created by Julian on 07.03.2017.
+ * Klasse, um Linien darzustellen
  */
 
 public class Line implements Iterable<Vector2f> {
@@ -40,6 +41,9 @@ public class Line implements Iterable<Vector2f> {
         updateBuffer();
     }
 
+    /**
+     * Erneuert den Buffer für neue Punkte
+     */
     private void updateBuffer() {
         int bytes = 8*this.points.size();
         buffer = ByteBuffer.allocateDirect(bytes);
@@ -53,11 +57,17 @@ public class Line implements Iterable<Vector2f> {
 
     }
 
+    /**
+     * Berechnet eine neue BoundingBox
+     */
     private void updateBoundingBox() {
         boundingBox.reset();
         boundingBox.enclose(points);
     }
 
+    /**
+     * Erneuert den Buffer für neue Punkte und berechnet eine neue BoundingBox
+     */
     public void update() {
         updateBuffer();
         updateBoundingBox();
@@ -69,22 +79,45 @@ public class Line implements Iterable<Vector2f> {
         updateBuffer();
     }
 */
+
+    /**
+     * Gibt den i-ten Punkt zurück
+     * @param i
+     * @return
+     */
     public Vector2f getPoint(int i) {
         return points.get(i);
     }
 
+    /**
+     * Getter für die BoundingBox
+     * @return
+     */
     public BoundingBox getBoundingBox() {
         return boundingBox;
     }
 
+    /**
+     * Gibt den letzen Index der Liste von Punkte zurück
+     * @return
+     */
     public int end() {
         return points.size()-1;
     }
 
+    /**
+     * Gibt die Anzahl der Punkte zurück
+     * @return
+     */
     public int numPoints() {
         return points.size();
     }
 
+    /**
+     * Zeichnet die Linie
+     * @param posLocation
+     * @param texLocation
+     */
     public void draw(int posLocation, int texLocation) {
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);

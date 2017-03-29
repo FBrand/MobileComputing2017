@@ -15,7 +15,8 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.Thumbnail;
 
 /**
- * Created by Julian on 10.03.2017.
+ * A list adapter for Thumbnails.
+ * Its purpose is to create the view of list items.
  */
 public class ThumbnailListAdapter extends ArrayAdapter<Thumbnail> {
     private final Context context;

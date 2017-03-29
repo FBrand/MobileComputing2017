@@ -17,6 +17,7 @@ import static android.opengl.GLES20.glVertexAttribPointer;
 
 /**
  * Created by Julian on 07.03.2017.
+ * Darstellung eines Quads um eine Texture zu erstellen
  */
 
 public class QuadVBO {
@@ -41,6 +42,10 @@ public class QuadVBO {
         glBufferData(GL_ARRAY_BUFFER, size, vboBuffer, GL_STATIC_DRAW);
     }
 
+    /**
+     * Gibt einen einen einheitlichen Quad zurück
+     * @return
+     */
     public static QuadVBO getUnitQuad() {
         if (unitQuad == null) {
             unitQuad = new QuadVBO(2,2,1,1);
@@ -48,11 +53,18 @@ public class QuadVBO {
         return unitQuad;
     }
 
+    /**
+     * Setzt den Einheitsquad zurück
+     */
     public static void reset() {
         unitQuad = null;
     }
 
-
+    /**
+     * Zeichnet einen Quad
+     * @param posLocation
+     * @param texLocation
+     */
     public void draw(int posLocation, int texLocation) {
         glBindBuffer(GL_ARRAY_BUFFER, id);
         if (posLocation >= 0) {

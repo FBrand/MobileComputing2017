@@ -32,9 +32,8 @@ import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout
 import static com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.component.SurfaceType.SOCCER_GRASS;
 
 /**
- * Created by Julian on 13.03.2017.
+ * A utility class storing constants and providing static utility methods used several times.
  */
-
 public class Util {
 
     public static Vector2f pixelDensity;
@@ -73,12 +72,20 @@ public class Util {
         return dbConnection.select(DBInfo.EXERCISE_TABLE_NAME, sArr, s, sArgs);
     }
 
+    /**
+     * Forces the gl thread to reload its resources.
+     * This is required each time the glcontext  is lost, due to pausing or destroying the GLsurface.
+     */
     public static void forceReloadResources() {
         TextureFactory.reset();
         QuadVBO.reset();
         TriangleVBO.reset();
     }
 
+    /**
+     * The default layout is used for testing.
+     * It only contains the lines of a soccer field and a grass background.
+     */
     public static Layout defaultLayout() {
         // for testing
         Layout layout = new Layout();
@@ -86,6 +93,9 @@ public class Util {
         return layout;
     }
 
+    /**
+     * Loads a layout form the local database.
+     */
     public static Layout loadLayoutFromDB(int entryID, Context context) {
         DBConnection dbConnection = DBHelper.getConnection(context);
         Cursor dbCursor = selectCursorLayout(dbConnection, entryID);
@@ -100,6 +110,9 @@ public class Util {
         }
     }
 
+    /**
+     * Saves a layout to the local database.
+     */
     public static boolean saveLayoutToDB(int entryID, Layout layout, Context context) {
         try {
             JSONObject jsonLayout = layout.toJSON();
@@ -117,6 +130,9 @@ public class Util {
         }
     }
 
+    /**
+     * Pre-loads the textures of materials to speed up the creation process.
+     */
     public static void loadDrawables(Context context){
         for (MaterialType mat : MaterialType.values()) {
             TextureFactory.loadTexture(context, mat.getTextureResID());

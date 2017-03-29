@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Julian on 09.03.2017.
+ * Groups components of the same type together.
+ * It also extends the viewable class to provide a single viewable Layer for all components contained in this group.
+ * @param <T> The type of the components contained in this group.
  */
-
 public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGroup, T> implements Iterable<T> {
 
     private Set<T> components = new LinkedHashSet<>();
@@ -37,6 +38,7 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
         }
         return layer;
     }
+
 
     public void add(T component) {
         this.components.add(component);
@@ -91,6 +93,11 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
         return components.size();
     }
 
+    /**
+     * Converts the component group to a JSON array.
+     * @return The created JSON array.
+     * @throws JSONException if something went wrong.
+     */
     public JSONArray toJSONArray() throws JSONException {
         JSONArray temp = new JSONArray();
         for(Component c : components){
@@ -99,6 +106,9 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
         return temp;
     }
 
+    /**
+     * Adds the corresponding layer to the layer group, when a new component was added.
+     */
     private class LayerAddUpdate implements LayerUpdate {
 
         private T component;
@@ -113,7 +123,9 @@ public class ComponentGroup<T extends Component<?, T>> extends Viewable<LayerGro
             getLayer().add(component.getLayer());
         }
     }
-
+    /**
+     * Removes the corresponding layer from the layer group, when a component was removed.
+     */
     private class LayerRemoveUpdate implements LayerUpdate {
 
         private T component;

@@ -1,6 +1,5 @@
 package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -8,7 +7,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Handles Thumbnail onclick events and delegates them to the click listener provided for an item group.
+ * Furthermore it changes the background color of a selected/unselected item.
+ */
 public class ThumbnailOnClickListener implements OnItemClickListener {
 
     private List<ItemGroup> itemGroups = new ArrayList<>();
@@ -18,6 +20,9 @@ public class ThumbnailOnClickListener implements OnItemClickListener {
         this.adapter = adapter;
     }
 
+    /**
+     * Adds an item group to the listener.
+     */
     public void addItemGroup(ItemGroup group) {
         itemGroups.add(group);
     }

@@ -3,9 +3,8 @@ package com.scltrainer.uni_mainz.sclerchenbergtrainerassist.surface_layout.compo
 import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
 
 /**
- * Created by Julian on 14.03.2017.
+ * New thumbnails to edit a path can be declared here.
  */
-
 public class PathEditType implements Thumbnail {
 
     private static PathEditType instance;

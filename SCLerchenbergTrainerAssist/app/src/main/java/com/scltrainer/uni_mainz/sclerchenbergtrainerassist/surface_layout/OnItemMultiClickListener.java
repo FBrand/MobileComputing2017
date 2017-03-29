@@ -4,9 +4,8 @@ import android.view.View;
 import android.widget.AdapterView;
 
 /**
- * Created by Julian on 12.03.2017.
+ * Provides a method to detect a re-click on an item.
  */
-
 public interface OnItemMultiClickListener extends AdapterView.OnItemClickListener {
     void onItemReClick(AdapterView<?> var1, View var2, int var3, long var4);
 }

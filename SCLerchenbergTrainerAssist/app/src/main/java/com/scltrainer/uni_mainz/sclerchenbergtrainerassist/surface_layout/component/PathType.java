@@ -5,9 +5,8 @@ import com.scltrainer.uni_mainz.sclerchenbergtrainerassist.R;
 import org.joml.Vector4f;
 
 /**
- * Created by Julian on 09.03.2017.
+ * New path types can be added here.
  */
-
 public enum PathType implements Thumbnail {
     TRAVEL(R.drawable.arrow_orange, new Vector4f(1,0.3f,0,1)),
     PASS(R.drawable.arrow_blue, new Vector4f(0,0.3f,1,1));

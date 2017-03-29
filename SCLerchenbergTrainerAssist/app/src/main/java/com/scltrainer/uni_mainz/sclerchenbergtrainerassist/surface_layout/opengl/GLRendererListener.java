@@ -5,7 +5,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 /**
  * Created by Julian on 12.03.2017.
  */
-
 public interface GLRendererListener {
     void onCreateGL(EGLConfig eglConfig);
     void onDrawGL();

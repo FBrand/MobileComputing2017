@@ -30,6 +30,9 @@ import java.io.IOException;
 import javax.microedition.khronos.egl.EGLConfig;
 
 
+/**
+ * Renders 2D layers by blending them over each other.
+ */
 public class Layer2DRenderer extends RendererBase {
 
     public static final String TEXTURE_NAME = "tex";
@@ -86,6 +89,11 @@ public class Layer2DRenderer extends RendererBase {
         centerBounds.y = worldBounds.y - worldBounds.y/zoom;
     }
 
+    /**
+     * Computes world coordinates from normalized device coordinates.
+     * @param ndc A point in NDC coordinates.
+     * @return The same point in world coordinates.
+     */
     public Vector2f worldCoords(Vector2f ndc) {
         Matrix4f PV = new Matrix4f(projection);
         PV.mul(view);
@@ -95,16 +103,33 @@ public class Layer2DRenderer extends RendererBase {
         return new Vector2f(result.x, result.y);
     }
 
+    /**
+     * Adds a layer on top of the current layers.
+     * @param layer The layer to add.
+     */
     public void addLayer(Layer layer) {
         layers.add(layer);
     }
+
+    /**
+     * Removes a layer from queue.
+     * @param layer The layer to remove.
+     */
     public void removeLayer(Layer layer) {
         layers.remove(layer);
     }
+
+    /**
+     * Removes all layers.
+     */
     public void clearLayer() {
         layers.clear();
     }
 
+    /**
+     * Rotates the full view around the specified axis (x,y,z).
+     * @param angle The angle in degrees.
+     */
     public void rotate(float angle, float x, float y, float z) {
         Quaternionf q = new Quaternionf();
         q.fromAxisAngleDeg(x,y,z,angle);
@@ -112,12 +137,21 @@ public class Layer2DRenderer extends RendererBase {
         updateView();
     }
 
+    /**
+     * Translates the full view by a vector.
+     * @param t The translation vector.
+     */
     @Override
     public void translate(Vector2f t) {
         setCenter(new Vector2f(center).add(t));
         updateView();
     }
 
+    /**
+     * Zooms the full view around the specified zoom center.
+     * @param amount The amount to zoom.
+     * @param zoomCenter The center to zoom at.
+     */
     @Override
     public void zoom(float amount, Vector2f zoomCenter) {
         amount = Math.min(Math.max(amount, 1.0f/zoom), MAX_ZOOM/zoom);
@@ -129,6 +163,7 @@ public class Layer2DRenderer extends RendererBase {
         updateCenterBounds();
     }
 
+    @Override
     public void onCreateGL(EGLConfig config) {
         // Set the background frame color
         int colorCode = ContextCompat.getColor(context, R.color.colorPrimary);
@@ -195,6 +230,12 @@ public class Layer2DRenderer extends RendererBase {
         updateArrowScale();
     }
 
+    /**
+     * Sets the projection matrix, such that the view frustum encloses a
+     * rectangle with the specified sizes, while keeping the aspect of the viewport.
+     * @param sizeX The x size of the rectangle.
+     * @param sizeY The y size of the rectangle.
+     */
     public void updateWorldBounds(float sizeX, float sizeY) {
         projection.identity();
         assert height > width;
@@ -211,6 +252,10 @@ public class Layer2DRenderer extends RendererBase {
         return worldBounds;
     }
 
+    /**
+     * Provides information about the used Shaderprogram, such as uniform and attribute locations.
+     * @return The shader program info.
+     */
     public ShaderProgramInfo getProgramInfo() {
         return programInfo;
     }
