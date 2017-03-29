@@ -41,12 +41,31 @@ else if (array_key_exists('HTTP_X_HTTP_METHOD_OVERRIDE', $_SERVER) === true)
 	$_SERVER['REQUEST_METHOD'] = strtoupper(trim($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']));
 }
 
+
+ArrestDB::Serve('GET', 'querryDatabaseDirectly/(#any)', function ($querry)
+{
+	//$query = sprintf('%s;', implode(' ', $query));
+	$result = ArrestDB::Query($query);
+
+	if ($result === false)
+	{
+		$result = ArrestDB::$HTTP[404];
+	}
+
+	else if (empty($result) === true)
+	{
+		$result = ArrestDB::$HTTP[204];
+	}
+	return ArrestDB::Reply($result);
+});
+
+
 ArrestDB::Serve('GET', '/(#any)/(#any)/(#any)', function ($table,  $id, $data)
 {
 	$query = array
 	(
 		sprintf('SELECT * FROM "%s"', $table),
-		sprintf('WHERE "%s" %s ?', $id, (ctype_digit($data) === true) ? '=' : 'LIKE'),
+		sprintf('WHERE "%s" %s ?', $id, '>'),//(ctype_digit($data) === true) ? '>' : 'LIKE'),
 	);
 
 	if (isset($_GET['by']) === true)
@@ -156,9 +175,7 @@ ArrestDB::Serve('DELETE', '/(#any)/(#any)/(#num)', function ($user, $table, $id)
 	$author = implode(' ', $author2[0]);
 	if(($user != $author) and (array_search ( $user , $admin , $strict = false ) === false))
 	{
-		echo "hello2";
 		$result = ArrestDB::$HTTP[205];
-		echo "hello3";
 	}
 	else
 	{
